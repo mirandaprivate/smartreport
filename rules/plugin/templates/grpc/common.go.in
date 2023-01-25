@@ -1,0 +1,14 @@
+// tslint:disable: no-wildcard-import
+// tslint:disable: ordered-imports
+// tslint:disable: ter-max-len
+// tslint:disable: function-signature-length-limit
+// tslint:disable: naming-convention
+// tslint:disable: split-parameters-of-function
+// tslint:disable: comment-for-export-and-public
+// tslint:disable: prefer-method-signature
+// tslint:disable: blank-line-between-functions
+// tslint:disable: merge-redundant-blank-lines
+// tslint:disable: chain-methods-length-limit
+// tslint:disable: no-backbone-get-set-outside-model
+{{ range getImportFiles . }}import * as {{ mangle .Name.String }} from '{{ getImportPath .Name.String }}'
+{{ end }}

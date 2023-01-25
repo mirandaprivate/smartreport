@@ -1,0 +1,5 @@
+{{ $r := .Rules }}{{ if $r.MinItems }}    @validator.ArrayMinSize({{ $r.GetMinItems }})
+{{ end }}{{ if $r.MaxItems }}    @validator.ArrayMaxSize({{ $r.GetMaxItems }})
+{{ end }}{{ if $r.Unique }}    @logiValidator.arrayUnique()
+{{ end }}{{ if $r.Items }}{{ getItemsDecorators $r.GetItems .Field }}
+{{ end }}

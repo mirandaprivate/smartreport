@@ -1,0 +1,17 @@
+:host {
+    flex-direction: column;
+    display: flex;
+}
+button {
+    margin: 16px;
+    width: fit-content;
+}
+.icon {
+    margin: 0 4px;
+    width: 18px;
+    height: 32px;
+
+    font-size: 18px;
+    line-height: 32px;
+    color: rgba(0, 0, 0, 0.6);
+}

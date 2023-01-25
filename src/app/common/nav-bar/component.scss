@@ -1,0 +1,77 @@
+@use 'src/app/assets/styles/shared';
+
+:host {
+    display: block;
+    overflow: hidden;
+    height: 100%;
+}
+.body {
+    box-sizing: border-box;
+    height: calc(100% - 64px);
+    padding: 16px;
+    background-color: shared.logi-grey-color(50);
+}
+
+.left, .right {
+    align-items: center;
+    display: flex;
+    height: 64px;
+}
+.navs {
+    justify-content: space-between;
+    display: flex;
+    border-bottom: shared.$border-base;
+    box-sizing: border-box;
+    height: 64px;
+    padding: 0 16px;
+}
+
+.nav {
+    position: relative;
+    height: 100%;
+    padding: 0 16px;
+    cursor: pointer;
+    line-height: 64px;
+    @include shared.user-select(none);
+
+    &:focus {
+        outline: none;
+    }
+
+    @include shared.set-font(14px, $color: shared.$font-color-base);
+    &:hover {
+        background-color: shared.$bg-hover;
+    }
+    &:active {
+        background-color: shared.$bg-active;
+    }
+    &.curr {
+        @include shared.set-font(14px, bold, $color: shared.$base-brand);
+    }
+    &.curr::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        margin: 0 16px;
+        border-radius: 4px 4px 0 0;
+        width: calc(100% - 32px);
+        height: 2px;
+        background-color: shared.$base-brand;
+    }
+    &.disabled {
+        color: shared.$black-38;
+        pointer-events: none;
+    }
+}
+.title {
+    @include shared.set-font(16px, bold, $color: shared.$font-color-base);
+    @include shared.user-select(none);
+    cursor: pointer;
+}
+.split {
+    margin: 0 16px;
+    width: 1px;
+    height: 24px;
+    background-color: shared.$black-12;
+}

@@ -1,0 +1,45 @@
+<h4>普通列表(logi-list)</h4>
+<logi-list class='list-sample'>
+    <logi-list-item *ngFor="let item of list1">{{item}}</logi-list-item>
+</logi-list>
+
+<h4>带操作的列表(logi-action-list)</h4>
+<logi-action-list class='list-sample'>
+    <button logi-list-item>April</button>
+    <button logi-list-item disabled>August</button>
+    <button logi-list-item>July</button>
+    <button logi-list-item>May</button>
+</logi-action-list>
+
+<h4>导航列表(logi-nav-list)</h4>
+<logi-nav-list class='list-sample'>
+    <logi-list-item>April</logi-list-item>
+    <logi-list-item disabled>August</logi-list-item>
+    <logi-list-item>July</logi-list-item>
+    <logi-list-item>May</logi-list-item>
+</logi-nav-list>
+
+<h4>链接列表</h4>
+<logi-nav-list class='list-sample'>
+    <a logi-list-item *ngFor="let item of list1" target="_blank" href="https://baidu.com">{{item}}</a>
+</logi-nav-list>
+
+<h4>虚拟滚动</h4>
+<cdk-virtual-scroll-viewport itemSize='48' style='height: 480px;' class='list-sample'>
+    <logi-list>
+        <logi-list-item *cdkVirtualFor='let item of listDataSource'>
+            <div *ngIf='!item; else itemContent' style='height: 48px;'>
+                <div class='item-placeholder'></div>
+            </div>
+            <ng-template #itemContent>
+                <div class='item-container' style='height: 48px;'>
+                    <div>编号: {{item.id}}</div>
+                    <div>
+                        <span>名字: {{item.name}}</span>
+                        <span>邮箱: {{item.email}}</span>
+                    </div>
+                </div>
+            </ng-template>
+        </logi-list-item>
+    </logi-list>
+</cdk-virtual-scroll-viewport>

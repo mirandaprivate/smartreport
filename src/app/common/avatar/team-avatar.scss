@@ -1,0 +1,8 @@
+:host {
+    &.logi-team-avatar{
+        border-radius: 4px;
+    }
+}
+::ng-deep .logi-team-avatar~.logi-avatar-icon-container{
+    border-radius: 4px;
+}

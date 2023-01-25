@@ -1,0 +1,40 @@
+@use 'src/app/assets/styles/shared';
+:host {
+    display: block;
+    border-radius: inherit;
+    cursor: pointer;
+    &.logi-avatar-base {
+        position: relative;
+        &.logi-avatar-small {
+            width: 24px;
+            height: 24px;
+        }
+        &.logi-avatar-middle {
+            width: 64px;
+            height: 64px;
+        }
+        &.logi-avatar-big {
+            width: 72px;
+            height: 72px;
+        }
+    }
+}
+.img {
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
+}
+.default {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
+    color: shared.$base-brand;
+    ::ng-deep {
+        mat-icon path {
+            fill: currentColor !important;
+        }
+    }
+}

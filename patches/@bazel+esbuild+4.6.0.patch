@@ -1,0 +1,35 @@
+diff --git a/node_modules/@bazel/esbuild/launcher.js b/node_modules/@bazel/esbuild/launcher.js
+index cd0e606..989ad74 100755
+--- a/node_modules/@bazel/esbuild/launcher.js
++++ b/node_modules/@bazel/esbuild/launcher.js
+@@ -43,16 +43,20 @@ async function processConfigFile(configFilePath, existingArgs = {}) {
+ 
+   // These keys of the config can not be overriden
+   const IGNORED_CONFIG_KEYS = [
+-    'bundle',
+-    'entryPoints',
+-    'external',
+-    'metafile',
+-    'outdir',
+-    'outfile',
+-    'preserveSymlinks',
+-    'sourcemap',
+-    'splitting',
+-    'tsconfig',
++  // Not ignore following keys because we use config file to control esbuild
++  // for that some key can not write at the BUILD file and must be executed by
++  // rule an transformed by the config file.
++
++    // 'bundle',
++    // 'entryPoints',
++    // 'external',
++    // 'metafile',
++    // 'outdir',
++    // 'outfile',
++    // 'preserveSymlinks',
++    // 'sourcemap',
++    // 'splitting',
++    // 'tsconfig',
+   ];
+ 
+   const MERGE_CONFIG_KEYS = [

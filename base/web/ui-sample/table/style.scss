@@ -1,0 +1,37 @@
+@use 'base/web/ui/core/styles/shared';
+
+:host {
+    display: block;
+    font-size: 14px;
+    color: shared.$font-color-darker;
+
+    ::ng-deep.user {
+        align-items: center;
+        display: inline-flex;
+    }
+}
+.asyn-btn {
+    margin-bottom: 16px;
+}
+.table-container {
+    overflow-y: auto;
+    height: 300px;
+}
+
+table {
+    width: 100%;
+}
+
+.logi-table {
+    width: 100%;
+}
+
+.search-input-container {
+    align-items: center;
+    display: flex;
+    margin-bottom: 8px;
+
+    .label {
+        width: 100px;
+    }
+}

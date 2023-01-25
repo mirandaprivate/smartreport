@@ -1,0 +1,103 @@
+@use 'src/app/assets/styles/shared';
+
+$panel-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+
+.logi-select {
+    display: inline-block;
+    font-size: 14px;
+}
+
+.logi-select-trigger {
+    position: relative;
+    align-items: center;
+    display: flex;
+    border: shared.$border-base;
+    border-radius: 4px;
+    box-sizing: border-box;
+    min-height: 36px;
+    &.no-border {
+        border: none;
+    }
+    &:not(.no-border):hover {
+        border-color: shared.$black-24;
+    }
+}
+
+.logi-select-placeholder {
+    cursor: default;
+    opacity: 0.38;
+}
+
+.logi-select-content {
+    position: relative;
+    padding: 0 28px 0 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logi-select-multiple .logi-select-content {
+    flex-wrap: wrap;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 4px;
+
+    .logi-select-placeholder {
+        padding-left: 12px;
+    }
+}
+
+.logi-select-multiple .logi-selected-label {
+    border-style: solid;
+    border-width: 1px;
+    padding-left: 8px;
+}
+
+.logi-select-icon {
+    position: absolute;
+    right: 4px;
+    font-size: 0;
+    color: shared.$font-color-base;
+}
+
+.logi-select-panel {
+    font-family: shared.$base-font;
+    flex-direction: column;
+    display: flex;
+    overflow: auto;
+    box-shadow: $panel-shadow;
+    border-radius: 4px;
+    width: 100%;
+    padding: 8px 0;
+    background-color: shared.$base-white;
+    max-height: 256px;
+    min-width: 64px;
+
+    .empty-view {
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: shared.$black-38;
+        font-size: 14px;
+    }
+}
+.logi-select-panel-search-container {
+    margin-bottom: 8px;
+    padding: 0 16px;
+}
+.logi-select-panel-options {
+    flex: 1;
+    overflow-y: auto;
+}
+.logi-select-panel-actions {
+    display: block;
+    margin-top: 8px;
+    border-top: shared.$border-base;
+    height: 32px;
+    padding: 0 16px;
+    padding-top: 8px;
+    font-size: 14px;
+    line-height: 32px;
+    color: shared.$black-87;
+}

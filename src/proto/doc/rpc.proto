@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/doc/rpc';
+
+import "src/proto/doc/doc.proto";
+import "google/api/annotations.proto";
+
+service DocSvc {
+    rpc DocToHtml(DocToHtmlRequest) returns (DocToHtmlResponse) {
+        option (google.api.http) = {
+            get: "/editor/v1/doc/toHtml"
+        };
+    }
+    rpc DocToPDF(DocToPDFRequest) returns (DocToPDFResponse) {
+        option (google.api.http) = {
+            get: "/editor/v1/doc/toPDF"
+        };
+    }
+    rpc CreateDoc(CreateDocRequest) returns (CreateDocResponse) {
+        option (google.api.http) = {
+            get: "/editor/v1/doc/create"
+        };
+    }
+}

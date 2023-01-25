@@ -1,0 +1,10 @@
+{{ range getAllOneOfs . }}{{ $oneofName := getTsName . }}export const enum _{{ $oneofName }} {
+{{ range .Fields }}    {{ toUpper .Name.String }} = '{{ .Name.LowerCamelCase }}',
+{{ end }}}
+export type _{{ $oneofName }}_Type = {{ getOneOfUnionType .Fields }}
+type _{{ $oneofName }}_Field = _{{ $oneofName }}
+const {{ toUpper $oneofName }}: readonly _{{ $oneofName }}[] = [
+{{ range .Fields }}    _{{ $oneofName }}.{{ toUpper .Name.String }},
+{{ end }}]
+
+{{ end }}

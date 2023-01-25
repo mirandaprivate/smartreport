@@ -1,0 +1,33 @@
+:host {
+    display: block;
+}
+
+.samples {
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.select-container {
+    flex-direction: column;
+    flex-shrink: 0;
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 24px;
+    margin-right: 24px;
+    width: 480px;
+    height: 120px;
+}
+
+.label-content-container {
+    display: flex;
+    .name {
+        border-radius: 4px;
+        padding: 2px 8px;
+        background-color: #469CE1;
+    }
+
+    .age {
+        margin-left: 16px;
+        font-weight: bold;
+    }
+}

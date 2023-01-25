@@ -1,0 +1,43 @@
+<h4>带底色</h4>
+<div class="items">
+    <logi-tag class="item">默认颜色随主题</logi-tag>
+    <logi-tag class="item" color="blue">总收入</logi-tag>
+    <logi-tag class="item" color="green">摊销</logi-tag>
+    <logi-tag class="item" color="arisblue">营业总收入</logi-tag>
+    <logi-tag class="item" color="orange">EBIT</logi-tag>
+    <logi-tag class="item" color="red">营业总收入</logi-tag>
+    <logi-tag class="item" color="grey">预付款项</logi-tag>
+    <logi-tag class="item" color="#8800CC">customized#8800CC</logi-tag>
+    <logi-tag class="item" [disabled]="true" color="arisblue">营业总收入</logi-tag>
+</div>
+<h4>可编辑标签</h4>
+<div class="items">
+    <logi-tag class="item" [mode]="&quot;closeable&quot;" [text]="&quot;123@123.com&quot;"></logi-tag>
+    <logi-tag class="item" [mode]="&quot;closeable&quot;" [text]="&quot;123@123.com&quot;"></logi-tag>
+    <logi-tag class="item" [mode]="&quot;closeable&quot;" [text]="&quot;123@123.com&quot;"></logi-tag>
+    <logi-tag class="item" [disabled]="true" [mode]="&quot;closeable&quot;" [text]="&quot;123@123.com&quot;"></logi-tag>
+</div>
+<h4>带图标</h4>
+<div class="items">
+    <logi-tag class="item" [color]="&quot;blue&quot;" icon="ic_refresh">总收入</logi-tag>
+    <logi-tag class="item" [color]="&quot;green&quot;" icon="ic_error">摊销</logi-tag>
+    <logi-tag class="item" [color]="&quot;arisblue&quot;" icon="ic_user">黄鹏</logi-tag>
+    <logi-tag class="item" [color]="&quot;orange&quot;" icon="ic_refresh">EBIT</logi-tag>
+    <logi-tag class="item" [color]="&quot;red&quot;" icon="ic_refresh">营业总收入</logi-tag>
+    <logi-tag class="item" [color]="&quot;grey&quot;" icon="ic_refresh">预付款项</logi-tag>
+    <logi-tag class="item" [color]="&quot;#FF5500&quot;" icon="ic_refresh">总收入#FF5500</logi-tag>
+    <logi-tag class="item" [color]="&quot;arisblue&quot;" [disabled]="true" icon="ic_refresh">营业总收入</logi-tag>
+</div>
+<h4>最大宽度限制, 超过宽度换行</h4>
+<div class='items column'>
+    <logi-tag class='item width-limit-tag'>文本</logi-tag>
+    <logi-tag class='item width-limit-tag'>长文本</logi-tag>
+    <logi-tag class='item width-limit-tag'>长长长长长长长长长长长长长文本</logi-tag>
+</div>
+<h4>最大宽度限制, 超过宽度显示省略号</h4>
+<div class='items column'>
+    <logi-tag class='item width-limit-tag' [ellipsis]='true'>文本</logi-tag>
+    <logi-tag class='item width-limit-tag' [ellipsis]='true'>长文本</logi-tag>
+    <logi-tag class='item width-limit-tag' [ellipsis]='true'>长长长长长长长长长长长文本
+    </logi-tag>
+</div>

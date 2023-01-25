@@ -1,0 +1,45 @@
+/* stylelint-disable */
+@use 'src/app/assets/styles/shared';
+:host {
+    position: relative;
+}
+:host.time-series {
+    height: 173px;
+}
+:host:not(.time-series) {
+    width: calc(100% - 32px);
+    height: 195px;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.04);
+    white-space: normal;
+    word-break: break-all;
+    @include shared.set-font(14px, $color: rgba(0,0,0,0.38));
+}
+.th-cell {
+    padding-left: 16px;
+    text-align: left;
+}
+.td-cell {
+    position: relative;
+    overflow: hidden;
+    margin: 8px 16px 0;
+    width: 200px;
+    height: 99px;
+    text-align: justify;
+    white-space: normal;
+    word-break: break-all;
+    @include shared.set-font(14px, $color: rgba(0,0,0,0.6));
+}
+.td-cell-each {
+    margin: 0;
+    min-height: 20px;
+}
+.more {
+    margin: 0 0 8px 16px;
+    cursor: pointer;
+    @include shared.set-font(14px, $color: #4178B8);
+}
+.empty-more {
+    margin-bottom: 7px;
+    height: 20px;
+}

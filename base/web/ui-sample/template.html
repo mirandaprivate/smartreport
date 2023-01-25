@@ -1,0 +1,17 @@
+<header class='ui-sample-header'>
+    <h2 class='title'>GUIDELINE</h2>
+    <logi-radio-group (change$)='onThemeChange($event)' value='aris'>
+        <logi-radio-button class='theme-radio-button' value=''>无主题</logi-radio-button>
+        <logi-radio-button class='theme-radio-button' value='aris'>Aris主题</logi-radio-button>
+        <logi-radio-button class='theme-radio-button' value='logi'>Logi主题</logi-radio-button>
+        <logi-radio-button class='theme-radio-button' value='curie'>Curie主题</logi-radio-button>
+    </logi-radio-group>
+</header>
+<div class='ui-sample-body'>
+    <nav class='ui-sample-side-nav'>
+        <a *ngFor='let item of routeItems' [routerLinkActive]='"active"' [routerLink]='item.route'>{{item.text}}</a>
+    </nav>
+    <div class='ui-sample-content' cdkScrollable>
+        <router-outlet></router-outlet>
+    </div>
+</div>

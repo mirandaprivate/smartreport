@@ -1,0 +1,34 @@
+$border: 1px solid rgba(0, 0, 0, 0.12);
+
+.sample-item-container {
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    margin: 12px 0;
+    margin-right: 24px;
+    border: $border;
+    border-radius: 4px;
+    width: 650px;
+    height: 300px;
+    padding: 12px;
+}
+
+.sample-header {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    height: 48px;
+}
+
+.sample-title {
+    font-weight: bold;
+}
+
+.tabs {
+    height: calc(100% - 48px);
+}
+
+.tabs-control {
+    width: 140px;
+    font-size: 12px;
+}

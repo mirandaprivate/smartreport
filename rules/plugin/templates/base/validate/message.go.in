@@ -1,0 +1,2 @@
+{{ if or (not .Message) (not .Message.GetSkip) }}    @validator.ValidateNested()
+{{ end }}

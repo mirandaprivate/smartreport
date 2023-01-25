@@ -1,0 +1,1 @@
+export * from './logi_enum_label_class'

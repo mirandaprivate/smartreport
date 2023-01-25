@@ -1,0 +1,21 @@
+@use 'src/app/assets/styles/shared';
+
+:host {
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    &:hover .logi-avatar-icon-container {
+        display: flex;
+    }
+}
+.logi-avatar-icon-container {
+    @include shared.logi-fill();
+    justify-content: center;
+    align-items: center;
+    display: none;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background-color: shared.$black-24;
+    color: shared.$base-white;
+}

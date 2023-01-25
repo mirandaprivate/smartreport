@@ -1,0 +1,448 @@
+<div class="tables">
+    <button class="custom-table-item-tag" *ngFor='let t of tables;let index=index' (click)='jumpTable(index)'
+        logi-button>{{t}}</button>
+</div>
+<h3>常用示例</h3>
+<logi-group-input class="search" suffixIcon="ic_search">
+    <input [formControl]="simpleCustomFilter.searchFormControl" logi-input placeholder="搜索项目名称、股票代码或负责人">
+</logi-group-input>
+<logi-table class="simple-table" #basicTable [logiData]="simpleData" [logiPaginatorOptions]='simplePaginator'
+    [logiCustomFilter]='simpleCustomFilter' [logiWidthConfig]="['20%', '100px', null, '30%']">
+    <thead>
+        <tr>
+            <th logiColumnKey="name" [logiShowSort]="true" [logiSortFn]="simpleDataNameSortFn">Name</th>
+            <th logiColumnKey="age" [logiShowSort]="true" [logiSortFn]="simpleDataAgeSortFn">Age</th>
+            <th logiColumnKey="address">Address</th>
+            <th logiColumnKey="action">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td logiEllipsis>{{ data.address }}</td>
+            <td><a>Action 一 {{ data.name }}</a><a>Delete</a></td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>自定义分页器(仅能初始化)</h3>
+<div class="paginator">paginator: {{getObjString(paginatorSample)}}</div>
+<div class="options" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;">
+    <logi-checkbox style="margin-right: 10px;" [checked]='paginatorSample.show ?? false'
+        (change$)='paginatorChanged($event.checked, "show")'>
+        show
+    </logi-checkbox>
+    <div>total:</div>
+    <logi-input-number style="margin-right: 10px;" [value]='paginatorSample.total ?? 0'
+        (valueChange$)='paginatorChanged($event, "total")'>
+    </logi-input-number>
+    <div>pageIndex:</div>
+    <logi-input-number style="margin-right: 10px;" [value]='paginatorSample.pageIndex ?? 0'
+        (valueChange$)='paginatorChanged($event, "pageIndex")'>
+    </logi-input-number>
+    <logi-checkbox style="margin-right: 10px;" [checked]='paginatorSample.logiPageNoTotal ?? false'
+        (change$)='paginatorChanged($event.checked, "logiPageNoTotal")'>
+        logiPageNoTotal</logi-checkbox>
+    <div>pageSize:</div>
+    <logi-input-number style="margin-right: 10px;" [value]='paginatorSample.pageSize ?? 0'
+        (valueChange$)='paginatorChanged($event, "pageSize")'>
+    </logi-input-number>
+    <logi-checkbox style="margin-right: 10px;" [checked]='paginatorSample.hidePageSize ?? false'
+        (change$)='paginatorChanged($event.checked, "hidePageSize")'>
+        hidePageSize</logi-checkbox>
+    <logi-checkbox style="margin-right: 10px;" [checked]='paginatorSample.showFirstLastButtons ?? false'
+        (change$)='paginatorChanged($event.checked, "showFirstLastButtons")'>
+        showFIstLastButtons</logi-checkbox>
+</div>
+<logi-table *ngIf='!paginatorLoading;else customTableLoading' #paginatorTable [logiData]="paginatorData"
+    [logiPaginatorOptions]='paginatorSample'>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of paginatorTable.data">
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>多选框示例</h3>
+<logi-table #rowSelectionTable (logiCurrentPageDataChange)="onCurrentPageDataChange($event)" [logiData]="checkBoxData">
+    <thead>
+        <tr>
+            <th (logiCheckedChange)="onAllChecked($event)" [logiIndeterminate]="indeterminate"
+                [logiSelections]="listOfSelection" [(logiChecked)]="checked"></th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of rowSelectionTable.data">
+            <td (logiCheckedChange)="onItemChecked(data.id, $event)" [logiChecked]="setOfCheckedId.has(data.id)"></td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>多选框示例2</h3>
+<div class="send-request">
+    <button (click)="sendRequest2()" [disabled]="setOfCheckedId2.size === 0" [loading]="loading2"
+        logi-flat-button>Request</button><span>Selected {{ setOfCheckedId2.size }} items</span>
+</div>
+<logi-table #rowSelectionTable2 (logiCurrentPageDataChange)="onCurrentPageDataChange2($event)"
+    [logiData]="sendRequestData" logiShowPagination>
+    <thead>
+        <tr>
+            <th (logiCheckedChange)="onAllChecked2($event)" [logiChecked]="checked2"
+                [logiIndeterminate]="indeterminate2"></th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of rowSelectionTable2.data">
+            <td (logiCheckedChange)="onItemChecked2(data.id, $event)" [logiChecked]="setOfCheckedId2.has(data.id)"
+                [logiDisabled]="data.disabled"></td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>加载示例</h3>
+<button (click)='loadDataFromServer(0, 20, null, null, [])'>load data from server</button>
+<logi-table #loadingTable1 (logiQueryParams)="onQueryParamsChange($event)" [logiData]="listOfRandomUser"
+    [logiFrontPagination]="false" [logiLoading]="loading3" [logiPaginatorOptions]='paginatorOptions'>
+    <thead>
+        <tr>
+            <th logiColumnKey="name">Name</th>
+            <th [logiFilters]="filterGender" logiColumnKey="gender">Gender</th>
+            <th logiColumnKey="email">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of loadingTable1.data">
+            <td>{{ data.name.first }} {{ data.name.last }}</td>
+            <td>{{ data.gender }}</td>
+            <td>{{ data.email }}</td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>边框示例</h3>
+<h4>内边框</h4>
+<logi-table #borderedTable [logiData]="dataSet" logiFooter="Footer" logiTitle="Header" logiBordered>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of borderedTable.data">
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+        </tr>
+    </tbody>
+</logi-table><br>
+<h4>外边框</h4>
+<logi-table #outBordered [logiData]="dataSet" logiFooter="Footer" logiTitle="Header" logiOuterBordered>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of outBordered.data">
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>可扩展表格</h3>
+<logi-table #expandTable [logiData]="expandData" logiTableLayout="fixed">
+    <thead>
+        <tr>
+            <th logiWidth="60px"></th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let data of expandTable.data">
+            <tr>
+                <td (logiExpandChange)="onExpandChange(data.id, $event)" [logiExpand]="expandSet.has(data.id)"></td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.age }}</td>
+                <td>{{ data.address }}</td>
+            </tr>
+            <tr [logiExpand]="expandSet.has(data.id)"><span>{{ data.description }}</span></tr>
+        </ng-container>
+    </tbody>
+</logi-table>
+<h3>单元格合并</h3>
+<logi-table #colSpanTable logiBordered [logiData]="spanData">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th colspan="2">Home phone</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of colSpanTable.data;">
+            <td>{{ data.name }}</td>
+            <ng-container [ngSwitch]="data.key">
+                <ng-container *ngSwitchCase="3">
+                    <td>{{ data.age }}</td>
+                    <td rowspan="2">{{ data.tel }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>{{ data.address }}</td>
+                </ng-container>
+                <ng-container *ngSwitchCase="4">
+                    <td>{{ data.age }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>{{ data.address }}</td>
+                </ng-container>
+                <ng-container *ngSwitchCase="5">
+                    <td colspan="4">{{ data.age }}</td>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <td>{{ data.age }}</td>
+                    <td>{{ data.tel }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>{{ data.address }}</td>
+                </ng-container>
+            </ng-container>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>fixed column 表格 left</h3>
+<logi-table #fixedTable [logiData]="fixedData">
+    <thead>
+        <tr>
+            <th [logiWidth]="'200px'" logiLeft> Name</th>
+            <th [logiWidth]="'200px'" logiLeft>Age</th>
+            <th [logiWidth]="'200px'">Column 1</th>
+            <th [logiWidth]="'200px'">Column 2</th>
+            <th [logiWidth]="'200px'">Column 3</th>
+            <th [logiWidth]="'200px'">Column 4</th>
+            <th [logiWidth]="'200px'">Column 5</th>
+            <th [logiWidth]="'200px'">Column 6</th>
+            <th [logiWidth]="'200px'">Column 7</th>
+            <th [logiWidth]="'200px'">Column 8</th>
+            <th [logiWidth]="'200px'">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of fixedTable.data">
+            <td logiLeft>{{ data.name }}</td>
+            <td logiLeft>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td><a>action</a></td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>fixed column 表格 right</h3>
+<logi-table #fixedTable [logiData]="fixedData">
+    <thead>
+        <tr>
+            <th [logiWidth]="'200px'"> Name</th>
+            <th [logiWidth]="'200px'">Age</th>
+            <th [logiWidth]="'200px'">Column 1</th>
+            <th [logiWidth]="'200px'">Column 2</th>
+            <th [logiWidth]="'200px'">Column 3</th>
+            <th [logiWidth]="'200px'">Column 4</th>
+            <th [logiWidth]="'200px'">Column 5</th>
+            <th [logiWidth]="'200px'">Column 6</th>
+            <th [logiWidth]="'200px'">Column 7</th>
+            <th [logiWidth]="'200px'">Column 8</th>
+            <th [logiWidth]="'200px'" logiRight>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of fixedTable.data">
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td logiRight><a>action</a></td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>fixed column 表格 left and right</h3>
+<logi-table #fixedTable [logiData]="fixedData">
+    <thead>
+        <tr>
+            <th [logiWidth]="'200px'" logiLeft> Name</th>
+            <th [logiWidth]="'200px'" logiLeft>Age</th>
+            <th [logiWidth]="'200px'">Column 1</th>
+            <th [logiWidth]="'200px'">Column 2</th>
+            <th [logiWidth]="'200px'">Column 3</th>
+            <th [logiWidth]="'200px'">Column 4</th>
+            <th [logiWidth]="'200px'">Column 5</th>
+            <th [logiWidth]="'200px'">Column 6</th>
+            <th [logiWidth]="'200px'">Column 7</th>
+            <th [logiWidth]="'200px'">Column 8</th>
+            <th [logiWidth]="'200px'" logiRight>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of fixedTable.data">
+            <td logiLeft>{{ data.name }}</td>
+            <td logiLeft>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.address }}</td>
+            <td logiRight><a>action</a></td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>分组表格</h3>
+<logi-table #groupingTable [logiData]="groupingData" logiBordered logiSize="middle">
+    <thead>
+        <tr>
+            <th rowspan="4" logiLeft>Name</th>
+            <th colspan="4">Other</th>
+            <th colspan="2">Company</th>
+            <th rowspan="4" logiRight>Gender</th>
+        </tr>
+        <tr>
+            <th rowspan="3" [logiSortFn]="sortAgeFn">Age</th>
+            <th colspan="3">Address</th>
+            <th rowspan="3">Company Address</th>
+            <th rowspan="3">Company Name</th>
+        </tr>
+        <tr>
+            <th rowspan="2">Street</th>
+            <th colspan="2">Block</th>
+        </tr>
+        <tr>
+            <th>Building</th>
+            <th>Door No.</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of groupingTable.data">
+            <td logiLeft> {{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.street }}</td>
+            <td>{{ data.building }}</td>
+            <td>{{ data.number }}</td>
+            <td>{{ data.companyAddress }}</td>
+            <td>{{ data.companyName }}</td>
+            <td logiRight>{{ data.gender }}</td>
+        </tr>
+    </tbody>
+</logi-table>
+<h3>虚拟滚动</h3>
+<button logi-stroked-button (click)="scrollToIndex(200)">Scroll To Index 200</button><br><br>
+<logi-table #virtual_table class="virtual-scroll" [logiVirtualItemSize]="50" [logiData]="virtualData"
+    [logiVirtualForTrackBy]="trackByIndex" [logiFrontPagination]="false" [logiPaginatorOptions]="noPaginator"
+    [logiWidthConfig]='["332px", "120px", null, null, "100px", null, null, null, null, null, null, null]'>
+    <thead>
+        <tr>
+            <th class="col1" logiLeft rowspan="2">Full Name</th>
+            <th class="col2" logiLeft rowspan="2">Age</th>
+            <th>Index</th>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+            <th>Column 4</th>
+            <th>Column 5</th>
+            <th>Column 6</th>
+            <th>Column 7</th>
+            <th>Column 8</th>
+            <th logiRight rowspan="2">Action</th>
+        </tr>
+        <tr>
+            <th colspan="5">Column col span 5</th>
+            <th>Column col span 1</th>
+            <th colspan="3">Column col span 3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template logi-virtual-scroll let-data let-index="index">
+            <tr class="virtual tr{{index}}">
+                <td logiLeft>
+                    <div class="col1">{{ data.name }}</div>
+                </td>
+                <td logiLeft>
+                    <div class="col2">{{ data.age }}</div>
+                </td>
+                <td>
+                    <div class="td1">{{ data.id }}</div>
+                </td>
+                <td>{{ data.address }}</td>
+                <td>{{ data.address }}</td>
+                <td>{{ data.address }}</td>
+                <td>{{ data.address }}</td>
+                <td>{{ data.address }}</td>
+                <td>{{ data.address }}</td>
+                <td>{{ data.address }}</td>
+                <td>{{ data.address }}</td>
+                <td logiRight><a>action</a></td>
+            </tr>
+        </ng-template>
+    </tbody>
+</logi-table>
+<h3>树形数据展示</h3>
+<logi-table-expand-tree></logi-table-expand-tree>
+<h3>层叠表格1</h3>
+<logi-table-nested-sample></logi-table-nested-sample>
+<h3>层叠表格2</h3>
+<logi-table-nested-sample [layout]="&quot;auto&quot;" [scroll]="{x: &quot;1200px&quot;, y: &quot;100%&quot;}">
+</logi-table-nested-sample>
+<h3>暂无数据</h3>
+<logi-table #emptyTable [logiData]="[]" [logiPaginatorOptions]='simplePaginator'
+    [logiCustomFilter]='simpleCustomFilter'>
+    <thead>
+        <tr>
+            <th logiColumnKey="name" [logiShowSort]="true" [logiSortFn]="simpleDataNameSortFn">Name</th>
+            <th logiColumnKey="age" [logiShowSort]="true" [logiSortFn]="simpleDataAgeSortFn">Age</th>
+            <th logiColumnKey="address">Address</th>
+            <th logiColumnKey="action">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of emptyTable.data">
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+            <td><a>Action 一 {{ data.name }}</a><a>Delete</a></td>
+        </tr>
+    </tbody>
+</logi-table>
+<ng-template #customTableLoading>
+    <div>loading...</div>
+</ng-template>

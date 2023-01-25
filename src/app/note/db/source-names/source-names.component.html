@@ -1,0 +1,11 @@
+<logi-scrollbar class="scrollbar-container-database-button">
+    <logi-button-toggle-group class='database-button' [value]='sourceName' (valueChange$)='sourceChanged$.next($event)'>
+        <logi-button-toggle *ngFor='let source of sources' [value]='source.name'>
+            <span title="{{source.name}}" class="source-name-text">{{source.name}}</span>
+        </logi-button-toggle>
+    </logi-button-toggle-group>
+</logi-scrollbar>
+<div class="research">
+    <span class="tag">当前示例数据:&nbsp;&nbsp;</span>
+    <span class="name">{{researchName}}</span>
+</div>

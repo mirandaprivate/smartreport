@@ -1,0 +1,6 @@
+<logi-file-uploader readAs='dataUrl' [maxSize]='200' [accept]='accept' (dataUrl$)='onLoadImg($event)'>
+    <ng-content></ng-content>
+    <div class='logi-avatar-icon-container'>
+        <mat-icon class='camera' svgIcon='ic_camera'></mat-icon>
+    </div>
+</logi-file-uploader>

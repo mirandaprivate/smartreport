@@ -1,0 +1,10 @@
+{{ getAllLeadingComments . 0 }}export interface {{ getTsName . }} extends proto.Message {
+{{ range .NonOneOfFields }}{{ getAllLeadingComments . 1 }}    readonly {{ .Name.LowerCamelCase }}{{if and (isMessage .) (not (isRequiredField .)) }}?{{ end }}: {{ if isAnyTypeField . }}{{ getAnyType . }}{{ else }}{{ getTsType . }}{{ end }}
+{{ end }}{{ range .OneOfFields }}{{ getAllLeadingComments . 1 }}    readonly {{ .Name.LowerCamelCase }}?: {{ if isAnyTypeField . }}{{ getAnyType . }}{{ else }}{{ getTsType . }}{{ end }}
+{{ end }}{{ if ne (len .Descriptor.ExtensionRange) 0 }}    readonly _ext: proto.Extension
+{{ end }}{{ range .OneOfs }}{{ getAllLeadingComments . 1 }}    get{{ .Name.UpperCamelCase }}(): readonly [_{{ getTsName . }}_Type, _{{ getTsName . }}_Field] | undefined
+{{ end }}{{ if not (isValidateDisable .) }}
+    validate(): readonly __Exception__[]{{ end }}
+    equals(obj: {{ getTsName . }}): boolean
+    clone(): {{ getTsName . }}
+}

@@ -1,0 +1,49 @@
+---
+deps:
+- deps:
+  - name: block
+    pack:
+    - locale: 1
+      text: block
+    - locale: 2
+      text: 块
+    - locale: 3
+      text: 塊
+  - deps:
+    - name: foo
+      pack:
+      - locale: 1
+        text: foo
+      - locale: 2
+        text: 负
+      - locale: 3
+        text: 負
+    - name: bar
+      pack:
+      - locale: 1
+        text: bar
+      - locale: 2
+        text: 霸
+      - locale: 3
+        text: 霸
+    name: col
+  name: row
+- deps:
+  - name: foo
+    pack:
+    - locale: 1
+      text: foo
+    - locale: 2
+      text: 负
+    - locale: 3
+      text: 負
+  - name: bar
+    pack:
+    - locale: 1
+      text: bar
+    - locale: 2
+      text: 霸
+    - locale: 3
+      text: 霸
+  name: col
+name: title

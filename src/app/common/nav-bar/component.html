@@ -1,0 +1,21 @@
+<div class='navs'>
+    <div class="left">
+        <div class="title">{{navTitle}}</div>
+        <div class="split" *ngIf='navs.length !== 0'></div>
+        <ng-container *ngFor='let nav of navs'>
+            <div class="nav" *ngIf='!nav.customNav; else customNavButton' [routerLink]='nav.path'
+                routerLinkActive='curr' [class.disabled]='nav.disable'>
+                {{nav.name}}</div>
+            <ng-template #customNavButton>
+                <div class="nav" (click)='nav.customNav && nav.customNav()' [class.disabled]='nav.disable'>
+                    {{nav.name}}</div>
+            </ng-template>
+        </ng-container>
+    </div>
+    <div class='right'>
+        <ng-template [ngTemplateOutlet]='actionsTpl'></ng-template>
+    </div>
+</div>
+<div class='body'>
+    <ng-content></ng-content>
+</div>

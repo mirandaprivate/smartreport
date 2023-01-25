@@ -1,0 +1,8 @@
+<div class="title">文本详情</div>
+<div class="time-tag tag">时间:</div>
+<div class="time-text text">{{data.date}}</div>
+<div class="text-tag tag">文本内容:</div>
+<div class="text-text text">
+    <p *ngFor='let text of texts' class="text-each">{{text}}</p>
+</div>
+<button class="close" (click)='close()' logi-flat-button>关闭</button>

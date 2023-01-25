@@ -1,0 +1,38 @@
+/**
+ * Transfer information between protos. DO NOT USE OR EDIT IT.
+ */
+export const REGISTRY = registryInit()
+
+function registryInit(): Readonly<proto.Registry> {
+    const registry = new proto.Registry()
+    registry.putFile(FILE_DESCRIPTOR)
+{{ range .AllMessages }}    registry.putConstructor('{{ .FullyQualifiedName }}', {{ getTsName . }}Builder)
+{{ end }}{{ range $i, $f := getImportMessage . }}
+    const registry{{ $i }} = {{ mangle (index $f.Imports 0).Name.String }}.REGISTRY
+    registry{{ $i }}.getAllMessage().forEach((
+        d: proto.DescriptorProto,
+        name: string,
+    ): void => {
+        registry.getAllMessage().set(name, d)
+    })
+    registry{{ $i }}.getAllConstructor().forEach((
+        obj: proto.CtorType,
+        name: string,
+    ): void => {
+        registry.putConstructor(name, obj)
+    })
+    registry{{ $i }}.getAllEnum().forEach((
+        d: proto.EnumDescriptorProto,
+        name: string,
+    ): void => {
+        registry.getAllEnum().set(name, d)
+    }){{ end }}
+    return registry
+}
+
+function registerGlobal(): void {
+    proto.GLOBAL_REGISTRY.putFile(FILE_DESCRIPTOR){{ range .AllMessages }}
+    proto.GLOBAL_REGISTRY.putConstructor('{{ .FullyQualifiedName }}', {{ getTsName . }}Builder){{ end }}
+}
+
+registerGlobal()

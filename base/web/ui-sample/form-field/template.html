@@ -1,0 +1,109 @@
+<logi-switch (change$)='toggleDisabled()'>禁用</logi-switch>
+
+<table>
+    <tr>
+        <td rowspan="4">大尺寸(size='large')</td>
+        <td>常规情况</td>
+        <td>
+            <logi-form-field size='large'>
+                <input logi-input [formControl]='formControl'>
+            </logi-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>带标签</td>
+        <td>
+            <logi-form-field label='文本' size='large'>
+                <input logi-input [formControl]='formControl'>
+            </logi-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>带有前缀图标</td>
+        <td>
+            <logi-form-field label='用户名' size='large'>
+                <mat-icon logiPrefix svgIcon='ic_user'></mat-icon>
+                <input logi-input [formControl]='formControl'>
+            </logi-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>密码输入框</td>
+        <td>
+            <logi-form-field label='密码' size='large'>
+                <mat-icon logiPrefix svgIcon='ic_lock'></mat-icon>
+                <mat-icon logiSuffix [logiPasswordOrigin]='pwd'
+                    [svgIcon]='pwd.type === "password" ? "ic_visibility_off" : "ic_visibility"'></mat-icon>
+                <input #pwd logi-input [formControl]='formControl' type='password'>
+            </logi-form-field>
+        </td>
+    </tr>
+
+    <tr>
+        <td rowspan="3">正常尺寸</td>
+        <td>常规情况</td>
+        <td>
+            <logi-form-field>
+                <input logi-input [formControl]='formControl'>
+            </logi-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>前缀图标</td>
+        <td>
+            <logi-form-field>
+                <mat-icon logiPrefix svgIcon='ic_user'></mat-icon>
+                <input logi-input [formControl]='formControl'>
+            </logi-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>密码输入框</td>
+        <td>
+            <logi-form-field label='密码'>
+                <mat-icon logiPrefix svgIcon='ic_lock'></mat-icon>
+                <mat-icon logiSuffix [logiPasswordOrigin]='pwd2'
+                    [svgIcon]='pwd2.type === "password" ? "ic_visibility_off" : "ic_visibility"'></mat-icon>
+                <input #pwd2 logi-input [formControl]='formControl' type='password'>
+            </logi-form-field>
+        </td>
+    </tr>
+
+    <tr>
+        <td>小尺寸(size='small')</td>
+        <td>常规情况</td>
+        <td>
+            <logi-form-field size='small'>
+                <input logi-input [formControl]='formControl'>
+            </logi-form-field>
+        </td>
+    </tr>
+</table>
+
+
+<h4>表单示例</h4>
+<form [formGroup]='formGroup'>
+    <div class="form-field">
+        <logi-form-field label='用户名' size='large'>
+            <mat-icon logiPrefix svgIcon='ic_user'></mat-icon>
+            <input logi-input formControlName='user'>
+        </logi-form-field>
+    </div>
+    <div class="form-field">
+        <logi-form-field label='密码' size='large'>
+            <mat-icon logiPrefix svgIcon='ic_lock'></mat-icon>
+            <mat-icon logiSuffix [logiPasswordOrigin]='userPwd'
+                [svgIcon]='userPwd.type === "password" ? "ic_visibility_off" : "ic_visibility"'></mat-icon>
+            <input #userPwd logi-input [formControlName]='pwdControlName' type='password'>
+        </logi-form-field>
+    </div>
+    <div class="form-field">
+        <logi-form-field label='确认密码' size='large'>
+            <mat-icon logiPrefix svgIcon='ic_lock'></mat-icon>
+            <mat-icon logiSuffix [logiPasswordOrigin]='userPwdConfirm'
+                [svgIcon]='userPwdConfirm.type === "password" ? "ic_visibility_off" : "ic_visibility"'></mat-icon>
+            <input #userPwdConfirm logi-input [formControlName]='pwdConfirmControlName' type='password'>
+        </logi-form-field>
+    </div>
+</form>
+<button logi-flat-button [disabled]='formGroup.invalid'>OK</button>

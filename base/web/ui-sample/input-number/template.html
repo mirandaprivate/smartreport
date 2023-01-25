@@ -1,0 +1,21 @@
+<h4>基本用法</h4>
+<logi-switch (switchChange$)="disabled = !disabled">禁用</logi-switch>
+<div class="input-container">
+    <logi-input-number (valueChange$)="onValueChange($event)" [disabled]="disabled" [max]="10" [min]="1">
+    </logi-input-number>
+    <logi-input-number size='large' (valueChange$)="onValueChange($event)" [disabled]="disabled" [max]="10" [min]="1">
+    </logi-input-number>
+    <logi-input-number size='small' (valueChange$)="onValueChange($event)" [disabled]="disabled" [max]="10" [min]="1">
+    </logi-input-number>
+</div>
+<h4>表单用法</h4>
+<div class="input-container">
+    <logi-input-number [formControl]="formControl" [max]="10" [min]="0"></logi-input-number>
+</div>
+<h4>结合 slider</h4>
+<div class="input-container">
+    <logi-slider class="slider" (valueChange$)="value = $any($event)" [max]="10" [min]="1" [step]="1" [value]="value">
+    </logi-slider>
+    <logi-input-number (valueChange$)="value = $event" [max]="10" [min]="1" [step]="1" [value]="value">
+    </logi-input-number>
+</div>

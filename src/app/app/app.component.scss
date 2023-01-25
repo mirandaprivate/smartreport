@@ -1,0 +1,21 @@
+/* stylelint-disable-next-line */
+::ng-deep {
+    html, body {
+        overflow: hidden;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+    }
+}
+:host {
+    flex-direction: column;
+    display: flex;
+    overflow-y: hidden;
+    height: 100%;
+}
+.msg {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+}

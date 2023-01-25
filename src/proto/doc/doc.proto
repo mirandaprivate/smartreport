@@ -1,0 +1,37 @@
+// (api-linter: core::0158::request-page-size-field=disabled)
+// (api-linter: core::0158::request-page-token-field=disabled)
+// (api-linter: core::0158::response-next-page-token-field=disabled)
+// (api-linter: core::0142::time-field-type=disabled)
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/doc';
+
+import "src/proto/jianda/file.proto";
+
+message DocToHtmlRequest {
+    string file_id = 1;
+    FileType file_type = 2;
+}
+
+message DocToHtmlResponse {
+    string base64_content = 1;
+}
+
+message CreateDocRequest {
+    string template_id = 1;
+    string research_id = 2;
+}
+
+message CreateDocResponse {
+    string base64_content = 1;
+}
+
+message DocToPDFRequest {
+    string file_id = 1;
+    FileType file_type = 2;
+}
+
+message DocToPDFResponse {
+    string base64_content = 1;
+}

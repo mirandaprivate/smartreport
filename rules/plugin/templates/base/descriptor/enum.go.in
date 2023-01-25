@@ -1,0 +1,33 @@
+{{ range .AllEnums }}function build{{ getTsName . }}Enum(): proto.EnumDescriptorProto {
+{{ range .Values }}    const {{ .Name }}Value = new proto.EnumValueDescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .number({{ .Value }})
+        .options(new proto.EnumValueOptionsBuilder()
+            .deprecated({{ .Descriptor.Options.GetDeprecated }})
+            .extension(new Map([{{ getExtensionBytes .Descriptor.Options 3 }}
+            ]))
+            .build())
+        .build()
+{{ end }}
+    const opt = new proto.EnumOptionsBuilder()
+        .allowAlias({{ .Descriptor.Options.GetAllowAlias }})
+        .deprecated({{ .Descriptor.Options.GetDeprecated }})
+        .extension(new Map([{{ getExtensionBytes .Descriptor.Options 3 }}
+        ]))
+        .build()
+    return new proto.EnumDescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .value([{{ range .Values }}
+            {{ .Name }}Value,{{ end }}
+        ])
+        .options(opt)
+        .reservedRange([{{ range .Descriptor.ReservedRange }}
+            new proto.EnumReservedRangeBuilder().start({{ .Start }}).end({{ .End }}).build(),{{ end }}
+        ])
+        .reservedName([{{ range .Descriptor.ReservedName }}
+            '{{ . }}',{{ end }}
+        ])
+        .build()
+}
+
+{{ end }}

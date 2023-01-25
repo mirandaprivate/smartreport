@@ -1,0 +1,6 @@
+/* Assets map */
+$logi-assets: (
+    foo-a-svg: 'rules/assets_library/test/foo_a.svg',
+    logo-1-png: 'rules/assets_library/test/logo-1.png',
+    logo-2x-png: 'rules/assets_library/test/logo@2x.png',
+);

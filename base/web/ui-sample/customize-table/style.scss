@@ -1,0 +1,20 @@
+@use 'base/web/ui/core/styles/shared';
+
+:host {
+    display: block;
+    font-size: 14px;
+    color: shared.$font-color-darker;
+}
+logi-table {
+    margin-bottom: 20px;
+    height: 400px;
+}
+.tables {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    display: flex;
+    .custom-table-item-tag {
+        margin-right: 5px;
+    }
+}

@@ -1,0 +1,20 @@
+syntax = 'proto2';
+package base.ts.common.proto;
+
+option cc_enable_arenas = true;
+option go_package = 'logi_build/src/ts/proto/test_data';
+
+message Animal {
+    required string name = 1;
+    extensions 100 to 1000;
+}
+
+extend Animal {
+    optional int32 age = 100;
+    repeated int32 number = 101 [packed = false];
+    optional Type type = 102;
+}
+
+message Type {
+    required string name = 1;
+}

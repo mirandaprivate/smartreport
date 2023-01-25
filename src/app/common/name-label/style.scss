@@ -1,0 +1,26 @@
+@use 'src/app/assets/styles/shared';
+
+:host {
+    /** 在 Table 行中的 name-label 会被其他 position absolute 元素覆盖，导致无法 hover
+     * 到元素上面显示 tooltip
+     */
+    position: relative;
+    z-index: 1;
+}
+
+.logi-tag {
+    height: 18px;
+    background-color: shared.$black-12;
+    color: shared.$font-color-base;
+    max-width: 96px;
+
+    @include shared.logi-overflow-ellipsis;
+
+    ::ng-deep.logi-tag-wrapper span {
+        max-width: 60px;
+    }
+}
+
+.text {
+    @include shared.logi-overflow-ellipsis;
+}

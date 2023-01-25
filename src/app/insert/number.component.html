@@ -1,0 +1,11 @@
+<div class="table-title not-time-series">{{isTimeSeries ? "时间序列:" : "数据选择:"}}</div>
+<div class="table-container">
+    <logi-number-table [tableValues]='tableValues' [currValue]='currValue' [isTimeSeries]='isTimeSeries'
+        [isRelative]='false' (clickItem$)='clickItem($event)' (dbclickItem$)='dblClickItem($event)'></logi-number-table>
+</div>
+<div class="series-value-desc">
+    <logi-series-value-desc [seriesValueDescs]='seriesValueDescs' [freq]='itemData.freqs'
+        (magnitudeChanged$)='onDescChanged($event)'>
+    </logi-series-value-desc>
+</div>
+<button class="insert-btn" logi-flat-button (click)='onInsert()'>插入</button>

@@ -1,0 +1,35 @@
+<logi-header [title]='"设置"' (close$)='close()'></logi-header>
+<form class="body" [formGroup]="group">
+    <div class="key">研报名称:</div>
+    <logi-form-field class="value text">
+        <input [formControlName]='templateNameFormControl' logi-input>
+    </logi-form-field>
+    <div class="key">文档类型:</div>
+    <logi-select class="value normal-value" [transfer]="transfer" [value]="currTemplateType"
+        (valueChange$)="currTemplateType = $event">
+        <logi-option *ngFor='let option of templateTypes' [value]='option' [label]='option.name' [id]='option.id'>
+            {{option.name}}
+        </logi-option>
+    </logi-select>
+    <div class="key">研究对象类型:</div>
+    <logi-select class="value normal-value" [transfer]="transfer" [value]="currResearchType">
+        <logi-option *ngFor='let option of researchTypes' [value]='option' [label]='option.name' [id]='option.id'>
+            {{option.name}}
+        </logi-option>
+    </logi-select>
+    <div class="key">研究对象:</div>
+    <div class="value text wrapper">
+        <logi-form-field>
+            <input logi-input class="search-input" [formControlName]="researchObjFormControl"
+                [matAutocompletePosition]="&quot;below&quot;" [matAutocomplete]="auto" placeholder="搜索研究对象" type="text">
+        </logi-form-field>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option class="option" *ngFor="let option of researchObjectOptions;" [value]="option">
+                {{ option.name }}</mat-option>
+        </mat-autocomplete>
+    </div>
+</form>
+<div class="footer">
+    <button (click)='save()' logi-flat-button>保存</button>
+    <button (click)='close()' logi-button>取消</button>
+</div>

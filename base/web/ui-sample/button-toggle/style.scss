@@ -1,0 +1,39 @@
+/*
+  We can declare variables for common style.
+
+  More scss syntax, see:
+    https://sass-lang.com/documentation/variables.
+ */
+$host-padding: 5px;
+$title-color: brown;
+
+/*
+  This style rule is applied on any element with class 'title'.
+ */
+.title {
+    /*
+      Any element with class 'title' will have a brown color font.
+      Here we use the variable declared above.
+     */
+    color: $title-color;
+
+    /*
+      We can write nested rule in scss. It is equivalent to:
+          .title h2 {
+              font-style: italic;
+          }
+     */
+    h2 {
+        font-style: italic;
+    }
+}
+
+/*
+   ':host' is a pseudo-class selector which will select the host element of
+   current component.
+   For example, host element of current component is 'logi-button-toggle'.
+   It is usually specified by 'selector' attribute in `@Component` annotation.
+ */
+:host {
+    padding: $host-padding;
+}

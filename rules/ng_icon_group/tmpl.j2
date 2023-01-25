@@ -1,0 +1,54 @@
+/**
+ * Angular icon information.
+ */
+export interface NgIcon {
+    /**
+     * Angular icon id.
+     */
+    readonly id: string
+    /**
+     * Angualr icon fetch uri address, like `logi/foo.svg`.
+     */
+    readonly uri: string
+    /**
+     * The uri file hash value.
+     */
+    readonly hash: string
+    /**
+     * Current icon belong to which groups.
+     */
+    readonly groups: readonly Group[]
+}
+
+/**
+ * All groups of the icons.
+ */
+export const enum Group {
+{{groups}}
+}
+
+const DATA: readonly Data[] = [
+{{data}}
+]
+
+/**
+ * All icons defined at current ts.
+ */
+export const ICONS: readonly NgIcon[] = createIcons()
+
+type Data = readonly [string, string, string, readonly Group[]]
+
+function createIcons(): readonly NgIcon[] {
+    const icons: NgIcon[] = []
+    DATA.forEach((data: Data): void => {
+        icons.push({
+            // tslint:disable-next-line: no-magic-numbers
+            groups: data[3],
+            // tslint:disable-next-line: no-magic-numbers
+            hash: data[2],
+            id: data[0],
+            uri: data[1],
+        })
+    })
+    return icons
+}

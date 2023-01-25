@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package saas;
+
+import "src/proto/jianda/data.proto";
+
+message DocContentRequest {
+    bytes binary = 1;
+}
+
+message DocContent{
+    string content = 1;
+}
+
+message PlaceholderIDsRequest {
+    bytes binary = 1;
+}
+
+message PlaceholderIDsResponse {
+    repeated string ids = 1;
+}
+
+message RenderTemplateRequest {
+    bytes template = 1;
+    repeated jianda.DataValue data = 2;
+}
+
+message RenderTemplateResponse {
+    bytes doc = 1;
+}
+
+message CalculateDateDesc {
+    string id = 1;
+    string date = 2;
+    jianda.ItemDataFreq freq = 3;
+    int32 distance = 4;
+}
+
+message CalculateDateRequest {
+    repeated CalculateDateDesc descs = 1;
+}
+
+message CalculateDate {
+    string id = 1;
+    string date = 2;
+}
+
+message CalculateDateResponse {
+    repeated CalculateDate dates = 1;
+}

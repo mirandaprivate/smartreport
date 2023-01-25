@@ -1,0 +1,5 @@
+{{ range .Services }}{{ $map := getGrpcGateWayUrl . }}{{ if ne (len $map) 0 }}
+export enum {{ .Name.UpperCamelCase }}GateWayUrl { {{- range $rpc, $url := $map }}
+    {{ toUpper $rpc }} = '{{ $url }}',{{ end }}
+}{{ end }}
+{{ end -}}

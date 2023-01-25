@@ -1,0 +1,8 @@
+/**
+ * Assets Path.
+ */
+export enum Assets {
+    FOO_A_SVG = 'rules/assets_library/test/foo_a.svg',
+    LOGO_1_PNG = 'rules/assets_library/test/logo-1.png',
+    LOGO_2X_PNG = 'rules/assets_library/test/logo@2x.png',
+}

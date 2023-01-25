@@ -1,0 +1,32 @@
+<div class='header'>
+    <div class='title-wrapper'>
+        <span class='title'>检索敏感词汇</span>
+        <mat-icon class='tooltip-icon' svgIcon='ic_help' [matTooltip]='titleTooltip'
+            matTooltipClass='logi-style-mat-tooltip'>
+        </mat-icon>
+    </div>
+    <button class='close-button' logi-icon-button small icon='ic_close' (click)='onClosePanel()'></button>
+</div>
+<div class='body'>
+    <ng-container *ngIf='!isFirstCheckDone(); else checkResultView'>
+        <button logi-flat-button [loading]='checking' (click)='onStartCheck()'>{{checking?"正在检索...":"开始检索"}}</button>
+    </ng-container>
+    <ng-template #checkResultView>
+        <div class='result-view'>
+            <div class='word-check-results'>
+                <ng-container *ngIf='results.length > 0; else emptyView'>
+                    <logi-word-check-result class='check-result' *ngFor='let result of results' [type]='result.type'
+                        [words]='result.words' [wpsApp]='wpsApp'>
+                    </logi-word-check-result>
+                </ng-container>
+                <ng-template #emptyView>
+                    <div class='emput-result-message'>当前文档不包含敏感词汇</div>
+                </ng-template>
+            </div>
+            <div class='actions'>
+                <button logi-flat-button [loading]='checking'
+                    (click)='onStartCheck()'>{{checking?"正在检索...":"重新检索"}}</button>
+            </div>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,225 @@
+<logi-switch (change$)='toggleDisabled()'>禁用</logi-switch>
+<table>
+    <tr>
+        <td class="title-cell" rowspan="3">
+            <h4>基础用法</h4><span>使用logi-input指令</span>
+        </td>
+        <td>
+            <span>正常尺寸</span>
+            <input logi-input [disabled]='disabled'>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span>小尺寸(size='small')</span>
+            <input logi-input size="small" [disabled]='disabled'>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span>大尺寸(size='large')</span>
+            <input logi-input size="large" [disabled]='disabled'>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td class="title-cell" rowspan="2">
+            <h4>带有图标的输入框</h4><span>使用logi-group-input</span>
+        </td>
+        <td>
+            <span>后缀图标(suffixIcon='ic_search') 正常尺寸</span>
+            <logi-group-input suffixIcon="ic_search">
+                <input logi-input placeholder="搜索" [disabled]='disabled'>
+            </logi-group-input>
+            <span>后缀图标(suffixIcon='ic_search') 小尺寸</span>
+            <logi-group-input suffixIcon="ic_search">
+                <input logi-input placeholder="搜索" [disabled]='disabled' size="small">
+            </logi-group-input>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span>前缀图标(prefixIcon='ic_user') 正常尺寸</span>
+            <logi-group-input prefixIcon="ic_user">
+                <input logi-input placeholder="用户名" [disabled]='disabled'>
+            </logi-group-input>
+            <span>前缀图标(prefixIcon='ic_user') 小尺寸</span>
+            <logi-group-input prefixIcon="ic_user">
+                <input logi-input placeholder="用户名" [disabled]='disabled' size="small">
+            </logi-group-input>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td class="title-cell" rowspan="8">
+            <h4>表单功能的输入框</h4><span>使用logi-form-field</span>
+        </td>
+        <td class="sub-title-cell" rowspan="2"><span>正常尺寸</span></td>
+        <td>
+            <logi-form-field>
+                <input [formControl]="formControlB" logi-input>
+            </logi-form-field>
+        </td>
+        <td>
+            <logi-form-field>
+                <input [formControl]="formControlC" logi-input>
+            </logi-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <logi-form-field>
+                <mat-icon [logiPasswordOrigin]="pwd1"
+                    [svgIcon]="pwd1.type === &quot;password&quot; ? &quot;ic_visibility_off&quot; : &quot;ic_visibility&quot;"
+                    logiSuffix></mat-icon>
+                <input #pwd1 [formControl]="formControlB" logi-input type="password">
+            </logi-form-field>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><span>小尺寸(size='small')</span></td>
+        <td>
+            <logi-form-field size="small">
+                <input logi-input>
+            </logi-form-field>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="3"><span>大尺寸(size='large')</span></td>
+        <td>
+            <logi-form-field label="邮箱" size="large">
+                <input [formControl]="formControlA" logi-input>
+            </logi-form-field>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <logi-form-field label="邮箱" size="large">
+                <mat-icon logiPrefix svgIcon="ic_user"></mat-icon>
+                <input [formControl]="formControlD" logi-input>
+            </logi-form-field>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <logi-form-field label="密码" size="large">
+                <mat-icon logiPrefix svgIcon="ic_lock"></mat-icon>
+                <mat-icon [logiPasswordOrigin]="pwd2"
+                    [svgIcon]="pwd2.type === &quot;password&quot; ? &quot;ic_visibility_off&quot; : &quot;ic_visibility&quot;"
+                    logiSuffix></mat-icon>
+                <input #pwd2 [formControl]="formControlD" logi-input>
+            </logi-form-field>
+        </td>
+        <td></td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td class="title-cell" rowspan="3">
+            <h4>带有选择框的输入框</h4>
+            <p>使用logi-select-input</p>
+        </td>
+        <td>
+            <p>普通</p>
+        </td>
+        <td>
+            <logi-select-input class="select-input" (valueChange$)="onSelectInputValueChange($event)"
+                [formControl]="selectInputControl" [options]="selectInputOptions"></logi-select-input>
+        </td>
+        <td>
+            <logi-select-input class="select-input" [options]="selectInputOptions" disabled></logi-select-input>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>搜索功能(searchSelect)</p>
+        </td>
+        <td>
+            <logi-select-input class="select-input" [formControl]="searchSelectInputControl"
+                [options]="selectInputOptions" placeholder="搜索" searchSelect></logi-select-input>
+        </td>
+        <td>
+            <logi-select-input class="select-input" [formControl]="disabledSelectInputControl"
+                [options]="selectInputOptions" searchSelect></logi-select-input>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>带有箭头图标(dropdownSelect)</p>
+        </td>
+        <td>
+            <logi-select-input class="dropdown-select-input" [formControl]="dropdownSelectInputControl"
+                [options]="dropdownSelectInputOptions" dropdownSelect></logi-select-input>
+        </td>
+        <td>
+            <logi-select-input class="dropdown-select-input" [options]="dropdownSelectInputOptions" disabled
+                dropdownSelect></logi-select-input>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td class="title-cell" rowspan="2">
+            <h4>可激活输入框</h4>
+            <p>使用logi-active-input，可用在框选确定单元格范围的场景下，点击下面的按钮会将值设置到当前激活的input中</p>
+            <button (click)='onSetActiveInputValue()'>设置随机值</button>
+        </td>
+        <td>
+            <p>普通</p>
+        </td>
+        <td>
+            <logi-active-input class="select-input" icon='ic_add_snippet'>
+                <input logi-input>
+            </logi-active-input>
+        </td>
+        <td>
+            <logi-active-input class="select-input" icon='ic_add_row'>
+                <input disabled logi-input>
+            </logi-active-input>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>普通</p>
+        </td>
+        <td>
+            <logi-active-input class="select-input" icon='ic_add_node'>
+                <input logi-input>
+            </logi-active-input>
+        </td>
+        <td>
+            <logi-active-input class="select-input" icon='ic_add_node'>
+                <input disabled logi-input>
+            </logi-active-input>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td class='title-cell' rowspan="2">
+            <h4>文本域</h4>
+        </td>
+        <td>
+            <div>
+                <div>基本用法</div>
+                <textarea class='textarea' placeholder="输入文本" logi-input></textarea>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <div>最大字数限制</div>
+                <logi-textarea-count [maxCount]='100'>
+                    <textarea class='textarea' placeholder="输入文本" logi-input [formControl]='textareaControl'></textarea>
+                </logi-textarea-count>
+            </div>
+        </td>
+    </tr>
+</table>

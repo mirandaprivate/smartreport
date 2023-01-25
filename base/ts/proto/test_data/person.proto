@@ -1,0 +1,38 @@
+syntax = 'proto3';
+package base.ts.common.proto;
+
+option cc_enable_arenas = true;
+option go_package = 'logi_build/src/ts/proto/test_data';
+
+import 'src/ts/proto/test_data/pet.proto';
+
+message Person {
+    string name = 1;
+    int32 age = 2;
+    float height = 3;
+    uint64 asset = 4;
+    Type type = 5;
+    Location loc = 6;
+    map<string, string> relations = 7;
+    sint64 key = 8;
+    repeated sfixed64 scores = 9 [packed = true];
+    Animal pet = 10;
+    repeated string favorite = 300;
+    enum Type {
+        NPC = 0;
+        Player = 1;
+    }
+    oneof address {
+        string home = 1001;
+        string company = 1002;
+    }
+    oneof empty {
+        string text = 1003;
+        int32 num = 1004;
+    }
+}
+
+message Location {
+    sint32 x = 1;
+    sint32 y = 2;
+}

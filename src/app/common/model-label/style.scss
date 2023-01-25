@@ -1,0 +1,11 @@
+@use 'src/app/assets/styles/shared';
+
+.label {
+    margin-left: 16px;
+    border-radius: 44px;
+    padding: 0 8px;
+    background-color: shared.$brand-12;
+    line-height: 18px;
+    text-align: center;
+    @include shared.set-font($size: 12px, $weight: bold, $color: shared.$base-brand);
+}

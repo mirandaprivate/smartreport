@@ -1,0 +1,34 @@
+<h4>基本用法</h4>
+<logi-switch (switchChange$)="toggleDisable()">禁用</logi-switch>
+<logi-switch (switchChange$)="toggleTooltip()">显示tooltip</logi-switch>
+<div class="slider-container">
+  <logi-slider (valueChange$)="singleValue1 = $event" [value]="30" [disabled]="disabled" [tooltipFormatter]="tooltipFormatter"></logi-slider>
+  <div>{{singleValue1}}</div>
+</div>
+<div class="slider-container">
+  <logi-slider range [disabled]="disabled" (valueChange$)="rangeValue1 = $event" [value]="[20, 50]" [tooltipFormatter]="tooltipFormatter"></logi-slider>
+  <div>{{rangeValue1}}</div>
+</div>
+<h4>表单</h4>
+<div class="slider-container">
+  <logi-slider [formControl]="sliderControl1"></logi-slider>
+  <div>{{singleValue2}}</div>
+</div>
+<div class="slider-container">
+  <logi-slider [formControl]="sliderControl2" range></logi-slider>
+  <div>{{rangeValue2}}</div>
+</div>
+<h4>指定步数</h4>
+<div class="slider-container">
+  <logi-slider [step]="10" [value]="30" (valueChange$)="singleValue3 = $event"></logi-slider>
+  <div>{{singleValue3}}</div>
+</div>
+<div class="slider-container">
+  <logi-slider range [step]="10" (valueChange$)="rangeValue3 = $event" [value]="[40, 60]"></logi-slider>
+  <div>{{rangeValue3}}</div>
+</div>
+<h4>应用示例1</h4>
+<div class="slider-container">
+  <logi-slider range [max]="quartersRange.length - 1" (valueChange$)="onQuartersChange($event)" [value]="rangeValue4" [tooltipFormatter]="yearQuarterFormatter"></logi-slider>
+  <div>{{rangeValue4Label}}</div>
+</div>

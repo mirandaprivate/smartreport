@@ -1,0 +1,701 @@
+{
+    "placeholder": {
+        "id": "placeholder id"
+    },
+    "dataListText": {
+        "status": "success",
+        "data": [
+            {
+                "id": "1",
+                "name": "text source 1",
+                "tables": [
+                    {
+                        "id": "1",
+                        "name": "table 1",
+                        "items": [
+                            {
+                                "id": "text day1",
+                                "name": "text day time seires no data",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day2",
+                                "name": "text day not time series not data",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text day",
+                                "name": "day item",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 1
+                            },
+                            {
+                                "id": "text week",
+                                "name": "week",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 2
+                            },
+                            {
+                                "id": "text month",
+                                "name": "month",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 2
+                            },
+                            {
+                                "id": "text quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 4
+                            },
+                            {
+                                "id": "text year",
+                                "name": "year",
+                                "is_timeseries": true,
+                                "data_type": 2,
+                                "freqs": 5
+                            }
+                        ],
+                        "sub_tables": []
+                    }
+                ]
+            },
+            {
+                "id": "2",
+                "name": "text source 2",
+                "tables": [
+                    {
+                        "id": "2",
+                        "name": "table 1",
+                        "items": [
+                            {
+                                "id": "text 2",
+                                "name": "item 2",
+                                "is_timeseries": false,
+                                "data_type": 2
+                            },
+                            {
+                                "id": "text 3",
+                                "name": "item 2",
+                                "is_timeseries": false,
+                                "data_type": 2
+                            }
+                        ],
+                        "sub_tables": []
+                    }
+                ]
+            },
+            {
+                "id": "3",
+                "name": "text source 3"
+            },
+            {
+                "id": "4",
+                "name": "text source 4"
+            },
+            {
+                "id": "5",
+                "name": "text source 4"
+            },
+            {
+                "id": "6",
+                "name": "text source 4"
+            },
+            {
+                "id": "7",
+                "name": "text source 4"
+            },
+            {
+                "id": "8",
+                "name": "text source 4"
+            },
+            {
+                "id": "4",
+                "name": "text source 4"
+            }
+        ]
+    },
+    "dataList": {
+        "status": "success",
+        "data": [
+            {
+                "id": "1",
+                "name": "source 1",
+                "tables": [
+                    {
+                        "id": "1",
+                        "name": "table 1",
+                        "items": [
+                            {
+                                "id": "day3",
+                                "name": "day not time series has value",
+                                "is_timeseries": false,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 1
+                            },
+                            {
+                                "id": "day2",
+                                "name": "day not time series no value",
+                                "is_timeseries": false,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 1
+                            },
+                            {
+                                "id": "day1",
+                                "name": "day time series no value",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 1
+                            },
+                            {
+                                "id": "day",
+                                "name": "day time series has value",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 1
+                            },
+                            {
+                                "id": "week",
+                                "name": "week",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 2
+                            },
+                            {
+                                "id": "month",
+                                "name": "month",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 3
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "quarter",
+                                "name": "quarter",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 4
+                            },
+                            {
+                                "id": "year",
+                                "name": "year",
+                                "is_timeseries": true,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ],
+                                "freqs": 5
+                            }
+                        ],
+                        "sub_tables": []
+                    }
+                ]
+            },
+            {
+                "id": "2",
+                "name": "source 2",
+                "tables": [
+                    {
+                        "id": "2",
+                        "name": "table 1",
+                        "items": [
+                            {
+                                "id": "2",
+                                "name": "item 2",
+                                "is_timeseries": false,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ]
+                            },
+                            {
+                                "id": "3",
+                                "name": "item 3",
+                                "is_timeseries": false,
+                                "data_type": 3,
+                                "format": [
+                                    "万元"
+                                ]
+                            }
+                        ],
+                        "sub_tables": []
+                    }
+                ]
+            },
+            {
+                "id": "3",
+                "name": "source 333333333333333333333333333333333333333"
+            }
+        ]
+    },
+    "seriesValue": {
+        "projectId": "2",
+        "items": [
+            {
+                "id": "2",
+                "format": "万元"
+            }
+        ]
+    },
+    "wpsUrl": {
+        "url": "https://wps-server.logiocean.com/weboffice/office/w/7400e3a59c0f3887be21304a25036e54?_w_appid=AK20210728RASHNK&_w_appid=AK20210729JOMDQZ&_w_dbg_user=minglong&_w_file_id=75&_w_file_type=4&_w_third_appid=AK20210729JOMDQZ&_w_third_file_id=4_75_minglong&_w_tokentype=1"
+    },
+    "check": {
+        "res": "Logged in"
+    },
+    "user": {
+        "uid": "123456",
+        "fullName": "test_user",
+        "email": "email@logiocean.com",
+        "phone": "1097362475",
+        "avatarUrl": ""
+    },
+    "reportInfo": {
+        "status": "success",
+        "data": {
+            "id": "1",
+            "name": "report test",
+            "report_type": 1,
+            "report_doc_type": "基金：观察周报",
+            "template": {
+                "id": "template id",
+                "name": "周报模板"
+            },
+            "classification": {
+                "id": "classification id",
+                "name": "分类1"
+            },
+            "type": {
+                "id": "type id",
+                "name": "类型"
+            },
+            "tags": [
+                "tag1",
+                "tag2"
+            ],
+            "research_type": {
+                "id": "research type id",
+                "name": "研究对象类型"
+            },
+            "research_target": {
+                "id": "1",
+                "name": "研究对象"
+            },
+            "read_perm": {
+                "type": 1
+            },
+            "write_perm": {
+                "type": 1
+            },
+            "download_url": "http://123"
+        }
+    },
+    "templateInfo": {
+        "status": "success",
+        "data": {
+            "id": "1",
+            "name": "template test",
+            "type": {
+                "name": "行业研究报告",
+                "id": "type id"
+            },
+            "research": {
+                "type_id": "1",
+                "type_name": "行业",
+                "object_id": "1",
+                "object_name": "新能源"
+            },
+            "template_type": 1,
+            "download_url": "http://123"
+        }
+    },
+    "posts": [
+        {
+            "id": 1,
+            "title": "json-server",
+            "author": "typicode"
+        }
+    ],
+    "comments": [
+        {
+            "id": 1,
+            "body": "some comment",
+            "postId": 1
+        }
+    ],
+    "profile": {
+        "name": "typicode"
+    },
+    "login": {
+        "uid": "123456"
+    }
+}

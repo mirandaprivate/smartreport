@@ -1,0 +1,19 @@
+// (api-linter: core::0136::http-uri-suffix=disabled)
+// (api-linter: core::0136::verb-noun=disabled)
+syntax = "proto3";
+
+package wps;
+option go_package = 'logi/src/proto/wps/rpc';
+
+import "google/api/annotations.proto";
+import "src/proto/wps/wps.proto";
+
+// The wps service definition.
+service WpsSvc {
+    // Get saas cloud wps signed url.
+    rpc GetSaasWpsUrl(WpsUrlParams) returns (WpsUrlResponse) {
+        option (google.api.http) = {
+            get: "/editor/v1/wps/wpsSaasUrl"
+        };
+    }
+}

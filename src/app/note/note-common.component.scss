@@ -1,0 +1,141 @@
+@use 'src/app/assets/styles/shared';
+
+$head-bg: shared.$header-bar-bg;
+$head-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+$editor-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+$body-bg: #FAFAFA;
+$board-panel-width: 45%;
+$side-width: 64px;
+$word-checking-spinner-bg: rgba(0, 0, 0, 0.32);
+
+::ng-deep .logi-report-dialog-panel .mat-dialog-container {
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+.head {
+    position: relative;
+    z-index: 999;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    box-shadow: $head-shadow;
+    height: 64px;
+    padding: 0 16px;
+    background-color: $head-bg;
+    font-family: shared.$base-font;
+
+    .logo-wrapper {
+        margin-right: 16px;
+    }
+    .note-info {
+        color: shared.$font-color-base;
+    }
+    .note-actions {
+        margin-left: auto;
+    }
+    .note-file-name {
+        margin-bottom: 8px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .file-action-button {
+        @include shared.square-size(18px);
+        margin-left: 8px;
+        ::ng-deep.mat-icon {
+            @include shared.square-size(18px);
+        }
+    }
+    .sub-title {
+        font-size: 12px;
+    }
+    .notice-container {
+        margin-left: 16px;
+    }
+}
+.container {
+    width: 100%;
+}
+
+.body {
+    display: flex;
+    height: calc(100% - 64px);
+    background-color: $body-bg;
+    .editor {
+        display: flex;
+        box-sizing: border-box;
+        height: 100%;
+    }
+    &.sidebar-visible .editor {
+        width: 100%;
+    }
+    .side-content {
+        width: 600px;
+    }
+}
+.doc-area {
+    position: relative;
+    width: calc(100% - #{$side-width});
+}
+.word-checking-spinner {
+    display: block;
+    @include shared.logi-fill;
+    background-color: $word-checking-spinner-bg;
+    ::ng-deep.container {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: shared.$shadow-8;
+        border-radius: 4px;
+        width: 270px;
+        height: 160px;
+        background-color: white;
+    }
+}
+.sidenav {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    border-left: shared.$border-base;
+    box-sizing: border-box;
+    padding: 16px 0;
+    .sidenav-item-common {
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        width: 64px;
+        height: 64px;
+    }
+    .sidenav-item {
+        margin-bottom: 16px;
+    }
+    .sidenav-item.active {
+        background-color: shared.$black-4;
+        .sidenav-button, .sidenav-button-label {
+            color: shared.$base-brand !important;
+        }
+    }
+    .sidenav-item2 {
+        margin-top: auto;
+    }
+
+    .sidenav-button {
+        margin-bottom: 4px;
+        border-radius: 4px;
+        width: 40px;
+        height: 40px;
+    }
+    .sidenav-button-label {
+        @include shared.set-font();
+        color: shared.$black-60;
+    }
+}
+
+.empty-project-view {
+    height: 100%;
+}

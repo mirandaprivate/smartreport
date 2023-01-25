@@ -1,0 +1,22 @@
+@use 'src/app/assets/styles/shared';
+:host {
+    display: grid;
+    line-height: 36px;
+    grid-template-columns: 15% 35% 15% 35%;
+    @include shared.set-font();
+    .key {
+        @include shared.set-font($color: rgba(0,0,0,0.6));
+        line-height: 36px;
+    }
+    .distance-input {
+        width: 80px;
+        height: 24px;
+    }
+    .magnitude-container {
+        display: flex;
+        .magnitude-input {
+            margin-left: 24px;
+            width: 100px;
+        }
+    }
+}

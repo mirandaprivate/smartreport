@@ -1,0 +1,11 @@
+{{ $r := .Rules }}{{ if $r.Const }}    @validator.Equals({{ $r.GetConst }})
+{{ end }}{{ if $r.NotIn }}    @validator.IsNotIn([{{ range $r.GetNotIn }}
+        {{ . }},{{ end }}
+    ])
+{{ end }}{{ if $r.In }}    @validator.IsIn([{{ range $r.GetIn }}
+        {{ . }},{{ end }}
+    ])
+{{ end }}{{ if $r.DefinedOnly }}    @validator.IsIn([{{ range .Field.Type.Enum.Values }}
+        {{ .Value }},{{ end }}
+    ])
+{{ end }}

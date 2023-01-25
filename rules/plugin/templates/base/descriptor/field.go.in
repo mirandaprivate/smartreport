@@ -1,0 +1,99 @@
+{{ range .AllMessages }}
+function build{{ getTsName . }}Desc(): proto.DescriptorProto {
+{{ range .Fields }}    const {{ .Name }}Opt = new proto.FieldOptionsBuilder()
+        .ctype(proto.CType.{{ .Descriptor.Options.GetCtype }})
+        .packed({{ .Descriptor.Options.GetPacked }})
+        .jstype(proto.JsType.{{ .Descriptor.Options.GetJstype }})
+        .lazy({{ .Descriptor.Options.GetLazy }})
+        .deprecated({{ .Descriptor.Options.GetDeprecated }})
+        .extension(new Map([{{ getExtensionBytes .Descriptor.Options 3 }}
+        ]))
+        .build()
+    const {{ .Name }}Field = new proto.FieldDescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .number({{ .Descriptor.GetNumber }})
+        .label({{ getLabelNum . }})
+        .type({{ getTypeNum . }})
+        .typeName('{{ .Descriptor.GetTypeName }}')
+        .defaultValue('{{ .Descriptor.GetDefaultValue }}'){{ if .InOneOf }}
+        .oneofIndex({{ .Descriptor.GetOneofIndex }}){{ end }}
+        .jsonName('{{ if eq .Descriptor.GetJsonName "" }}{{ .Name.LowerCamelCase }} {{ else }}{{ .Descriptor.GetJsonName }}{{ end }}')
+        .options({{ .Name }}Opt)
+        .build()
+{{ end }}{{ range $i, $f := .MapEntries }}{{ range .Fields }}
+    const {{ .Name }}MapField{{ $i }} = new proto.FieldDescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .number({{ .Descriptor.GetNumber }})
+        .label({{ getLabelNum . }})
+        .type({{ getTypeNum . }})
+        .typeName('{{ .Descriptor.GetTypeName }}')
+        .jsonName('{{ .Name }}')
+        .build(){{ end }}
+    const build{{ $f.Name }}Map = new proto.DescriptorProtoBuilder()
+        .name('{{ $f.Name }}')
+        .field([{{ range .Fields }}
+            {{ .Name }}MapField{{ $i }},{{ end }}
+        ])
+        .options(new proto.MessageOptionsBuilder().mapEntry(true).build())
+        .build()
+{{ end }}    const opt = new proto.MessageOptionsBuilder()
+        .messageSetWireFormat({{ .Descriptor.Options.GetMessageSetWireFormat }})
+        .noStandardDescriptorAccessor({{ .Descriptor.Options.GetNoStandardDescriptorAccessor }})
+        .deprecated({{ .Descriptor.Options.GetDeprecated }})
+        .extension(new Map([{{ getExtensionBytes .Descriptor.Options 3 }}
+        ]))
+        .build()
+{{ range .DefinedExtensions }}    const {{ .Name }}ExtOption = new proto.FieldOptionsBuilder()
+        .ctype(proto.CType.{{ .Descriptor.Options.GetCtype }})
+        .packed({{ .Descriptor.Options.GetPacked }})
+        .jstype(proto.JsType.{{ .Descriptor.Options.GetJstype }})
+        .lazy({{ .Descriptor.Options.GetLazy }})
+        .deprecated({{ .Descriptor.Options.GetDeprecated }})
+        .extension(new Map([{{ getExtensionBytes .Descriptor.Options 3 }}
+        ]))
+        .build()
+    const {{ .Name }}Ext = new proto.FieldDescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .number({{ .Descriptor.GetNumber }})
+        .label({{ getLabelNum . }})
+        .type({{ getTypeNum . }})
+        .typeName('{{ .Descriptor.GetTypeName }}')
+        .extendee('{{ .Descriptor.GetExtendee }}')
+        .defaultValue('{{ .Descriptor.GetDefaultValue }}'){{ if .InOneOf }}
+        .oneofIndex({{ .GetOneofIndex }}){{ end }}
+        .jsonName('{{ .Name }}')
+        .options({{ .Name }}ExtOption)
+        .build()
+{{ end }}
+    return new proto.DescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .field([{{ range .Fields }}
+            {{ .Name }}Field,{{ end }}
+        ])
+        .nestedType([{{ range .Messages }}
+            build{{ getTsName . }}Desc(),{{ end }}{{ range .MapEntries }}
+            build{{ .Name }}Map,{{ end }}
+        ])
+        .extension([{{ range .DefinedExtensions }}
+            {{ .Name }}Ext,{{ end }}
+        ])
+        .enumType([{{ range .Enums }}
+            build{{ getTsName . }}Enum(),{{ end }}
+        ])
+        .extensionRange([{{ range .Descriptor.ExtensionRange }}
+            new proto.DescExtensionRangeBuilder()
+                .start({{ .Start }})
+                .end({{ .End }})
+                .options(new proto.ExtensionRangeOptionsBuilder()
+                    .extension(new Map([{{ getExtensionBytes .Options 6 }}
+                    ]))
+                    .build())
+                .build(),{{ end }}
+        ])
+        .oneofDecl([{{ range .OneOfs }}
+            new proto.OneofDescriptorProtoBuilder().name('{{ .Name }}').build(),{{ end }}
+        ])
+        .options(opt)
+        .build()
+}
+{{ end }}

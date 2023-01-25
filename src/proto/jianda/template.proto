@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/jianda/template';
+
+message GetTemplateInfoRequest {
+    string id = 1;
+}
+
+message GetTemplateInfoResponse {
+    string status = 1;
+    TemplateInfo data = 2;
+    string message = 3;
+}
+
+message TemplateInfo {
+    string id = 1;
+    string title = 2;
+    int32 version = 3;
+    int32 size = 4;
+    string owner_id = 5;
+    int32 create_time = 6;
+    int32 last_modify_time = 7;
+    string last_modify_user = 8;
+    // 文档类型
+    Type type = 9;
+    Research research = 10;
+    string download_url = 11;
+    TemplateType template_type = 12;
+    message Research {
+        string type_id = 1;
+        string type_name = 2;
+        string object_id = 3;
+        string object_name = 4;
+    }
+    message Type {
+        string id = 1;
+        string name = 2;
+        string source = 3;
+    }
+}
+
+message UpdateTemplateInfoRequest {
+    string title = 1;
+    // 文档类型
+    Type type = 2;
+    string id = 3;
+    Research research = 4;
+    message Research {
+        string type_id = 1[json_name = 'type_id'];
+        string type_name = 2[json_name='type_name'];
+        string object_id = 3[json_name = 'object_id'];
+        string object_name = 4[json_name = 'object_name'];
+    }
+    message Type {
+        string id = 1;
+        string name = 2;
+        string source = 3;
+    }
+}
+
+message ResearchSearchRequest {
+    string key = 1;
+    string type_id = 2[json_name = 'type_id'];
+}
+
+message ResearchSearchResponse {
+    string status = 1;
+    repeated Research data = 2;
+    message Research {
+        string id = 1;
+        string name = 2;
+        string source = 3;
+    }
+}
+
+enum TemplateType {
+    TEMPLATE_TYPE_UNSPECIFIED = 0;
+    TEMPLATE_TYPE_DOC = 1;
+    TEMPLATE_TYPE_PPT = 2;
+}

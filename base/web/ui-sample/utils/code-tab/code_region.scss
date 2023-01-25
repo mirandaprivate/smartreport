@@ -1,0 +1,24 @@
+@use 'base/web/ui/core/styles/shared';
+
+:host {
+    display: flex;
+    color: shared.$font-color-base;
+}
+
+.left {
+    border-right: shared.$border-base;
+}
+
+.template-code {
+    border-bottom: shared.$border-base;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+pre {
+    margin: 1em;
+}

@@ -1,0 +1,227 @@
+// tslint:disable:no-magic-numbers
+import {
+    DescriptorProto,
+    DescriptorProtoBuilder,
+    EnumDescriptorProtoBuilder,
+    EnumValueDescriptorProtoBuilder,
+    FieldDescriptorProtoBuilder,
+    FieldOptionsBuilder,
+    FileDescriptorProto,
+    FileDescriptorProtoBuilder,
+    Label,
+    MessageOptionsBuilder,
+    OneofDescriptorProtoBuilder,
+    Type,
+} from '../../lib/descriptor'
+
+export function buildFileDescriptor(): FileDescriptorProto {
+    const location = buildLocationDescriptor()
+    const person = buildPersonDescriptor()
+    return new FileDescriptorProtoBuilder()
+        .name('src/ts/common/proto/test_data/person.proto')
+        .package('base.ts.common.proto')
+        .messageType([location, person])
+        .syntax('proto3')
+        .build()
+}
+
+// tslint:disable-next-line: max-func-body-length
+function buildPersonDescriptor(): DescriptorProto {
+    const nameField = new FieldDescriptorProtoBuilder()
+        .name('name')
+        .number(1)
+        .label(Label.OPTIONAL)
+        .type(Type.TYPE_STRING)
+        .jsonName('name')
+        .build()
+    const ageField = new FieldDescriptorProtoBuilder()
+        .name('age')
+        .number(2)
+        .type(Type.TYPE_INT32)
+        .jsonName('age')
+        .label(Label.OPTIONAL)
+        .build()
+    const heightField = new FieldDescriptorProtoBuilder()
+        .name('height')
+        .number(3)
+        .label(Label.OPTIONAL)
+        .type(Type.TYPE_FLOAT)
+        .jsonName('height')
+        .build()
+    const assetField = new FieldDescriptorProtoBuilder()
+        .name('asset')
+        .jsonName('asset')
+        .number(4)
+        .type(Type.TYPE_UINT64)
+        .label(Label.OPTIONAL)
+        .build()
+    const typeField = new FieldDescriptorProtoBuilder()
+        .name('type')
+        .jsonName('type')
+        .number(5)
+        .label(Label.OPTIONAL)
+        .type(Type.TYPE_ENUM)
+        .typeName('.base.ts.common.proto.Person.Type')
+        .build()
+    const locField = new FieldDescriptorProtoBuilder()
+        .name('loc')
+        .number(6)
+        .jsonName('loc')
+        .type(Type.TYPE_MESSAGE)
+        .label(Label.OPTIONAL)
+        .typeName('.base.ts.common.proto.Location')
+        .build()
+    const favoriteField = new FieldDescriptorProtoBuilder()
+        .name('favorite')
+        .jsonName('favorite')
+        .number(300)
+        .type(Type.TYPE_STRING)
+        .label(Label.REPEATED)
+        .build()
+    const relationsField = new FieldDescriptorProtoBuilder()
+        .name('relations')
+        .number(7)
+        .label(Label.REPEATED)
+        .type(Type.TYPE_MESSAGE)
+        .typeName('.base.ts.common.proto.Person.RelationsEntry')
+        .jsonName('relations')
+        .build()
+    const keyField = new FieldDescriptorProtoBuilder()
+        .name('key')
+        .jsonName('key')
+        .number(8)
+        .type(Type.TYPE_SINT64)
+        .label(Label.OPTIONAL)
+        .build()
+    const scoresField = new FieldDescriptorProtoBuilder()
+        .name('scores')
+        .jsonName('scores')
+        .number(9)
+        .label(Label.REPEATED)
+        .type(Type.TYPE_SFIXED64)
+        .options(new FieldOptionsBuilder().packed(true).build())
+        .build()
+    const petField = new FieldDescriptorProtoBuilder()
+        .name('pet')
+        .number(10)
+        .label(Label.OPTIONAL)
+        .type(Type.TYPE_MESSAGE)
+        .typeName('.base.ts.common.proto.Animal')
+        .jsonName('pet')
+        .build()
+    const enumValueNpc = new EnumValueDescriptorProtoBuilder()
+        .name('NPC')
+        .number(0)
+        .build()
+    const enumValuePlayer = new EnumValueDescriptorProtoBuilder()
+        .name('Player')
+        .number(1)
+        .build()
+    const enumType = new EnumDescriptorProtoBuilder()
+        .name('Type')
+        .value([enumValueNpc, enumValuePlayer])
+        .build()
+    const relationMap = buildRelationMap()
+    const homeField = new FieldDescriptorProtoBuilder()
+        .name('home')
+        .jsonName('home')
+        .label(Label.OPTIONAL)
+        .number(1001)
+        .type(Type.TYPE_STRING)
+        .oneofIndex(0)
+        .build()
+    const companyField = new FieldDescriptorProtoBuilder()
+        .name('company')
+        .jsonName('company')
+        .label(Label.OPTIONAL)
+        .number(1002)
+        .type(Type.TYPE_STRING)
+        .oneofIndex(0)
+        .build()
+    const textField = new FieldDescriptorProtoBuilder()
+        .name('text')
+        .jsonName('text')
+        .label(Label.OPTIONAL)
+        .number(1003)
+        .type(Type.TYPE_STRING)
+        .oneofIndex(1)
+        .build()
+    const numField = new FieldDescriptorProtoBuilder()
+        .name('num')
+        .jsonName('num')
+        .label(Label.OPTIONAL)
+        .number(1004)
+        .type(Type.TYPE_INT32)
+        .oneofIndex(1)
+        .build()
+    const addressOneof = new OneofDescriptorProtoBuilder()
+        .name('address')
+        .build()
+    const emptyOneof = new OneofDescriptorProtoBuilder().name('empty').build()
+    return new DescriptorProtoBuilder()
+        .name('Person')
+        .field([
+            nameField,
+            ageField,
+            heightField,
+            assetField,
+            typeField,
+            locField,
+            favoriteField,
+            relationsField,
+            petField,
+            keyField,
+            scoresField,
+            homeField,
+            companyField,
+            textField,
+            numField,
+        ])
+        .enumType([enumType])
+        .nestedType([relationMap])
+        .oneofDecl([addressOneof, emptyOneof])
+        .build()
+}
+
+function buildRelationMap(): DescriptorProto {
+    const keyField = new FieldDescriptorProtoBuilder()
+        .name('key')
+        .number(1)
+        .label(Label.OPTIONAL)
+        .type(Type.TYPE_STRING)
+        .jsonName('key')
+        .build()
+    const valueField = new FieldDescriptorProtoBuilder()
+        .name('value')
+        .number(2)
+        .label(Label.OPTIONAL)
+        .type(Type.TYPE_STRING)
+        .jsonName('value')
+        .build()
+    return new DescriptorProtoBuilder()
+        .name('RelationsEntry')
+        .field([keyField, valueField])
+        .options(new MessageOptionsBuilder().mapEntry(true).build())
+        .build()
+}
+
+function buildLocationDescriptor(): DescriptorProto {
+    const xField = new FieldDescriptorProtoBuilder()
+        .name('x')
+        .jsonName('x')
+        .number(1)
+        .label(Label.OPTIONAL)
+        .type(Type.TYPE_SINT32)
+        .build()
+    const yField = new FieldDescriptorProtoBuilder()
+        .name('y')
+        .jsonName('y')
+        .number(2)
+        .label(Label.OPTIONAL)
+        .type(Type.TYPE_SINT32)
+        .build()
+    return new DescriptorProtoBuilder()
+        .name('Location')
+        .field([xField, yField])
+        .build()
+}

@@ -1,0 +1,89 @@
+@use './shared';
+
+@use './palette';
+
+@use './typography';
+
+/**
+ * ======== NOTE ========
+ * Style rules of this file are used to cover the default style of angular
+ * material components and other global style.
+ *
+ * TODO(zengkai): should remove this file.
+ */
+
+/* **************** logi style of mat-dialog ****************** */
+.mat-dialog-title {
+    @include typography.logi-head-6-typography;
+    margin-bottom: 24px !important;
+    font-size: 20px;
+    line-height: 29px;
+    font-weight: bold;
+    color: palette.logi-black(0.87);
+}
+
+/**
+ * If set margin-bottom instead of padding-bottom, the error message of
+ * input element at bottom of mat-dialog-content will not display.
+ */
+.mat-dialog-content {
+    padding-bottom: 24px !important;
+}
+
+.mat-dialog-actions {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+
+    button {
+        margin-left: 8px !important;
+    }
+}
+
+/* **************** logi style of mat-option ******************* */
+
+/* Now for mat-paginator */
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: shared.$base-brand !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: shared.$base-brand !important;
+}
+
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: shared.$base-brand !important;
+}
+
+/* **************** logi style of mat-menu-panel ****************** */
+.logi-style-menu-panel.mat-menu-panel {
+    width: 240px;
+    min-height: auto;
+
+    .mat-menu-item {
+        height: 32px;
+        line-height: 32px;
+    }
+}
+
+/*
+ * logi style of mat-tooltip
+ */
+.mat-tooltip.logi-style-mat-tooltip {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    padding: 8px 16px;
+    background-color: #FFFFFF;
+    color: rgba(0, 0, 0, 0.6) !important;
+    white-space: pre-line;
+    @include shared.set-font();
+}
+
+/**
+ * There is a title tag in svg which used in mat-icon. It will show the title
+ * when mouse over the svg.
+ * Set pointer-events none to prevent this.
+ */
+.mat-icon svg {
+    pointer-events: none;
+}

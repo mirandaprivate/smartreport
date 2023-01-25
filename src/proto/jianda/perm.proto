@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/jianda/perm';
+
+import "src/proto/jianda/file.proto";
+
+message GetPermRequest {
+    // 文件id
+    string file_id = 1[json_name='file_id'];
+    // 用户id
+    string user_id = 2[json_name='user_id'];
+    // 文件类型
+    FileType type = 3;
+}
+
+message GetPermResponse {
+    string status = 1;
+    FilePerm data = 2;
+}
+
+enum FilePerm {
+    PERM_UNSPECIFIED = 0;
+    // 无权限访问
+    PERM_DENIED = 1;
+    // 只读
+    PERM_READ = 2;
+    // 可读可写
+    PERM_WRITE = 3;
+}

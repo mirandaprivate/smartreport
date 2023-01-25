@@ -1,0 +1,13 @@
+
+            <h1 id="title" class="docs-header-link">
+                <span header-link="title"></span>
+                Title
+            </h1>
+        <p>Something.</p>
+
+            <h2 id="subtitle" class="docs-header-link">
+                <span header-link="subtitle"></span>
+                Subtitle
+            </h2>
+        <p>Something else.</p>
+<pre><code class="language-typescript">console.<span class="hljs-built_in">log</span>('Hello World!')</code></pre>

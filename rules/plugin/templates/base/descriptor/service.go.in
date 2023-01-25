@@ -1,0 +1,29 @@
+{{ range .Services }}function build{{ .Name }}Service(): proto.ServiceDescriptorProto {
+{{ range .Methods }}    const {{ .Name }}Method = new proto.MethodDescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .inputType('{{ .Descriptor.GetInputType }}')
+        .outputType('{{ .Descriptor.GetOutputType }}')
+        .clientStreaming({{ .ClientStreaming }})
+        .serverStreaming({{ .ServerStreaming }})
+        .options(new proto.MethodOptionsBuilder()
+            .deprecated({{ .Descriptor.GetOptions.GetDeprecated }})
+            .idempotencyLevel(proto.IdempotencyLevel.{{ .Descriptor.GetOptions.GetIdempotencyLevel }})
+            .extension(new Map([{{ getExtensionBytes .Descriptor.Options 4 }}
+            ]))
+            .build())
+        .build()
+{{ end }}
+    return new proto.ServiceDescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .method([{{ range .Methods }}
+            {{ .Name }}Method,{{ end }}
+        ])
+        .options(new proto.ServiceOptionsBuilder()
+            .deprecated({{ .Descriptor.GetOptions.GetDeprecated }})
+            .extension(new Map([{{ getExtensionBytes .Descriptor.Options 4 }}
+            ]))
+            .build())
+        .build()
+}
+
+{{ end }}

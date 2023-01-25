@@ -1,0 +1,209 @@
+export class {{ getTsName . }}Impl implements __Impl__<{{ getTsName . }}> {
+{{ range .NonOneOfFields }}{{ getDecorators . }}{{ render . }}
+{{ end }}{{ if ne (len .Descriptor.ExtensionRange) 0 }}
+    public _ext = new proto.ExtensionBuilder()
+        .extensionRange([{{ range .Descriptor.ExtensionRange }}
+            new proto.ExtensionRangeBuilder().start({{ .GetStart }}).end({{ .GetEnd }}).build(),{{ end }}
+        ])
+        .build(){{ end }}
+    public protobufInternal = {
+        fileDescriptorProto: FILE_DESCRIPTOR,
+        messageName: '{{ .FullyQualifiedName }}',
+        registry: REGISTRY,
+    }
+{{ range .OneOfFields }}    public {{ .Name.LowerCamelCase }}?: {{ if isAnyTypeField . }}{{ getAnyType . }}
+    private _{{ .Name.LowerCamelCase }}_any?: {{ getTsType . }}{{ else }}{{ getTsType . }}{{ end }}
+{{ end }}{{ range .OneOfs }}    public get{{ .Name.UpperCamelCase }}(): readonly [_{{ getTsName . }}_Type, _{{ getTsName . }}_Field] | undefined {
+        for (const field of {{ toUpper (getTsName .) }}) {
+            const value = Reflect.get(this, field)
+            if (value !== undefined)
+                return [value, field]
+        }
+        return
+    }
+{{ end }}
+    public encode(): Readonly<Uint8Array> | __Exception__ {
+        {{ range getAnyFields .Fields }}const {{ .Name.LowerCamelCase }}Cache = this.{{ .Name.LowerCamelCase }}
+        if ({{ .Name.LowerCamelCase }}Cache !== undefined)
+            Reflect.set(this, '{{ .Name.LowerCamelCase }}', this._{{ .Name.LowerCamelCase }}_any)
+        {{ end }}const bin = proto.encode(this)
+
+        {{ range getAnyFields .Fields }}if ({{ .Name.LowerCamelCase }}Cache !== undefined)
+            this.{{ .Name.LowerCamelCase }} = {{ .Name.LowerCamelCase }}Cache
+        {{ end }}return bin
+    }
+
+    public toJson(indent: string | number = '', ignoreDefault = true): string {
+        return proto.toJson(this, indent, ignoreDefault)
+    }{{ if not (isValidateDisable .) }}
+
+    public validate(): readonly __Exception__[] {
+        const validateErrors = validator.validateSync(this)
+        const exceptions: __Exception__[] = []
+        exceptions.push(...getAllExceptions(validateErrors)){{ range .OneOfs }}{{ if isRequiredOneOf . }}
+        if ({{ toUpper (getTsName .) }}.find((v: _{{ getTsName . }}): boolean =>
+            Reflect.get(this, v) !== undefined,
+        ) === undefined)
+            exceptions.push(new __ExceptionBuilder__()
+                .message('{{ .Name.LowerCamelCase }} must not be undefined')
+                .build()){{ end }}{{ end }}
+        return exceptions
+
+        function getAllExceptions(errs: validator.ValidationError[]): __Exception__[] {
+            const es: __Exception__[] = []
+            errs.forEach((v: validator.ValidationError): void => {
+                // tslint:disable: limit-indent-for-method-in-class
+                if (v.children.length !== 0) {
+                    const sub = getAllExceptions(v.children)
+                    const subMsg = sub.map((e: __Exception__): string => e.message).join('; ')
+                    es.push(new __ExceptionBuilder__()
+                        .message(`Nested unpassed validation in ${v.property}: ${subMsg}`)
+                        .build())
+                }
+                if (typeof v.constraints !== 'object')
+                    return
+                const msg = Reflect
+                    .ownKeys(v.constraints)
+                    .map((key: string | number | symbol): string =>
+                        Reflect.get(v.constraints, key))
+                    .join('; ')
+                es.push(new __ExceptionBuilder__().message(msg).build())
+            })
+            return es
+        }
+    }{{ end }}
+
+    public equals(obj: {{ getTsName . }}): boolean {
+        if (obj === undefined)
+            return false
+        {{- range .Fields }}{{ $name := .Name.LowerCamelCase }}{{ if isAnyTypeField . }}{{ $name = printf "_%s_any" .Name.LowerCamelCase }}{{ end }}
+        {{- if .Type.IsRepeated }}
+        const {{ $name }}Arr_ = Reflect.get(obj, '{{ $name  }}')
+        if (this.{{ $name }}.length !== {{ $name }}Arr_.length)
+            return false
+        for (let i = 0; i < this.{{ $name }}.length; i += 1)
+        {{- if or (eq .Type.ProtoType.Proto.String "TYPE_MESSAGE") (isLong .) }}
+            if (!this.{{ $name }}[i].equals({{ $name }}Arr_[i]))
+                return false
+        {{- else if eq .Type.ProtoType.Proto.String "TYPE_BYTES" }} {
+            if (this.{{ $name }}[i].length !== {{ $name }}Arr_[i].length)
+                return false
+            for (let j = 0; j < this.{{ $name }}[i].length; j += 1)
+                if (this.{{ $name }}[i][j] !== {{ $name }}Arr_[i][j])
+                    return false
+        }
+        {{- else }}
+            if (this.{{ $name }}[i] !== {{ $name }}Arr_[i])
+                return false{{ end }}
+        {{- else if isLong . }}
+        if ((this.{{ $name }} === undefined && Reflect.get(obj, '{{ $name  }}') !== undefined)
+            || (this.{{ $name }} !== undefined && !this.{{ $name }}.equals(Reflect.get(obj, '{{ $name  }}'))))
+            return false
+        {{- else if isMessage . }}
+        if ((this.{{ $name }} === undefined && Reflect.get(obj, '{{ $name  }}') !== undefined)
+            || (this.{{ $name }} !== undefined && !this.{{ $name }}.equals(Reflect.get(obj, '{{ $name  }}'))))
+            return false
+        {{- else if .Type.IsMap  }}
+        const {{ $name }}Map_ = Reflect.get(obj, '{{ $name  }}')
+        if (this.{{ $name }}.size !== {{ $name }}Map_.size)
+            return false
+        for (const key of Array.from(this.{{ $name }}.keys())) {
+            const valueA = this.{{ $name }}.get(key)
+            const valueB = {{ $name }}Map_.get(key)
+            if (valueA === undefined || valueB === undefined)
+                return false
+            {{- if eq .Type.Element.ProtoType.Proto.String "TYPE_BYTES" }}
+            if (valueA.length !== valueB.length)
+                return false
+            for (let i = 0; i < valueA.length; i += 1)
+                if (valueA[i] !== valueB[i])
+                    return false
+            {{- else if or (eq .Type.Element.ProtoType.Proto.String "TYPE_MESSAGE" ) (isLongMapValue .) }}
+            if (!valueA.equals(valueB))
+                return false
+            {{- else }}
+            if (valueA !== valueB)
+                return false{{ end }}
+        }
+        {{- else if eq .Type.ProtoType.Proto.String "TYPE_BYTES" }}
+        const {{ $name }}Bytes_ = Reflect.get(obj, '{{ $name  }}')
+        if (this.{{ $name }} === undefined && {{ $name }}Bytes_ !== undefined)
+            return false
+        if (this.{{ $name }} !== undefined) {
+            if (this.{{ $name }}.length !== {{ $name }}Bytes_?.length)
+                return false
+            for (let i = 0; i < this.{{ $name }}.length; i += 1)
+                if (this.{{ $name }}[i] !== {{ $name }}Bytes_[i])
+                    return false
+        }
+        {{- else }}
+        if (this.{{ $name }} !== Reflect.get(obj, '{{ $name  }}'))
+            return false{{ end }}{{ end }}
+        return true
+    }
+
+    public clone(): {{ getTsName . }} {
+        const builder = new {{ getTsName . }}Builder(){{ range .NonOneOfFields }}
+        {{- if .Type.IsRepeated }}
+            {{- if isLong . }}
+        const {{ .Name.LowerCamelCase }}Copy_ = this.{{ .Name.LowerCamelCase }}.map((v: Long): Long =>
+            Long.fromValue(v),
+        )
+            {{- else if eq .Type.ProtoType.Proto.String "TYPE_MESSAGE" }}
+        // tslint:disable-next-line: typedef ter-arrow-parens
+        const {{ .Name.LowerCamelCase }}Copy_ = this.{{ .Name.LowerCamelCase }}.map((v) =>
+            v.clone(),
+        )
+            {{- else if eq .Type.ProtoType.Proto.String "TYPE_BYTES" }}
+        const {{ .Name.LowerCamelCase }}Copy_ = this.{{ .Name.LowerCamelCase }}.map((v: Readonly<Uint8Array>): Uint8Array =>
+            new Uint8Array(v),
+        )
+            {{- else }}
+        const {{ .Name.LowerCamelCase }}Copy_ = [...this.{{ .Name.LowerCamelCase }}]
+            {{- end }}
+        builder.{{ .Name.LowerCamelCase }}({{ .Name.LowerCamelCase }}Copy_)
+        {{- else if .Type.IsMap  }}
+        const {{ .Name.LowerCamelCase }}Map_ = new Map()
+        // tslint:disable-next-line: typedef
+        this.{{ .Name.LowerCamelCase }}.forEach((v, k): void => {
+            {{- if isLongMapKey . }}
+            const key_ = Long.fromValue(k)
+            {{- else }}
+            const key_ = k
+            {{- end }}
+            {{- if isLongMapValue . }}
+            const value_ = Long.fromValue(v)
+            {{- else if eq .Type.Element.ProtoType.Proto.String "TYPE_BYTES" }}
+            const value_ = new Uint8Array(v)
+            {{- else if eq .Type.Element.ProtoType.Proto.String "TYPE_MESSAGE" }}
+            const value_ = v.clone()
+            {{- else }}
+            const value_ = v
+            {{- end }}
+            {{ .Name.LowerCamelCase }}Map_.set(key_, value_)
+        })
+        builder.{{ .Name.LowerCamelCase }}({{ .Name.LowerCamelCase }}Map_)
+        {{- else if isLong . }}
+        builder.{{ .Name.LowerCamelCase }}(Long.fromValue(this.{{ .Name.LowerCamelCase }}))
+        {{- else if isMessage . }}
+        if (this.{{ .Name.LowerCamelCase }} !== undefined)
+            builder.{{ .Name.LowerCamelCase }}(this.{{ .Name.LowerCamelCase }}.clone())
+        {{- else if eq .Type.ProtoType.Proto.String "TYPE_BYTES" }}
+        builder.{{ .Name.LowerCamelCase }}(new Uint8Array(this.{{ .Name.LowerCamelCase }}))
+        {{- else }}
+        builder.{{ .Name.LowerCamelCase }}(this.{{ .Name.LowerCamelCase }})
+        {{- end }}{{ end }}
+        {{- range .OneOfFields }}
+        if (this.{{ .Name.LowerCamelCase }} !== undefined)
+        {{- if isMessage . }}
+            builder.{{ .OneOf.Name.LowerCamelCase }}(this.{{ .Name.LowerCamelCase }}.clone(), _{{ getTsName .OneOf }}.{{ toUpper .Name.String }})
+        {{- else if isLong .}}
+            builder.{{ .OneOf.Name.LowerCamelCase }}(Long.fromValue(this.{{ .Name.LowerCamelCase }}), _{{ getTsName .OneOf }}.{{ toUpper .Name.String }})
+        {{- else if eq .Type.ProtoType.Proto.String "TYPE_BYTES" }}
+            builder.{{ .OneOf.Name.LowerCamelCase }}(new Uint8Array(this.{{ .Name.LowerCamelCase }}), _{{ getTsName .OneOf }}.{{ toUpper .Name.String }})
+        {{- else }}
+            builder.{{ .OneOf.Name.LowerCamelCase }}(this.{{ .Name.LowerCamelCase }}, _{{ getTsName .OneOf }}.{{ toUpper .Name.String }})
+        {{- end }}{{ end }}
+        return builder.build()
+    }
+}

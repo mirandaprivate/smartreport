@@ -1,0 +1,5 @@
+export * from './result.component'
+export * from './word-check.component'
+export * from './word-check.service'
+export * from './word-check.module'
+export * from './word_checker_core'

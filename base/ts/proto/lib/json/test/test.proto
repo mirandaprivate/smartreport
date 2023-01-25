@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/any.proto";
+import "src/ts/proto/lib/json/test/other.proto";
+
+message Foo {
+    int32 number = 1;
+    repeated int32 number_array = 2;
+    int64 long = 3;
+    repeated int64 long_array = 4;
+    bytes bytes = 5;
+    repeated bytes bytes_array = 6;
+    double double = 7;
+    repeated double double_array = 8;
+    bool bool = 9;
+    repeated bool bool_array = 10;
+    string str = 11;
+    repeated string str_array = 12;
+    Item item = 13;
+    repeated Item item_array = 14;
+    Foo message = 15;
+    repeated Foo message_array = 16;
+    map<string, Foo> map = 17;
+}
+
+message Nested {
+    Item item = 1;
+    Nested nested = 2;
+}
+
+message FieldName {
+    int32 foo = 1 [json_name = 'foo-bar'];
+    int32 foo_BaR = 2;
+    int32 FooO_bar = 3;
+    int32 foo_1 = 4;
+    int32 FoooO_baR_ =  5;
+    int32 _FooooO_baR =  6;
+    int32 _FooOOOOBar =  7;
+    int32 FoOoooOoBar = 8;
+    int32 f1oOoo1baR = 9;
+}
+
+message ImportMsg {
+    Sub sub = 1;
+    Other other = 2;
+    OtherItem other_item = 3;
+    message Sub {
+        Item item = 1;
+
+    }
+    enum Item {
+        ZERO = 0;
+        FOO = 1;
+        BAR = 2;
+    }
+}
+
+message Wkt {
+    google.protobuf.Timestamp time = 1;
+    google.protobuf.Duration duration = 2;
+    google.protobuf.Any any = 3;
+    repeated google.protobuf.Any any_array = 4;
+    map<int32, google.protobuf.Any> any_map = 5;
+    NestedAny nested_any = 6;
+}
+
+message NestedAny {
+    google.protobuf.Any any = 1;
+}
+
+enum Item {
+    ZERO = 0;
+    FOO = 1;
+    BAR = 2;
+}

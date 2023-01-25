@@ -1,0 +1,6 @@
+    private _{{ .Name.LowerCamelCase }}_any{{ if .Type.IsRepeated }}: {{ getTsType . }} = []
+{{ else if .Type.IsMap }}: {{ getTsType . }} = new Map()
+{{ else }}{{ if isRequiredField . }}!{{ else }}?{{ end }}: {{ getTsType . }}
+{{ end }}    public {{ .Name.LowerCamelCase }}{{ if .Type.IsRepeated }}: {{ getAnyType . }} = []
+{{ else if .Type.IsMap }}: {{ getAnyType . }} = new Map()
+{{ else }}{{ if isRequiredField . }}!{{ else }}?{{ end }}: {{ getAnyType . }}{{ end }}

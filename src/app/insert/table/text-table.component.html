@@ -1,0 +1,58 @@
+<ng-container *ngIf="!disableScrollLeftButton || !disableScrollRightButton">
+    <button class="left-scroll-btn scroll-btn" icon='ic_arrow_left' [disabled]='disableScrollLeftButton'
+        (click)='onLeftScroll()' logi-icon-button small></button>
+    <button class="right-scroll-btn scroll-btn" icon='ic_arrow_right' [disabled]='disableScrollRightButton'
+        (click)='onRightScroll()' logi-icon-button small></button>
+</ng-container>
+<logi-scrollbar class='scrollbar-container'>
+    <ng-container *ngTemplateOutlet='content'></ng-container>
+    <ng-template #content>
+        <div #scrollContainer class='scroll'
+            [ngClass]='{"time-series": isTimeSeries,"has-value": tableValues.length !== 0}'>
+            <ng-container *ngIf=' !disableScrollLeftButton || !disableScrollRightButton'>
+            </ng-container>
+            <ng-container *ngIf='tableValues.length !== 0;else tableEmpty'>
+                <table *ngIf='isTimeSeries; else notTimeSeries'>
+                    <thead>
+                        <tr>
+                            <th [ngClass]='{"selected": currValue === value,"relative": isRelative}'
+                                *ngFor='let value of tableValues' (dblclick)='onItemClick(value)'
+                                (click)='onItemClick(value)'>
+                                <div class="curr-date-box" *ngIf="lastestValue === value && isRelative">最近</div>
+                                <div class='th-cell'>
+                                    <span>{{value.th}}</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td [ngClass]='{"selected": currValue === value,"relative": isRelative}'
+                                *ngFor='let value of tableValues;let i=index' (dblclick)='onDbClickItem(value)'
+                                (click)='onItemClick(value)'>
+                                <div #cell class='td-cell'>
+                                    <p *ngFor='let text of tdValues(value)' class="td-cell-each">{{text}}</p>
+                                </div>
+                                <div class="more" *ngIf='hasMore(i);else emptyMore' (click)='more(value)'>更多...</div>
+                                <ng-template #emptyMore>
+                                    <div class="empty-more"></div>
+                                </ng-template>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+        </div>
+    </ng-template>
+
+</logi-scrollbar>
+
+<ng-template #tableEmpty>
+    <div class='empty-table'>暂无数据</div>
+</ng-template>
+<ng-template #notTimeSeries>
+    <div class="not-time-series-text">
+        <p *ngFor='let text of tdValues(tableValues[0])' class="td-cell-each">{{text}}</p>
+    </div>
+</ng-template>

@@ -1,0 +1,3 @@
+{{ $r := .Rules }}{{ if or $r.MinPairs $r.MaxPairs }}    @logiValidator.mapLength({{ $r.GetMinPairs }}{{ if $r.MaxPairs }}, {{ $r.GetMaxPairs }}{{ end }})
+{{ end }}{{ if $r.Values }}{{ getItemsDecorators $r.GetValues .Field }}
+{{ end }}

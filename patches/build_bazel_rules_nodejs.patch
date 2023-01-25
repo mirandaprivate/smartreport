@@ -1,0 +1,102 @@
+diff --git a/internal/pkg_web/assembler.js b/internal/pkg_web/assembler.js
+index 9f2d20c..dac27f8 100755
+--- a/internal/pkg_web/assembler.js
++++ b/internal/pkg_web/assembler.js
+@@ -101,7 +101,7 @@ function main(params) {
+   const substitutions = Object.entries(normalizedSubstitutions);
+ 
+   const rootDirs = [];
+-  while (params.length && params[0] !== '--assets') {
++  while (params.length && params[0] !== '--file_map') {
+     let r = params.shift();
+     if (!r.endsWith('/')) {
+       r += '/';
+@@ -111,6 +111,9 @@ function main(params) {
+   // Always trim the longest prefix
+   rootDirs.sort((a, b) => b.length - a.length);
+ 
++  params.shift(); // --file_map
++  file_map =new Map(Object.entries(JSON.parse(params.shift())))
++
+   params.shift(); // --assets
+ 
+   function relative(execPath) {
+@@ -131,7 +134,7 @@ function main(params) {
+         // Change paths to posix
+         copy(path.join(f, file).replace(/\\/g, '/'), substitutions);
+       }
+-    } else if (!isBinary(f)) {
++    } else if (!isBinary(f) && substitutions.length) {
+       const dest = path.join(outdir, relative(f));
+       let content = fs.readFileSync(f, {encoding: 'utf-8'});
+       substitutions.forEach(([occurrence, replaceWith]) => {
+@@ -140,7 +143,8 @@ function main(params) {
+       fs.mkdirSync(path.dirname(dest), {recursive: true});
+       fs.writeFileSync(dest, content);
+     } else {
+-      const dest = path.join(outdir, relative(f));
++      const custom_path = file_map.get(f)
++      const dest = path.join(outdir, custom_path? custom_path: relative(f));
+       mkdirp(path.dirname(dest));
+       fs.copyFileSync(f, dest);
+     }
+diff --git a/internal/pkg_web/pkg_web.bzl b/internal/pkg_web/pkg_web.bzl
+index 539e3e9..066a79b 100755
+--- a/internal/pkg_web/pkg_web.bzl
++++ b/internal/pkg_web/pkg_web.bzl
+@@ -27,6 +27,19 @@ _ATTRS = dict(NODE_CONTEXT_ATTRS, **{
+         allow_files = True,
+         doc = """Files which should be copied into the package""",
+     ),
++    "path_map": attr.label_keyed_string_dict(
++        allow_files = True,
++        doc = '''The custom file map of the package.
++        The key is a file, the value is the path relative to the output_dir.
++        For example:
++        ```
++        {
++            ':index_html': 'index.html',
++            ':bar.html': 'bar/bar.html',
++        }
++        ```
++        ''',
++    ),
+     "substitutions": attr.string_dict(
+         doc = """Key-value pairs which are replaced in all the files while building the package.
+ 
+@@ -48,7 +61,7 @@ _execution_requirements = {
+     "no-remote-exec": "1",
+ }
+ 
+-def _move_files(ctx, root_paths):
++def _move_files(ctx, root_paths, file_map):
+     """Moves files into an output directory
+ 
+     Args:
+@@ -71,6 +84,8 @@ def _move_files(ctx, root_paths):
+         args.add_all(["", ""])
+     args.add(ctx.attr.substitutions)
+     args.add_all(root_paths)
++    args.add("--file_map")
++    args.add(str(file_map))
+     args.add("--assets")
+     args.add_all([f.path for f in ctx.files.srcs])
+     args.use_param_file("%s", use_always = True)
+@@ -107,9 +122,16 @@ def additional_root_paths(ctx):
+         "/".join([p for p in [ctx.bin_dir.path, ctx.label.package, "_" + ctx.label.name, ctx.label.package] if p]),
+     ]
+ 
++def custom_file_path(ctx):
++    file_map = {}
++    for key, value in ctx.attr.path_map.items():
++        file_map[key.files.to_list()[0].path] = value
++    return file_map
++
+ def _impl(ctx):
+     root_paths = additional_root_paths(ctx)
+-    package_layout = _move_files(ctx, root_paths)
++    file_map = custom_file_path(ctx)
++    package_layout = _move_files(ctx, root_paths, file_map)
+     return [
+         DefaultInfo(files = package_layout),
+     ]

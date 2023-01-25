@@ -1,0 +1,20 @@
+// (api-linter: core::0136::http-uri-suffix=disabled)
+// (api-linter: core::0136::verb-noun=disabled)
+syntax = "proto3";
+
+package saas;
+option go_package = 'logi/src/proto/ping/rpc';
+
+import "google/api/annotations.proto";
+import "src/proto/ping/ping.proto";
+
+// The ping service definition.
+service PingSvc {
+    // 返回用户状态
+    rpc Check(Ping) returns (Pong) {
+        option (google.api.http) = {
+            post: "/saas/v1/ping/check",
+            body: "*",
+        };
+    }
+}

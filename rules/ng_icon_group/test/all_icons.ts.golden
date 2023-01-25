@@ -1,0 +1,61 @@
+/**
+ * Angular icon information.
+ */
+export interface NgIcon {
+    /**
+     * Angular icon id.
+     */
+    readonly id: string
+    /**
+     * Angualr icon fetch uri address, like `logi/foo.svg`.
+     */
+    readonly uri: string
+    /**
+     * The uri file hash value.
+     */
+    readonly hash: string
+    /**
+     * Current icon belong to which groups.
+     */
+    readonly groups: readonly Group[]
+}
+
+/**
+ * All groups of the icons.
+ */
+export const enum Group {
+    ALL,
+    FOO,
+    BAR,
+}
+
+const DATA: readonly Data[] = [
+    ['foo_a', 'logi_build/rules/internal/web/ng_icon_group/test/foo_a.svg', '1f0e73205eb656f108a614a44ce3d3a1e77eb272', [Group.ALL, Group.FOO]],
+    ['foo_b', 'logi_build/rules/internal/web/ng_icon_group/test/foo_b.svg', '5f1e3e654ebb8c8f3ca9a353363c0bb0348834af', [Group.ALL, Group.FOO]],
+    ['test_bar_a', 'logi_build/rules/internal/web/ng_icon_group/test/bar_a.svg', '29b655f3b0d916e04f711649d2265abc7e52aaaf', [Group.ALL, Group.BAR]],
+    ['test_bar_b', 'logi_build/rules/internal/web/ng_icon_group/test/bar_b.svg', '904f62bb7840ec1a83b95435f9e463fb00c64cb6', [Group.ALL, Group.BAR]],
+    ['ng_icon_group_test_a', 'logi_build/rules/internal/web/ng_icon_group/test/a.svg', '3f786850e387550fdab836ed7e6dc881de23001b', [Group.ALL]],
+    ['ng_icon_group_test_b', 'logi_build/rules/internal/web/ng_icon_group/test/b.svg', '89e6c98d92887913cadf06b2adb97f26cde4849b', [Group.ALL]],
+]
+
+/**
+ * All icons defined at current ts.
+ */
+export const ICONS: readonly NgIcon[] = createIcons()
+
+type Data = readonly [string, string, string, readonly Group[]]
+
+function createIcons(): readonly NgIcon[] {
+    const icons: NgIcon[] = []
+    DATA.forEach((data: Data): void => {
+        icons.push({
+            // tslint:disable-next-line: no-magic-numbers
+            groups: data[3],
+            // tslint:disable-next-line: no-magic-numbers
+            hash: data[2],
+            id: data[0],
+            uri: data[1],
+        })
+    })
+    return icons
+}

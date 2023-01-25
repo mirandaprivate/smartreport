@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/jianda/report';
+
+import "src/proto/jianda/user.proto";
+
+message GetAllReportTypesRequest {
+    // 分类的id(/v1/types)
+    string node = 1;
+}
+
+message ReportTagsRequest {
+    string q = 1;
+}
+
+message ReportInfoRequest {
+    string id = 1;
+}
+
+message ReportInfoResponse {
+    string status = 1;
+    ReportInfo data = 2;
+    string message = 3;
+}
+
+message ReportInfo {
+    string id = 1;
+    string title = 2;
+    ReportType report_type = 3;
+    // 文档类型
+    string report_doc_type = 4;
+    // 模板
+    Template template = 5;
+    // 分类
+    Type classification = 6;
+    // 类型
+    Type type = 7;
+    // 标签
+    repeated Type tags = 8;
+    // 研究对象类型
+    Type research_type = 9;
+    // 研究对象
+    Type research_target = 10;
+    // 查看者
+    Perm read_perm = 11;
+    // 协作编辑者
+    Perm write_perm = 12;
+    string download_url = 13;
+    message Template {
+        string id = 1;
+        string name = 2;
+    }
+    message Type {
+        string id = 1;
+        string name = 2;
+        string source = 3;
+    }
+}
+
+message Perm {
+    PermType type = 1;
+    repeated string custom_users_id = 2[json_name = 'custom_users_id'];
+}
+
+enum PermType {
+    PERM_TYPE_UNSPECIFIED = 0;
+    PERM_TYPE_SELF = 1;
+    PERM_TYPE_DEPARTMENT = 2;
+    PERM_TYPE_BU = 3;
+    PERM_TYPE_ALL = 4;
+    PERM_TYPE_CUSTOM = 5;
+}
+
+message ReportInfoUpdateRequest {
+    string id = 1;
+    string title = 2;
+    Type classification = 3;
+    Type type = 4;
+    repeated Type tags = 6;
+    Perm read_perm = 7[json_name = 'read_perm'];
+    Perm write_perm = 9[json_name = 'write_perm'];
+    message Type {
+        string id = 1;
+        string name = 2;
+        string source = 3;
+    }
+}
+
+message ReportInfoUpdateResponse {
+    string status = 1;
+    ReportInfo data = 2;
+}
+
+message GetTypesResponse {
+    string status = 1;
+    repeated Type data = 2;
+    message Type {
+        string id = 1;
+        string name = 2;
+        string source = 3;
+    }
+}
+
+enum ReportType {
+    REPORT_TYPE_UNSPECIFIED = 0;
+    REPORT_TYPE_DOC = 1;
+    REPORT_TYPE_PPT = 2;
+}
+message SensitiveWord {
+    string word = 1;
+    SensitiveWordLevel level = 2;
+    string description = 3;
+}
+
+enum SensitiveWordLevel {
+    SENSITIVE_WORD_LEVEL_UNSPECIFIED = 0;
+    SENSITIVE_LEVEL_ERROR = 1;
+    SENSITIVE_LEVEL_WARN = 2;
+}
+
+message SensitiveWordListRequest {
+    SensitiveWordLevel level = 1;
+}
+
+message SensitiveWordListResponse {
+    string status = 1;
+    repeated SensitiveWord data = 2;
+}
+
+message ReportCheckResponse {
+    repeated WordCount words = 1;
+    message WordCount{
+        SensitiveWord word = 1;
+        int32 count = 2;
+    }
+}

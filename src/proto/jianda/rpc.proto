@@ -1,0 +1,175 @@
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/jianda/rpc';
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+import "src/proto/jianda/data.proto";
+import "src/proto/jianda/file.proto";
+import "src/proto/jianda/report.proto";
+import "src/proto/jianda/template.proto";
+import "src/proto/jianda/user.proto";
+import "src/proto/jianda/perm.proto";
+
+service JiandaSvc {
+    // 获取所有研究对象类型,模板信息更新时需要选择其中一个
+    rpc GetAllResearchTypes(google.protobuf.Empty) returns (GetTypesResponse) {
+        option (google.api.http) = {
+            get: "/v1/report/researchTypes"
+        };
+    }
+    rpc SearchResearch(ResearchSearchRequest) returns (ResearchSearchResponse) {
+        option (google.api.http) = {
+            get: "/v1/search"
+        };
+    }
+    // 获取用户信息
+    rpc GetUser(UserInfoRequest) returns (UserInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/user/info"
+        };
+    }
+    // 获取文档信息
+    rpc GetReportInfo(ReportInfoRequest) returns (ReportInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/report/info"
+        };
+    }
+    // 文档信息更新
+    rpc ReportInfoUpdate(ReportInfoUpdateRequest) returns (ReportInfoUpdateResponse) {
+        option (google.api.http) = {
+            post: "/v1/report/info"
+            body: "*",
+        };
+    }
+    // 获取敏感词
+    rpc GetSensitiveWords(SensitiveWordListRequest) returns (SensitiveWordListResponse) {
+        option (google.api.http) = {
+            get: "/v1/sensitiveWords"
+        };
+    }
+    // 获取用户编辑查看权限时候自定义的用户列表
+    rpc GetReadAvailableUsers(GetAvailableUsersRequest) returns (GetAvailableUsersResponse) {
+        option (google.api.http) = {
+            get: "/v1/perm/readAvailableUsers"
+        };
+    }
+    // 获取用户编辑协作编辑时候自定义的用户列表
+    rpc GetWriteAvailableUsers(GetAvailableUsersRequest) returns (GetAvailableUsersResponse) {
+        option (google.api.http) = {
+            get: "/v1/perm/writeAvailableUsers"
+        };
+    }
+    // 获取全部类型,文档信息更新需要，如类型一
+    rpc GetAllTypes(google.protobuf.Empty) returns (GetTypesResponse) {
+        option (google.api.http) = {
+            get: "/v1/type"
+        };
+    }
+    // 获取全部分类,文档信息更新需要，如分类一
+    rpc GetAllClassifications(google.protobuf.Empty) returns (GetTypesResponse) {
+        option (google.api.http) = {
+            get: "/v1/classifications"
+        };
+    }
+    // 获取全部文档类型,模板信息更新时需要，如基金
+    rpc GetAllReportTypes(GetAllReportTypesRequest) returns (GetTypesResponse) {
+        option (google.api.http) = {
+            get: "/v1/reportTypes"
+        };
+    }
+    // 获取全部标签,文档信息更新时需要，如定投、投资价值
+    rpc GetAllReportTags(ReportTagsRequest) returns (GetTypesResponse) {
+        option (google.api.http) = {
+            get: "/v1/reportTags"
+        };
+    }
+    // 获取模板信息
+    rpc GetTemplateInfo(GetTemplateInfoRequest) returns (GetTemplateInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/template/info"
+        };
+    }
+    // 更新模板信息
+    rpc UpdateTemplateInfo(UpdateTemplateInfoRequest) returns (GetTemplateInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/template/info"
+            body: "*",
+        };
+    }
+    // 获取数据库指标列表
+    rpc DataList(DataListRequest) returns (DataListResponse) {
+        option (google.api.http) = {
+            get: "/v1/data/dataList"
+        };
+    }
+    // 获取数据库某个指标的时间序列值
+    rpc DataSeriesValue(DataSeriesValueRequest) returns (DataSeriesValueResponse) {
+        option (google.api.http) = {
+            post: "/v1/data/dataSeriesValue"
+            body: "*",
+        };
+    }
+    // 获取数据库某个指标的值
+    rpc DataValue(DataValueRequest) returns (DataValueResponse) {
+        option (google.api.http) = {
+            post: "/v1/data/dataValue"
+            body: "*",
+        };
+    }
+    // 获取最新指标日期
+    rpc DataLastDate(DataLastDateRequest) returns (DataLastDateResponse) {
+        option (google.api.http) = {
+            post: "/v1/data/lastDate"
+            body: "*",
+        };
+    }
+    // 创建占位符
+    rpc CreatePlaceholder(CreatePlaceholderRequest) returns (CreatePlaceholderResponse) {
+        option (google.api.http) = {
+            post: "/v1/data/placeholder"
+            body: "*",
+        };
+    }
+    // 获取占位符
+    rpc GetPlaceholder(GetPlaceholderRequest) returns (GetPlaceholderResponse) {
+        option (google.api.http) = {
+            get: "/v1/data/placeholder"
+        };
+    }
+    // 获取文件信息
+    rpc GetFileInfo(FileInfoRequest) returns (FileInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/file/info"
+        };
+    }
+    // 保存文件
+    rpc SaveFile(SaveFileRequest) returns (SaveFileResponse) {
+        option (google.api.http) = {
+            post: "/v1/file/save"
+            body: "*",
+        };
+    }
+    // 获取特定版本文件信息
+    rpc GetFileVersionInfo(GetFileVersionInfoRequest) returns (FileInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/file/version"
+            body: "*",
+        };
+    }
+    // 获取文件所有历史记录
+    rpc GetFileVersionHistory(GetFileVersionHistoryRequest) returns (GetFileVersionHistoryResponse) {
+        option (google.api.http) = {
+            post: "/v1/file/history"
+            body: "*",
+        };
+    }
+    // 获取访问权限
+    rpc GetPerm(GetPermRequest) returns (GetPermResponse) {
+        option (google.api.http) = {
+            get: "/v1/perm"
+        };
+    }
+}

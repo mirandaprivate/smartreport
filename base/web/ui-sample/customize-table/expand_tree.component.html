@@ -1,0 +1,24 @@
+<logi-table #expand [logiData]='listOfMapData' logiTableLayout='fixed'>
+    <thead>
+        <tr>
+            <th>name</th>
+            <th>age</th>
+            <th>address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let data of expand.data">
+            <ng-container *ngFor="let item of mapOfExpandedData[data.key]">
+                <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+                    <td [logiIndentSize]="item.level! * 20" [logiShowExpand]="!!item.children"
+                        [(logiExpand)]="item.expand"
+                        (logiExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)">
+                        {{ item.name }}
+                    </td>
+                    <td>{{ item.age }}</td>
+                    <td>{{ item.address }}</td>
+                </tr>
+            </ng-container>
+        </ng-container>
+    </tbody>
+</logi-table>

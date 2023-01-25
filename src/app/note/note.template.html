@@ -1,0 +1,74 @@
+<ng-container *ngIf='!loading;else load'>
+    <ng-container *ngIf="reportInfo !== undefined;else empty">
+        <div class='head'>
+            <div class='logo-wrapper'>
+                <a class='logo' target="_blank" rel='noopener'>
+                    <logi-team-avatar [url]='teamAvatarUrl' [teamId]='teamId'>
+                    </logi-team-avatar>
+                </a>
+            </div>
+            <div class='note-info'>
+                <div class='note-file-name'>
+                    <span>{{reportInfo.title}}</span>
+                    <span>
+                        <button class='file-action-button' logi-icon-button icon='ic_download'
+                            [logiMenuTrigger]='fileMenu'></button>
+                        <button class='file-action-button' logi-icon-button icon='ic_start_save'
+                            (click)='onSaveFile()'></button>
+                        <logi-menu #fileMenu>
+                            <button logi-menu-item (click)='onExportAsWord()'>{{"导出为"+docTypeLabel}}</button>
+                            <button logi-menu-item (click)='onExportAsPdf()'>导出为PDF</button>
+                        </logi-menu>
+                    </span>
+                </div>
+            </div>
+            <div class='note-actions'>
+                <ng-content></ng-content>
+            </div>
+        </div>
+        <div class='body'>
+            <mat-drawer-container class='container'>
+                <mat-drawer position='end' #drawer class='side-content' mode='side' (closedStart)='onSidenavClose()'>
+                    <ng-container [ngSwitch]='activeNavId'>
+                        <logi-db-number *ngSwitchCase='navId.NUMBER' class='data-source-panel' [researchId]="researchId"
+                            [noteNavId]='activeNavId!' [researchName]='researchName'>
+                        </logi-db-number>
+                        <logi-db-text *ngSwitchCase='navId.TEXT' class='data-source-panel' [researchId]="researchId"
+                            [noteNavId]='activeNavId!' [researchName]='researchName'>
+                        </logi-db-text>
+                        <logi-config *ngSwitchCase='navId.CONFIG' class='data-source-panel' [reportInfo]='reportInfo'
+                            (reportInfo$)='update($event)'>
+                        </logi-config>
+                    </ng-container>
+                </mat-drawer>
+                <div class='editor'>
+                    <div class='doc-area'>
+                        <logi-wps-docs class='docs' [data]='docConfig' [fileName]='reportInfo.title'>
+                        </logi-wps-docs>
+                    </div>
+                    <div class='sidenav'>
+                        <div class='sidenav-item sidenav-item-common' *ngFor='let button of sidenavButtons1'
+                            [class.active]='activeNavId === button.id'>
+                            <button class='sidenav-button' [disabled]='button.disabled' [icon]='button.icon'
+                                (click)='onSidenavClick(button)' logi-icon-button></button>
+                            <div class='sidenav-button-label'>{{button.label}}</div>
+                        </div>
+                        <div class='sidenav-item2 sidenav-item-common' *ngFor='let button of sideNavButtons2'
+                            [class.active]='activeNavId === button.id'>
+                            <button class='sidenav-button' [disabled]='button.disabled' [icon]='button.icon'
+                                (click)='onSidenavClick(button)' logi-icon-button></button>
+                            <div class='sidenav-button-label'>{{button.label}}</div>
+                        </div>
+                    </div>
+                </div>
+            </mat-drawer-container>
+        </div>
+    </ng-container>
+</ng-container>
+
+<ng-template #load>
+    <logi-spinner></logi-spinner>
+</ng-template>
+<ng-template #empty>
+    <logi-empty [message]='"暂无数据"'></logi-empty>
+</ng-template>

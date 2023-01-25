@@ -1,0 +1,8 @@
+:host {
+    &.logi-user-avatar{
+        border-radius: 50%;
+    }
+}
+::ng-deep .logi-user-avatar~.logi-avatar-icon-container{
+    border-radius: 50%;
+}

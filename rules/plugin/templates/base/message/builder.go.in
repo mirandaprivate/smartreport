@@ -1,0 +1,80 @@
+export class {{ getTsName . }}Builder extends __Builder__<{{ getTsName . }}, {{ getTsName . }}Impl> {
+    public constructor(obj?: Readonly<{{ getTsName . }}>) {
+        const impl = new {{ getTsName . }}Impl()
+        if (obj)
+            {{ getTsName . }}Builder.shallowCopy(impl, obj)
+        super(impl)
+    }{{ range .NonOneOfFields }}
+
+    public {{ .Name.LowerCamelCase }}(value: {{ if isAnyTypeField . }}{{ getAnyType . }}{{ else }}{{ getTsType . }}{{ end }}): this {
+        {{ if isAnyTypeField . }}{{ if .Type.IsRepeated }}const valueAny: google__protobuf__any.Any[] = []
+        value.forEach((v: Readonly<proto.Message>): void => {
+            const bin = v.encode()
+            const oneAny = new google__protobuf__any.AnyBuilder()
+                .typeUrl(`type.googleapis.com/${v.protobufInternal.messageName.slice(1)}`)
+                .value(bin instanceof Uint8Array ? bin : new Uint8Array(0))
+                .build()
+            valueAny.push(oneAny)
+        }){{ else if .Type.IsMap }}const valueAny = new Map()
+        // tslint:disable-next-line: typedef
+        value.forEach((v: proto.Message, k): void => {
+            const bin = v.encode()
+            const mapAny = new google__protobuf__any.AnyBuilder()
+                .typeUrl(`type.googleapis.com/${v.protobufInternal.messageName.slice(1)}`)
+                .value(bin instanceof Uint8Array ? bin : new Uint8Array(0))
+                .build()
+            valueAny.set(k, mapAny)
+        }){{ else }}const bin = value.encode()
+        const valueAny = new google__protobuf__any.AnyBuilder()
+            .typeUrl(`type.googleapis.com/${value.protobufInternal.messageName.slice(1)}`)
+            .value(bin instanceof Uint8Array ? bin : new Uint8Array(0))
+            .build(){{ end }}
+        Reflect.set(this.getImpl(), '_{{ .Name.LowerCamelCase }}_any', valueAny)
+        {{ end }}this.getImpl().{{ .Name.LowerCamelCase }} = value
+        return this
+    }{{ end }}{{ range .OneOfs }}
+
+    public {{ .Name.LowerCamelCase }}(type: _{{ getTsName . }}_Type, field: _{{ getTsName . }}_Field): this {
+        {{ toUpper (getTsName .) }}.forEach((f: string): void => {
+            Reflect.deleteProperty(this.getImpl(), f)
+        })
+        Reflect.set(this.getImpl(), field, type){{ with $any := getAnyFields .Fields }}{{ if ne (len $any) 0 }}
+        switch (field) {
+        {{ range $any }}case '{{ .Name.LowerCamelCase }}':
+            {{ end }}// tslint:disable-next-line: no-type-assertion
+            const t = type as proto.Message
+            const bin = proto.encode(t)
+            const valueAny = new google__protobuf__any.AnyBuilder()
+            .typeUrl(`type.googleapis.com/${t.protobufInternal.messageName.slice(1)}`)
+            .value(bin instanceof Uint8Array ? bin : new Uint8Array(0))
+            .build()
+            Reflect.set(this.getImpl(), `_${field}_any`, valueAny)
+            break
+        default:
+        }{{ end }}{{ end }}
+        return this
+    }{{ end }}
+
+    public decode(bin: Readonly<Uint8Array>): this {
+        const err = proto.decode(bin, this.getImpl())
+        if (err !== undefined)
+            console.log(err.message)
+        {{ range $i, $_ := getAnyFields .Fields }}const anyErr{{ $i }} = proto.decodeAny('{{ .Name.LowerCamelCase }}', this.getImpl())
+        if (anyErr{{ $i }} !== undefined)
+            console.log(anyErr{{ $i }}.message)
+        {{ end }}return this
+    }
+
+    public fromJson(content: string): this {
+        // tslint:disable-next-line: no-object
+        Object.assign(this.getImpl(), proto.fromJson(content, this.getImpl()))
+        return this
+    }
+
+    protected get daa(): readonly string[] {
+        return {{ getTsName . }}Builder.__DAA_PROPS__
+    }
+    protected static readonly __DAA_PROPS__: readonly string[] = [{{ range .NonOneOfFields }}{{ if isRequiredField . }}
+        '{{ .Name.LowerCamelCase }}',{{ end }}{{ end }}
+    ]
+}

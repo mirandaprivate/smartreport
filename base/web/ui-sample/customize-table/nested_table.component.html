@@ -1,0 +1,31 @@
+<div class='container' [style]='!child ? "height: 300px;" : "height: 100%"'>
+    <logi-table #nested [style]='"height: 100%;"' [logiLoading]='loading' [logiPaginatorOptions]='{show: false}'
+        [logiWidthConfig]='["4%", "32%", "32%" ,"32%"]' [logiData]='nestedData' [logiSize]='size' [logiScroll]='scroll'
+        [logiTableLayout]='layout'>
+        <thead>
+            <tr>
+                <th></th>
+                <th>name</th>
+                <th>age</th>
+                <th>address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let data of nested.data">
+                <tr>
+                    <td (logiExpandChange)='onExpandChange(data.name, $event)'
+                        [logiShowExpand]='data.expandData !== undefined && data.expandData.length !== 0'></td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.age}}</td>
+                    <td>{{data.address}}</td>
+                </tr>
+                <tr *ngIf='expandSet.has(data.name)' logi-table-fixed-row logiNoIndent>
+                    <logi-table-nested-sample *ngIf='data.expandData !== undefined' [showIndent]='showIndent'
+                        [child]='true' [nestedData]='data.expandData' [size]='"small"' [scroll]='{x: null, y: null}'>
+                    </logi-table-nested-sample>
+                </tr>
+            </ng-container>
+        </tbody>
+    </logi-table>
+
+</div>

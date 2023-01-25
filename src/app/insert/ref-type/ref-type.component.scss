@@ -1,0 +1,13 @@
+@use 'src/app/assets/styles/shared';
+:host {
+    @include shared.set-font($color: rgba(0,0,0,0.6));
+    align-items: center;
+    display: flex;
+    height: 36px;
+    .label {
+        margin-right: 34px;
+    }
+    .relative-reference {
+        margin-right: 24px;
+    }
+}

@@ -1,0 +1,47 @@
+@use 'src/app/assets/styles/shared';
+
+$color: shared.$black-87;
+$color-disabled: rgba(0, 0, 0, 0.38);
+$border: shared.$border-base;
+$border-hover: 1px solid rgba(0, 0, 0, 0.38);
+:host {
+    display: inline-block;
+}
+
+.logi-input-number-wrapper {
+    align-items: center;
+    display: inline-flex;
+    border: $border;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: inherit;
+    height: inherit;
+
+    &.logi-disabled {
+        pointer-events: none;
+    }
+
+    &:not(.logi-focused):hover {
+        border: $border-hover;
+    }
+}
+
+.logi-input-number-element {
+    border: none;
+    width: 100%;
+    height: inherit;
+    padding: 0;
+    background-color: transparent;
+    text-align: center;
+    color: $color;
+    outline: none;
+
+    &:disabled {
+        background-color: transparent;
+        color: $color-disabled;
+    }
+}
+
+.logi-icon-button.logi-input-number-button {
+    min-width: 32px;
+}

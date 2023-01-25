@@ -1,0 +1,55 @@
+$color: rgba(0, 0, 0, 0.6);
+$border: 1px solid rgba(0, 0, 0, 0.12);
+
+table {
+    margin-bottom: 12px;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+    table-layout: fixed;
+}
+
+td {
+    padding: 8px;
+
+    &.title-cell {
+        border-right: $border;
+        width: 120px
+    }
+
+    &.sub-title-cell {
+        width: 140px;
+    }
+}
+
+tr {
+    border: $border;
+    height: 84px;
+}
+
+table.form-sample {
+    td {
+        padding: 12px 8px;
+    }
+}
+
+.input-container {
+    margin-top: 12px;
+}
+
+.form {
+    font-size: 14px;
+    color: $color;
+}
+
+.label {
+    margin-bottom: 16px;
+}
+
+.dropdown-select-input {
+    width: 100px;
+}
+
+.textarea {
+    min-height: 120px;
+}

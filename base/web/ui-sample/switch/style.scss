@@ -1,0 +1,8 @@
+:host {
+    flex-direction: column;
+    display: flex;
+
+    .item {
+        width: 120px;
+    }
+}

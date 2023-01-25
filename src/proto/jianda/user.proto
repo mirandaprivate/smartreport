@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/jianda/user';
+
+import "validate/validate.proto";
+
+message User {
+    string id = 1;
+    string full_name = 2;
+    string email = 3;
+    string phone = 4;
+    string avatar_url = 6;
+}
+
+message UserInfoRequest {
+    repeated string ids = 1;
+}
+message UserInfoResponse {
+    string status = 1;
+    repeated User data = 2;
+}
+
+message GetAvailableUsersRequest {
+    string report_id = 1[json_name='report_id'];
+}
+
+message GetAvailableUsersResponse {
+    string status = 1;
+    repeated User data = 2;
+    message User {
+        string id = 1;
+        string full_name = 2;
+    }
+}

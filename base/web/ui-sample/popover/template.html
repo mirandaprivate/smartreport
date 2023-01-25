@@ -1,0 +1,20 @@
+<h5>基本用法</h5>
+<button #popover_trigger='logiPopoverTrigger' logi-flat-button [logiPopoverTrigger]='panel1' (open$)='onPanelChange()'
+    (closed$)='onPanelChange()'>鼠标移入</button>
+<logi-popover #panel1>
+    <h2>标题</h2>
+    <p>正文</p>
+</logi-popover>
+
+<h5>设置弹出框位置</h5>
+<button logi-flat-button [logiPopoverTrigger]='panel2'>鼠标移入</button>
+<logi-popover #panel2 positionX='after'>
+    <h2>标题</h2>
+    <p>正文</p>
+</logi-popover>
+
+<h5>设置1s延时关闭(单位秒)</h5>
+<button logi-flat-button [logiPopoverTrigger]='panel2' [logiPopoverHideDelay]='1'>鼠标移入</button>
+<logi-popover #panel2>
+    <p>正文</p>
+</logi-popover>

@@ -1,0 +1,7 @@
+<button (click)='onChangeData()' logi-flat-button>change data</button>
+<logi-tree [data]='data' [getChildren]='getChildren' [getIcon]='getIcon' [transform]='transform' [selection]='singleSel'>
+</logi-tree>
+<br>
+<logi-tree [data]='data' [getChildren]='getChildren' [selection]='mulSel' [getIcon]='getIcon'
+    [transform]='transform'></logi-tree>
+<button (click)="onConfirm()">print all selected nodes</button>

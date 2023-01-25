@@ -1,0 +1,8 @@
+./bazelisk-4.2.0 run src/server:main -- \
+--server.gateway_addr=0.0.0.0:10000 \
+--server.grpc_addr=localhost:10001 \
+--server.node_grpc_addr=localhost:10002 \
+--wps.appkey=953d3386cb3d7e2125e00a1d949cfa7f \
+--wps.appid=AK20210729JOMDQZ \
+--wps.dbg_user=curie \
+--wps.server.url=https://wps-server.logiocean.com 

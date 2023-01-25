@@ -1,0 +1,9 @@
+@use 'src/app/assets/styles/shared';
+.table-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 220px);
+}
+.series-value-desc {
+    margin: 16px 0;
+}

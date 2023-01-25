@@ -1,0 +1,56 @@
+{
+    "angularCompilerOptions": {
+        "disableTypeScriptVersionCheck": true
+    },
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "alwaysStrict": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": [
+            "dom",
+            "es2016",
+            "ES2018",
+            "webworker"
+        ],
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "pretty": true,
+        "sourceMap": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "baseUrl": "./",
+        "paths": {
+            "@logi-assets/*": [
+                "./build/bin/*"
+            ],
+            "@logi-config/*": [
+                "./build/bin/*"
+            ],
+            "@logi-i18n/*": [
+                "./build/bin/*"
+            ],
+            "@logi-icon/*": [
+                "./build/bin/*"
+            ],
+            "@logi-pb/*": [
+                "./build/bin/*"
+            ],
+            "@logi/*": [
+                "./*"
+            ],
+            "logi/*": [
+                "./*"
+            ]
+        },
+        "target": "es5",
+    }
+}

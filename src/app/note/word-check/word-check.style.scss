@@ -1,0 +1,64 @@
+@use 'src/app/assets/styles/shared';
+
+:host {
+    position: relative;
+    display: block;
+    height: 100%;
+}
+
+.header {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    border-bottom: shared.$border-base;
+    box-sizing: border-box;
+    height: 56px;
+    padding: 0 16px;
+
+    .title-wrapper {
+        align-items: center;
+        display: flex;
+        font-size: 16px;
+        font-weight: bold;
+        color: shared.$font-color-darker;
+    }
+    .tooltip-icon {
+        @include shared.square-size(18px);
+        margin-left: 16px;
+        color: shared.$font-color-base;
+    }
+    .close-button {
+        height: 24px;
+        line-height: 24px;
+    }
+}
+.body {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: calc(100% - 56px);
+}
+.result-view {
+    flex-direction: column;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+
+    .word-check-results {
+        flex: 1 1 auto;
+        overflow-y: auto;
+    }
+    .empty-result-message {
+        font-size: 14px;
+        color: shared.$font-color-base;
+    }
+    .actions {
+        margin-top: 16px;
+    }
+}
+
+.check-result:not(:first-child) {
+    margin-top: 16px;
+}

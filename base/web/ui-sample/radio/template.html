@@ -1,0 +1,19 @@
+<h5>基本用法</h5>
+<logi-radio-group>
+    <logi-radio-button class='btn' value='Summer'>Summer</logi-radio-button>
+    <logi-radio-button class='btn' value='Autumn' checked>Autumn</logi-radio-button>
+    <logi-radio-button class='btn' value='Spring' size='middle' checked>middle size</logi-radio-button>
+</logi-radio-group>
+
+<h5>表单绑定</h5>
+<logi-radio-group (change$)='onChange($event)' [formControl]='control'>
+    <logi-radio-button class='btn' (change$)='onSummerChange($event)' value='Summer'>Summer</logi-radio-button>
+    <logi-radio-button class='btn' value='Autumn'>Autumn</logi-radio-button>
+</logi-radio-group>
+<div class='text'>(Binding data) Your favorite season is: {{ season }}</div>
+<h5>禁用项</h5>
+<logi-radio-group>
+    <logi-radio-button class='btn' [checked]='true' [disabled]='true' [value]='1'>Option 1 (disabled with checked)
+    </logi-radio-button>
+    <logi-radio-button class='btn' [disabled]='true' [value]='2'>Option 2 (disabled)</logi-radio-button>
+</logi-radio-group>

@@ -1,0 +1,23 @@
+@use 'src/app/assets/styles/shared';
+.value {
+    @include shared.set-font(14px);
+}
+.perm {
+    @include shared.set-font($color: rgba(0,0,0,0.6));
+    .normal-perm-button {
+        margin-right: 16px;
+    }
+}
+.custom-perm-container {
+    display: flex;
+    align-items: center;
+    .custom-perm-tag {
+        margin-right: 8px;
+    }
+}
+.custom-perm-button {
+    width: 100%;
+    .custom-perm-select {
+        width: 100%;
+    }
+}

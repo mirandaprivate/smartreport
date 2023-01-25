@@ -1,0 +1,20 @@
+$border: 1px solid rgba(0, 0, 0, 0.12);
+
+.list-sample {
+    border: $border;
+}
+
+.item-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    display: flex;
+    border-bottom: $border;
+    font-size: 12px;
+}
+
+.item-placeholder {
+    width: 100px;
+    height: 32px;
+    background-color: #F2F2F2;
+}

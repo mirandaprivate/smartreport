@@ -1,0 +1,6 @@
+<div class="default" *ngIf="url === undefined && icon !== undefined; else img">
+    <mat-icon class="logo" [svgIcon]='icon'></mat-icon>
+</div>
+<ng-template #img>
+    <img class="img" [src]="url">
+</ng-template>

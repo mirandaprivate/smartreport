@@ -1,0 +1,11 @@
+<h5>基础用法</h5>
+<logi-checkbox class='item' (change$)='onCheckboxChange($event)' [formControl]='control'>是否选择</logi-checkbox>
+<div class='text'>Checked: {{value}}</div>
+<h5>不确定状态</h5>
+<logi-checkbox class='item' [indeterminate]='true'>是否选择</logi-checkbox>
+<h5>禁用(未选中状态)</h5>
+<logi-checkbox class='item' [disabled]='true'>是否选择</logi-checkbox>
+<h5>禁用(选中状态)</h5>
+<logi-checkbox class='item' [checked]='true' [disabled]='true'>是否选择</logi-checkbox>
+<h5>禁用(不确定状态)</h5>
+<logi-checkbox class='item' [indeterminate]='true' [disabled]='true'>是否选择</logi-checkbox>

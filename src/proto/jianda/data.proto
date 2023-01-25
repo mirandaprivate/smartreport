@@ -1,0 +1,239 @@
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/jianda/data';
+
+message DataListRequest {
+    // 研究对象id，如汇添富id
+    string research_id = 1[json_name = 'research_id'];
+    DataListType type = 2;
+}
+
+enum DataListType {
+    DATA_LIST_TYPE_UNSPECIEFIED = 0;
+    DATA_LIST_TYPE_PICTURE = 1;
+    DATA_LIST_TYPE_TEXT = 2;
+    DATA_LIST_TYPE_NUMBER = 3;
+}
+
+message DataListResponse {
+    string status = 1;
+    repeated Source data = 2;
+    message Source {
+        string id = 1;
+        // 数据源名字
+        string name = 2;
+        // 多张表
+        repeated Table tables = 3;
+    }
+    message Table {
+        string id = 1;
+        // 表名
+        string name = 2;
+        // 表中所有项
+        repeated ItemDataDesc items = 3;
+        // 子表格
+        repeated Table sub_tables = 4;
+    }
+}
+
+message ItemDataDesc {
+    // 指标ID
+    string id = 1;
+    // 指标名字
+    string name = 2;
+    // 是否为时间序列
+    bool is_timeseries = 3;
+    // 数据类型(图片，文本，数字...)
+    ItemDataType data_type = 4;
+    // 数据格式化形式，目前应该是当作单位，且只拿第一个，如元，万元，吨，平方公顷...
+    repeated string format = 5;
+    // 频率，只在is_timeseries为true时有，如年、季、日等
+    ItemDataFreq freqs = 6;
+}
+
+enum ItemDataType {
+    ITEM_DATA_TYPE_UNSPECIEFIED = 0;
+    ITEM_DATA_TYPE_PICTURE = 1;
+    ITEM_DATA_TYPE_TEXT = 2;
+    ITEM_DATA_TYPE_NUMBER = 3;
+}
+
+enum ItemDataFreq {
+    ITEM_DATA_DATE_FREQ_UNSPECIEFIED = 0;
+    ITEM_DATA_DATE_FREQ_DAY = 1;
+    ITEM_DATA_DATE_FREQ_WEEK = 2;
+    ITEM_DATA_DATE_FREQ_MONTH = 3;
+    ITEM_DATA_DATE_FREQ_QUARTER = 4;
+    ITEM_DATA_DATE_FREQ_YEAR = 5;
+}
+
+message DataSeriesValueRequest {
+    // 研究对象id，如汇添富id
+    string research_id = 1[json_name = 'research_id'];
+    repeated SeriesValueDesc items = 2;
+    DataListType data_type = 3[json_name = 'data_type'];
+}
+
+message DataSeriesValueResponse {
+    string status = 1;
+    Data data = 2;
+    message Data {
+        // 研究对象id，如汇添富id
+        string research_id = 1;
+        repeated ItemSeriesValue value = 2;
+    }
+}
+
+message SeriesValueDesc {
+    // 指标id
+    string id = 1;
+    // 格式
+    string format = 2;
+}
+
+message ItemSeriesValue {
+    // 指标id
+    string id = 1;
+    // 指标名字
+    string name = 2;
+    // 是否为时间序列
+    bool is_timeseries = 3;
+    // 数据类型
+    ItemDataType data_type = 4;
+    // 格式
+    string format = 5;
+    // 指标的数据数组
+    repeated SeriesValue values = 6;
+}
+
+message SeriesValue {
+    Value value = 1;
+    // 日期，仅在是时间序列时有
+    string date = 2;
+    // 当数据类型为文字的时候用到。用以确定该文本是否有换行符
+    bool new_line = 3;
+}
+
+message Value {
+    oneof Value {
+        string s = 1;
+        double d = 2;
+        int32 i32 = 3;
+        int64 i64 = 4;
+        float f = 5;
+        bool b = 6;
+    }
+}
+
+message DataValueRequest {
+    // 研究对象id，如汇添富id
+    string research_id = 1[json_name = 'research_id'];
+    repeated DataValueDesc values_desc = 2[json_name = 'values_desc'];
+}
+
+message DataValueDesc {
+    // 指标id
+    string id = 1;
+    // 指标名字
+    string name = 2;
+    // 格式
+    string format = 3;
+    // 是否为时间序列
+    bool is_timeseries = 4[json_name = 'is_timeseries'];
+    // 数据类型(图片，文本，数字...)
+    ItemDataType data_type = 5[json_name = 'data_type'];
+    // 日期，仅在是时间序列时有
+    string date = 6;
+    // 频率，只在is_timeseries为true时有，如年、季、日等
+    ItemDataFreq freq = 7;
+    // 占位符id
+    string placeholder_id = 8[json_name = 'placeholder_id'];
+}
+
+message DataValue {
+    // 占位符id,和request对应一致
+    string placeholder_id = 1;
+    // 指标值
+    Value value = 2;
+}
+
+message DataValueResponse {
+    string status = 1;
+    Data data = 2;
+    message Data {
+        // 研究对象id，如汇添富id
+        string research_id = 2;
+        // 指标值数字
+        repeated DataValue data = 3;
+    }
+}
+
+message DataLastDateRequest {
+    // 研究对象id，如汇添富id
+    string research_id = 1[json_name = 'research_id'];
+    // 指标id列表
+    repeated string ids = 2;
+}
+
+message DataLastDateResponse {
+    string status = 1;
+    repeated DataLastDate dates = 2;
+}
+
+message DataLastDate {
+    string id = 1;
+    string date = 2;
+}
+
+message CreatePlaceholderRequest {
+    // 占位符信息
+    string text = 1;
+}
+
+message CreatePlaceholderResponse {
+    string status = 1;
+    // 占位符id
+    string data = 2;
+}
+
+message GetPlaceholderRequest {
+    // 占位符id数组
+    repeated string ids = 1;
+}
+
+message GetPlaceholderResponse {
+    string status = 1;
+    repeated Placeholder data = 2;
+}
+
+message Placeholder {
+    // 占位符id
+    string id = 1;
+    // 占位符信息
+    string text = 2;
+}
+
+message PlaceHolderDesc {
+    // 指标id
+    string id = 1;
+    // 指标名字
+    string name = 2;
+    // 单位
+    string format = 3;
+    // 是否为时间序列
+    bool is_timeseries = 4;
+    // 数据类型(数据、文本、图片)
+    ItemDataType data_type = 5;
+    // 日期
+    string date = 6;
+    // 频率(年、季度...)
+    ItemDataFreq freq = 7;
+    // 是否为动态类型
+    bool is_dynamic = 8;
+    // 距离当前时间的距离(0,1,2,3,-1,-2,-3)
+    int32 distance = 9;
+    // 数量级(1, 10, 100, 1000, 0.1, 0.01, 0.02)
+    double magnitude = 10;
+    string placeholder_id = 11;
+}

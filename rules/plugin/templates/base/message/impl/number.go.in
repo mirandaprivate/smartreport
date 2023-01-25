@@ -1,0 +1,1 @@
+    public {{ .Name.LowerCamelCase }} = 0

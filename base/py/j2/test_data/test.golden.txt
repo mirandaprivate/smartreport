@@ -1,0 +1,7 @@
+NAME : Foo
+AGE: 12
+SAY: Hello world!
+
+/foo/bar
+http
+k1=v1

@@ -1,0 +1,58 @@
+@use 'src/app/assets/styles/shared';
+
+$panel-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
+
+.logi-cascaded-select {
+    display: inline-block;
+}
+
+.logi-cascaded-select-wrapper {
+    align-items: center;
+    display: flex;
+}
+
+.logi-cascaded-select-label {
+    min-width: 64px;
+}
+
+.logi-cascaded-select-dropdown-icon {
+    color: shared.$font-color-base;
+}
+
+.cdk-overlay-backdrop.logi-cascaded-select-backdrop {
+    background-color: none;
+}
+
+.logi-cascaded-select-menus {
+    display: flex;
+    box-shadow: $panel-shadow;
+    border-radius: 4px;
+    padding: 8px 0;
+    background-color: shared.$base-white;
+    max-height: 240px;
+}
+.logi-cascaded-select-menu {
+    overflow-y: auto;
+    margin: 0;
+    border-right: shared.$border-base;
+    padding: 0;
+    list-style: none;
+    &:last-child {
+        border-right-color: transparent;
+    }
+}
+.logi-cascaded-select-menu-item {
+    @include shared.logi-overflow-ellipsis;
+    box-sizing: border-box;
+    padding: 0 16px;
+    font-size: 14px;
+    line-height: 32px;
+    color: shared.$font-color-darker;
+    max-width: 120px;
+    &:hover {
+        background-color: shared.$brand-4;
+    }
+    &.activated {
+        background-color: shared.$brand-12;
+    }
+}

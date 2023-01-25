@@ -1,0 +1,6 @@
+/* Assets map */
+$logi-assets: (
+    {% for file in files %}
+    {{ file.name }}: '{{ file.path }}',
+    {% endfor %}
+);

@@ -1,0 +1,1 @@
+    public {{ .Name.LowerCamelCase }}: Readonly<Uint8Array> = new Uint8Array(0)

@@ -1,0 +1,47 @@
+@use 'src/app/assets/styles/shared';
+
+:host {
+    display: block;
+}
+
+.word-count-container {
+    align-items: center;
+    display: flex;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: shared.$font-color-darker;
+
+    .word-count {
+        margin-left: auto;
+    }
+}
+.word-item-container {
+    align-items: center;
+    display: flex;
+    margin-bottom: 4px;
+
+    .word-tag {
+        flex: 1;
+    }
+    .goto-buttons {
+        margin: 0 8px;
+        visibility: hidden;
+    }
+    .index-step {
+        width: 48px;
+        font-size: 12px;
+        text-align: right;
+        color: shared.$font-color-base;
+    }
+    &.selected .goto-buttons {
+        visibility: visible;
+    }
+}
+
+/* TODO(zengkai): How to link this color to component.ts */
+.error-word-tag:focus {
+    background-color: rgba(#B40014, 0.24) !important;
+}
+.warn-word-tag:focus {
+    background-color: rgba(#E59035, 0.24) !important;
+}

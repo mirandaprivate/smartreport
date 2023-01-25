@@ -1,0 +1,26 @@
+:host {
+    display: block;
+}
+
+.table-container {
+    overflow-y: auto;
+    height: 300px;
+}
+
+table {
+    width: 100%;
+}
+
+.logi-table {
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+
+    .text {
+        width: 90%;
+    }
+}

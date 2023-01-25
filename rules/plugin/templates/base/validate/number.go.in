@@ -1,0 +1,14 @@
+{{ $r := .Rules }}{{ if $r.Const }}    @validator.Equals({{ $r.GetConst }})
+{{ end }}{{ if or $r.Lt $r.Gt $r.Lte $r.Gte }}    @logiValidator.compare({ {{- if $r.Gt }}
+        gt: {{ $r.GetGt }},{{ end }}{{ if $r.Gte }}
+        gte: {{ $r.GetGte }},{{ end }}{{ if $r.Lt }}
+        lt: {{ $r.GetLt }},{{ end }}{{ if $r.Lte }}
+        lte: {{ $r.GetLte }},{{ end }}
+    })
+{{ end }}{{ if $r.NotIn }}    @validator.IsNotIn([{{ range $r.GetNotIn }}
+        {{ . }},{{ end }}
+    ])
+{{ end }}{{ if $r.In }}    @validator.IsIn([{{ range $r.GetIn }}
+        {{ . }},{{ end }}
+    ])
+{{ end }}

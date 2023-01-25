@@ -1,0 +1,7 @@
+{{ $r := .Rules }}{{ if $r.In }}    @logiValidator.anyIsIn([{{ range $r.GetIn }}
+        '{{ . }}',{{ end }}
+    ])
+{{ end }}{{ if $r.NotIn }}    @logiValidator.anyIsNotIn([{{ range $r.GetNotIn }}
+        '{{ . }}',{{ end }}
+    ])
+{{ end }}

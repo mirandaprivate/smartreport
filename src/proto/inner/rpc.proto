@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package saas;
+
+import "google/api/annotations.proto";
+import "src/proto/inner/report.proto";
+
+service InnerSvc {
+    rpc GetDocContent(DocContentRequest) returns (DocContent) {}
+    rpc GetPlaceholderIDs(PlaceholderIDsRequest) returns (PlaceholderIDsResponse) {}
+    rpc RenderTemplate(RenderTemplateRequest) returns (RenderTemplateResponse) {}
+    rpc CalculateDate(CalculateDateRequest) returns (CalculateDateResponse) {}
+}

@@ -1,0 +1,21 @@
+@use 'src/app/assets/styles/shared';
+:host {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    white-space: nowrap;
+}
+.table-title {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    @include shared.set-font(14px, $color: rgba(0,0,0,0.6));
+}
+.not-time-series {
+    margin-bottom: 8px;
+}
+.insert-btn {
+    width: 64px;
+    margin-top: auto;
+}

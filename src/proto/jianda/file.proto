@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package jianda;
+option go_package = 'logi/src/proto/jianda/file';
+
+message FileInfoRequest {
+    string id = 1;
+    FileType type = 2;
+}
+
+message FileInfoResponse {
+    string status = 1;
+    FileInfo data = 2;
+}
+
+message FileInfo {
+    string id = 1;
+    string name = 2;
+    int32 version = 3;
+    int32 size = 4;
+    string owner_id = 5;
+    int32 create_time = 6;
+    int32 last_modify_time = 7;
+    string last_modify_user = 8;
+    string download_url = 9;
+    FileType type = 10;
+}
+
+enum FileType {
+    FILE_TYPE_UNSPECIFIED = 0;
+    FILE_TYPE_REPORT = 1;
+    FILE_TYPE_TEMPLATE = 2;
+}
+
+message SaveFileRequest {
+    string id = 1;
+    FileType type = 2;
+    string base64_content = 3[json_name = 'base64_content'];
+}
+
+message SaveFileResponse {
+    string status = 1;
+    FileInfo data = 2;
+}
+
+message GetFileVersionInfoRequest {
+    string id = 1;
+    FileType type = 2;
+    int32 version = 3;
+}
+
+message GetFileVersionHistoryRequest {
+    string id = 1;
+    FileType type = 2;
+    int32 offset = 3;
+    int32 count = 4;
+}
+
+message GetFileVersionHistoryResponse {
+    string status = 1;
+    repeated FileInfo data = 2;
+}

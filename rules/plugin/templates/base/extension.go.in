@@ -1,0 +1,18 @@
+{{ range getAllExtensions . }}
+export const E_{{ toUpper (getTsName .) }} = new proto.ExtensionDescriptorBuilder()
+    .extended('{{ .Descriptor.GetExtendee }}')
+    .name('{{ .FullyQualifiedName }}')
+    .field({{ .Descriptor.GetNumber }})
+    .fileName('{{ .File.InputPath }}')
+    .fieldDescriptor(new proto.FieldDescriptorProtoBuilder()
+        .number({{ .Descriptor.GetNumber }})
+        .name('{{ .Name }}')
+        .jsonName('{{ .Name }}'){{ if eq .Type.ProtoType.Proto.String "TYPE_MESSAGE" }}
+        .typeName('{{ .Descriptor.GetTypeName }}'){{ end }}
+        .label({{ getLabelNum . }})
+        .type({{ getTypeNum . }}){{ if .Type.IsRepeated }}
+        .options(new proto.FieldOptionsBuilder().packed({{ .Descriptor.Options.GetPacked }}).build()){{ end }}
+        .build()){{ if eq .Type.ProtoType.Proto.String "TYPE_MESSAGE" }}
+    .registry(REGISTRY){{ end }}
+    .build()
+{{ end }}

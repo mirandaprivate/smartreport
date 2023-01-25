@@ -1,0 +1,5 @@
+<div class="upload-region" (click)="fileInput.click()">
+    <ng-content></ng-content>
+</div>
+<input #fileInput class="file-input" [disabled]='disabled' (change)="onFileChange($event)" accept="{{accept}}"
+    style="display:none" type="file">

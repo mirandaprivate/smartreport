@@ -1,0 +1,65 @@
+diff --git a/node_modules/html-insert-assets/dist/main.js b/node_modules/html-insert-assets/dist/main.js
+index 4f081b6..5d7b4a4 100644
+--- a/node_modules/html-insert-assets/dist/main.js
++++ b/node_modules/html-insert-assets/dist/main.js
+@@ -344,6 +344,7 @@ function parseArgs(cmdParams) {
+     // In the order parsed from the CLI.
+     const assets = [];
+     let rootDirs = [];
++    let staticPrefix = "";
+     let verbose = false;
+     let strict = false;
+     let quiet = false;
+@@ -388,6 +389,9 @@ function parseArgs(cmdParams) {
+             case "--roots":
+                 [rootDirs, i] = readVarArgs(params, i + 1);
+                 break;
++            case "--staticprefix":
++                staticPrefix = params[++i];
++                break;
+             case "--out":
+                 outputFile = params[++i];
+                 break;
+@@ -417,6 +421,7 @@ function parseArgs(cmdParams) {
+         quiet,
+         verbose,
+         help,
++        staticPrefix,
+     };
+ }
+ exports.__parseArgs = parseArgs;
+@@ -559,7 +564,7 @@ function isSourceMap({ uri }, assets) {
+     return assets.some(a => a.uri === nonMap);
+ }
+ function main(params, write = mkdirpWrite) {
+-    const { inputFile: inputInputFile, outputFile: inputOutputFile, assets, rootDirs: inputRootDirs, stampType, strict, verbose, quiet, help, } = parseArgs(params);
++    const { inputFile: inputInputFile, outputFile: inputOutputFile, assets, rootDirs: inputRootDirs, stampType, strict, verbose, quiet, help, staticPrefix} = parseArgs(params);
+     if (help) {
+         console.log(HELP_MESSAGE);
+         return 0;
+@@ -613,7 +618,7 @@ function main(params, write = mkdirpWrite) {
+      *
+      * Leaves external URLs as-is.
+      */
+-    function toUrl(origPath) {
++    function toUrl(origPath, staticPrefix) {
+         let execPath = origPath;
+         if (EXTERNAL_RE.test(origPath)) {
+             return origPath;
+@@ -624,6 +629,7 @@ function main(params, write = mkdirpWrite) {
+         execPath = removeExternal(execPath);
+         execPath = removeRootPath(execPath);
+         execPath = relativeToHtml(execPath);
++        execPath = `${staticPrefix}/${execPath}`
+         execPath = normalizePath(execPath);
+         execPath = stamp ? `${execPath}?v=${stamp}` : execPath;
+         if (execPath !== origPath) {
+@@ -635,7 +641,7 @@ function main(params, write = mkdirpWrite) {
+     // Insertion of various asset types
+     for (const asset of processedAssets) {
+         const { type, use, uri, attributes } = asset;
+-        const url = toUrl(uri);
++        const url = toUrl(uri, staticPrefix);
+         switch (use) {
+             case 0 /* SCRIPT */:
+                 insertScript(utils, url, asset);

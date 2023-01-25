@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>标题</h2>
+<mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <div class="label">用户名</div>
+    <logi-form-field class="form-field">
+      <input logi-input formControlName="username">
+    </logi-form-field>
+    <div class="label">密码</div>
+    <logi-form-field class="form-field">
+      <input logi-input formControlName="password" type="password">
+    </logi-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button (click)="onCancel()" logi-button>取消</button>
+  <button (click)="onConfirm()" logi-flat-button>确定</button>
+</mat-dialog-actions>

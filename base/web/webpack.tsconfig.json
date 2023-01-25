@@ -1,0 +1,56 @@
+{
+    "angularCompilerOptions": {
+        "enableIvy": true,
+        "disableTypeScriptVersionCheck": true,
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
+    },
+    "compilerOptions": {
+        "target": "es2015",
+        "module": "esnext",
+        "downlevelIteration": true,
+        "skipDefaultLibCheck": true,
+        "moduleResolution": "node",
+        "outDir": "webpack-out",
+        "rootDir": "../../",
+        "rootDirs": [
+            "../../"
+        ],
+        "baseUrl": "./",
+        "paths": {
+            "@logi-base/src/*": [
+                "../*"
+            ],
+            "@logi-icon/src/*": [
+                "../../build/bin/src/*"
+            ],
+            "@logi-assets/src/*": [
+                "../../build/bin/src/*"
+            ]
+        },
+        "preserveConstEnums": false,
+        "preserveSymlinks": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "jsx": "react",
+        "noErrorTruncation": false,
+        "noEmitOnError": false,
+        "declaration": false,
+        "stripInternal": true,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "sourceMap": false,
+        "typeRoots": [
+            "./external/npm/node_modules/@types"
+        ],
+        "types": []
+    },
+    "files": [
+        "webpack-src/polyfills.ts",
+        "webpack-src/main.ts"
+    ],
+    "compileOnSave": false,
+    "extends": "../../tsconfig-bazel"
+}

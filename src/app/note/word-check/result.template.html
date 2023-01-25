@@ -1,0 +1,16 @@
+<div class='word-count-container'>
+    <div class='label'>检测到{{label}}词汇</div>
+    <div class='word-count'>{{words.length}}个</div>
+</div>
+<div class='word-display-container'>
+    <div class='word-item-container' *ngFor='let word of words' [class.selected]='isWordSelected(word.text)'>
+        <div class='word-tag'>
+            <logi-tag tabindex="-1" [ngClass]='typeClass' (click)='onClickWord(word.text, $event)' [color]='color'>
+                {{word.text}}</logi-tag>
+        </div>
+        <logi-goto class='goto-buttons' [total]='getWordCount(word)' (prev$)='onClickGoto(word.text, false)'
+            (next$)='onClickGoto(word.text, true)'>
+        </logi-goto>
+        <div class='index-step'>{{getIndexStep(word)}}</div>
+    </div>
+</div>

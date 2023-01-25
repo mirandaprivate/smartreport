@@ -1,0 +1,10 @@
+<ng-container *ngIf='isLogin;else load'>
+    <logi-note *ngIf="!isTemplate;else noteTemplate" [noteId]="noteId" [teamId]="teamId" [jid]='jid'></logi-note>
+    <ng-template #noteTemplate>
+        <logi-note-template [templateId]='templateId' [teamId]='teamId' [jid]='jid'></logi-note-template>
+    </ng-template>
+</ng-container>
+
+<ng-template #load>
+    <logi-spinner class="msg"></logi-spinner>
+</ng-template>

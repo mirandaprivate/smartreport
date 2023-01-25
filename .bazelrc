@@ -1,0 +1,12 @@
+build --symlink_prefix=build/
+
+# Go Environment
+build --action_env=GOPROXY=https://goproxy.cn
+
+build --jobs=8
+
+# Save current time to `build/time` of each bazel build command.
+# You can rely on this file to forcely refresh your bazel cache(targets rule
+# which rely on `build/time.txt`) at each build.
+# https://docs.bazel.build/versions/master/user-manual.html#workspace_status
+build --workspace_status_command='echo "LAST_BUILD $(date +%F-%T:%N)" > build/time.txt'

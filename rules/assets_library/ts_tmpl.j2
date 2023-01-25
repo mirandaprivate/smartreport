@@ -1,0 +1,8 @@
+/**
+ * Assets Path.
+ */
+export enum Assets {
+    {% for file in files %}
+    {{ file.name }} = '{{ file.path }}',
+    {% endfor %}
+}

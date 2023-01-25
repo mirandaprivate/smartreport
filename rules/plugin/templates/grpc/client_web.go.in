@@ -1,0 +1,33 @@
+{{ range $_, $service := .Services }}
+{{ getAllLeadingComments . 0 }}export class {{ $service.Name }}ServiceClient { {{- range .Methods }}
+{{ getAllLeadingComments . 1 }}    public static {{ .Name }}(reqMsg: {{ getFullTsName .Input }}): grpc.ClientRpcDescriptor<{{ getFullTsName .Input }}, {{ getFullTsName .Output }}> {
+        return new grpc.ClientRpcDescriptorBuilder<{{ getFullTsName .Input }}, {{ getFullTsName .Output }}>()
+            .path('{{ getGrpcPath . $service.Name }}')
+            .request(reqMsg)
+            .responseType({{ getFullTsName .Output }}Impl)
+            .encodeRequest((req: {{ getFullTsName .Input }}): Uint8Array => {
+                const bin = req.encode()
+                return bin instanceof Uint8Array ? bin : new Uint8Array(0)
+            })
+            .decodeResponse((bytes: Uint8Array): {{ getFullTsName .Output }} =>
+                new {{ getFullTsName .Output }}Builder().decode(bytes).build(),
+            )
+            .build()
+    }{{ end }}
+}
+{{ end }}
+
+{{ range .Services }}
+export class {{ .Name.UpperCamelCase }}GateWay {
+{{- range .Methods }}{{ $info := getGateWayInfo . }}{{ if $info }}
+    public static {{ .Name.ScreamingSnakeCase }} = new grpc.MethodInfoBuilder<{{ getFullTsName .Input }}, {{ getFullTsName .Output }}>()
+        .method('{{ $info.Method }}')
+        .url('{{ $info.Url }}')
+        .requestToJson((req: {{ getFullTsName .Input }}, ignoreDefault = false) => req.toJson(undefined, ignoreDefault))
+        .responseFromJson((
+            str: string,
+        ) => new {{ getFullTsName .Output }}Builder().fromJson(str).build())
+        .build()
+{{ end }}{{ end -}}
+}
+{{ end -}}

@@ -1,0 +1,4 @@
+export function assertIs{{ getTsName . }}(value: unknown): asserts value is {{ getTsName . }} {
+    if (!(value instanceof {{ getTsName . }}Impl))
+        throw Error('Not a {{ getTsName . }}!')
+}

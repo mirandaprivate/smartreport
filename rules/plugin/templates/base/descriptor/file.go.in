@@ -1,0 +1,48 @@
+function buildFileDescriptor(): proto.FileDescriptorProto {
+{{ range .DefinedExtensions }}    const {{ .Name }}ExtOption = new proto.FieldOptionsBuilder()
+        .ctype(proto.CType.{{ .Descriptor.Options.GetCtype }})
+        .packed({{ .Descriptor.Options.GetPacked }})
+        .jstype(proto.JsType.{{ .Descriptor.Options.GetJstype }})
+        .lazy({{ .Descriptor.Options.GetLazy }})
+        .deprecated({{ .Descriptor.Options.GetDeprecated }})
+        .extension(new Map([{{ getExtensionBytes .Descriptor.Options 3 }}
+        ]))
+        .build()
+    const {{ .Name }}Ext = new proto.FieldDescriptorProtoBuilder()
+        .name('{{ .Name }}')
+        .number({{ .Descriptor.GetNumber }})
+        .label({{ getLabelNum . }})
+        .type({{ getTypeNum . }})
+        .typeName('{{ .Descriptor.GetTypeName }}')
+        .extendee('{{ .Descriptor.GetExtendee }}')
+        .defaultValue('{{ .Descriptor.GetDefaultValue }}'){{ if .InOneOf }}
+        .oneofIndex({{ .GetOneofIndex }}){{ end }}
+        .jsonName('{{ .Name }}')
+        .options({{ .Name }}ExtOption)
+        .build()
+{{ end }}{{ template "fileOpt" .Descriptor.Options }}
+    return new proto.FileDescriptorProtoBuilder()
+        .name('{{ .InputPath }}')
+        .package('{{ .Package.ProtoName.String }}')
+        .dependency([{{ range .Descriptor.Dependency }}
+            '{{ . }}',{{ end }}
+        ])
+        .publicDependency([{{ range .Descriptor.PublicDependency }}
+            {{ . }},{{ end }}
+        ])
+        .messageType([{{ range .Messages }}
+            build{{ getTsName . }}Desc(),{{ end }}
+        ])
+        .enumType([{{ range .Enums }}
+            build{{ getTsName . }}Enum(),{{ end }}
+        ])
+        .service([{{ range .Services }}
+            build{{ .Name.String }}Service(),{{ end }}
+        ])
+        .extension([{{ range .DefinedExtensions }}
+            {{ .Name }}Ext,{{ end }}
+        ])
+        .options(opt)
+        .syntax('{{ .Syntax }}')
+        .build()
+}

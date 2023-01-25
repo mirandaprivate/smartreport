@@ -1,0 +1,65 @@
+diff --git a/container/build_tar.py b/container/build_tar.py
+index d5ed962..ad004d6 100644
+--- a/container/build_tar.py
++++ b/container/build_tar.py
+@@ -27,6 +27,7 @@ import sys
+ import re
+ import tarfile
+ import tempfile
++import time
+ 
+ from container import archive
+ 
+@@ -55,7 +56,7 @@ class TarFile(object):
+     self.output = output
+     self.compression = compression
+     self.root_directory = root_directory
+-    self.default_mtime = default_mtime
++    self.default_mtime = default_mtime or int(time.time())
+     self.enable_mtime_preservation = enable_mtime_preservation
+     self.xz_path = xz_path
+     self.force_posixpath = force_posixpath
+diff --git a/container/go/cmd/create_image_config/create_image_config.go b/container/go/cmd/create_image_config/create_image_config.go
+index 3866951..7f8617d 100644
+--- a/container/go/cmd/create_image_config/create_image_config.go
++++ b/container/go/cmd/create_image_config/create_image_config.go
+@@ -23,6 +23,7 @@ import (
+ 	"io/ioutil"
+ 	"log"
+ 	"os"
++	"time"
+ 
+ 	"github.com/bazelbuild/rules_docker/container/go/pkg/compat"
+ 	"github.com/bazelbuild/rules_docker/container/go/pkg/utils"
+@@ -34,7 +35,7 @@ var (
+ 	baseManifest       = flag.String("baseManifest", "", "The base image manifest.")
+ 	outputConfig       = flag.String("outputConfig", "", "The output image config file to generate.")
+ 	outputManifest     = flag.String("outputManifest", "", "The output manifest file to generate.")
+-	creationTimeString = flag.String("creationTime", "", "The creation timestamp. Acceptable formats: Integer or floating point seconds since Unix Epoch, RFC 3339 date/time.")
++	creationTimeString = flag.String("creationTime", string(time.Now().Format(time.RFC3339)), "The creation timestamp. Acceptable formats: Integer or floating point seconds since Unix Epoch, RFC 3339 date/time.")
+ 	user               = flag.String("user", "", "The username to run the commands under.")
+ 	workdir            = flag.String("workdir", "", "Set the working directory of the layer.")
+ 	nullEntryPoint     = flag.Bool("nullEntryPoint", false, "If true, Entrypoint will be set to null.")
+diff --git a/container/image.bzl b/container/image.bzl
+index b40c076..9126089 100644
+--- a/container/image.bzl
++++ b/container/image.bzl
+@@ -467,7 +467,9 @@ def _impl(
+         )
+ 
+     # Construct a temporary name based on the build target.
+-    tag_name = "{}:{}".format(_repository_name(ctx), name)
++    repo_name = ctx.attr.repository or _repository_name(ctx)
++    tag = ctx.attr.tag or name
++    tag_name = "{}:{}".format(repo_name, tag)
+ 
+     # These are the constituent parts of the Container image, which each
+     # rule in the chain must preserve.
+@@ -755,6 +757,7 @@ _attrs = dicts.add(_layer.attrs, {
+         These fields are specified in attributes using Python format
+         syntax, e.g. `foo{BUILD_USER}bar`.""",
+     ),
++    "tag": attr.string(),
+     "user": attr.string(
+         doc = """The user that the image should run as.
+ 

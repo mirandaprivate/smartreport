@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), /* stylelint-disable-line */
+        url('regular.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Medium';
+    src: local('Roboto Medium'), /* stylelint-disable-line */
+        url('medium.ttf') format('truetype');
+}

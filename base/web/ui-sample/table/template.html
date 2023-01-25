@@ -1,0 +1,152 @@
+<h3>使用 logi-table (基于 mat-table 封装，列定义通过 ng-content 传入)</h3>
+<h4>远程加载数据表格</h4>
+<button class="asyn-btn" (click)="onInitDataForAsyn()" logi-flat-button>点击加载数据</button>
+<div class="table-container">
+    <logi-table class="logi-table" (pageChange$)="onPageChange($event)" (rowClick$)="onClickRow($event)"
+        [columnWidthList]="[&quot;10%&quot;,&quot;20%&quot;,&quot;30%&quot;,&quot;40%&quot;]" [columns]="columns"
+        [data]="dataAsync" [isAsyncData]="true" [loading]="loading" [pageSizeOptions]="[2, 4, 8]" [total]="total">
+    </logi-table>
+</div>
+<h4>纯文本表格，并设置各列宽度</h4>
+<div class="table-container">
+    <logi-table class="logi-table" (rowClick$)="onClickRow($event)"
+        [columnWidthList]="[&quot;10%&quot;,&quot;20%&quot;,&quot;30%&quot;,&quot;40%&quot;]" [columns]="columns"
+        [data]="data" [pageSizeOptions]="[2, 4, 8]"></logi-table>
+</div>
+<h4>纯文本表格，自定义各列标题</h4>
+<div class="table-container">
+    <logi-table class="logi-table" (rowClick$)="onClickRow($event)"
+        [columnTitles]="[&quot;序号&quot;, &quot;名字&quot;, &quot;权重&quot;, &quot;简称&quot;]"
+        [columnWidthList]="[&quot;10%&quot;,&quot;20%&quot;,&quot;30%&quot;,&quot;40%&quot;]" [columns]="columns"
+        [data]="data" [pageSizeOptions]="[2, 4, 8]"></logi-table>
+</div>
+<h4>跳转到指定页（pageIndex = 0　表示第一页）</h4>
+<div class="table-container">
+    <logi-table [columns]="customCols" [data]="data" [pageIndex]="2" [pageSizeOptions]="[2, 4, 8]"
+        [sortColumns]="sortCols"></logi-table>
+</div>
+<h4>显示全部列，其中部分列自定义内容</h4>
+<div class="table-container">
+    <logi-table [columns]="columns" [data]="data" [pageSizeOptions]="[2, 4, 8]">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>只显示部分列</h4>
+<div class="table-container">
+    <logi-table [columns]="customCols" [data]="data" [pageSizeOptions]="[2, 4, 8]">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>只让部分列具有排序功能</h4>
+<div class="table-container">
+    <logi-table [columns]="customCols" [data]="data" [pageSizeOptions]="[2, 4, 8]" [sortColumns]="sortCols">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>过滤（使用搜索关键字）</h4>
+<div class="search-input-container"><span class="label">搜索关键字</span>
+    <input [(ngModel)]="searchKey" logi-input>
+</div>
+<div class="table-container">
+    <logi-table [columns]="columns" [data]="data" [filter]="searchKey" [pageSizeOptions]="[2, 4, 8]">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>带有单选效果</h4>
+<div class="table-container">
+    <logi-table [columns]="singleSelectCols1" [data]="data" [pageSizeOptions]="[2, 4, 8]" [singleSelect]="true">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>带有单选效果，自定义列宽度</h4>
+<div class="table-container">
+    <logi-table [columnWidthList]="[&quot;20%&quot;,&quot;20%&quot;,&quot;60%&quot;]" [columns]="singleSelectCols2"
+        [data]="data" [pageSizeOptions]="[2, 4, 8]" [singleSelect]="true">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>带有单选效果，给定选中输入</h4>
+<div class="table-container">
+    <logi-table [columnWidthList]="[&quot;20%&quot;,&quot;20%&quot;,&quot;60%&quot;]" [columns]="singleSelectCols2"
+        [data]="data" [pageSizeOptions]="[2, 4, 8]" [selectedItem]="data[1]" [singleSelect]="true">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>带有多选效果</h4>
+<div class="table-container">
+    <logi-table (selectedItemsChange$)="onSelectChange($event)"
+        [columnWidthList]="[&quot;20%&quot;,&quot;20%&quot;,&quot;60%&quot;]" [columns]="singleSelectCols2"
+        [data]="data" [multipleSelect]="true" [pageSizeOptions]="[2, 4, 8]">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>带有多选效果，给定选中输入</h4>
+<div class="table-container">
+    <logi-table [columnWidthList]="[&quot;20%&quot;,&quot;20%&quot;,&quot;60%&quot;]" [columns]="singleSelectCols2"
+        [data]="data" [multipleSelect]="true" [pageSizeOptions]="[2, 4, 8]" [selectedItems]="[data[1], data[3]]">
+        <ng-template colDef column="name" let-item>
+            <div class="user">
+                <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+            </div>
+        </ng-template>
+        <ng-template colDef column="weight" let-item><span>{{item.weight}}</span></ng-template>
+    </logi-table>
+</div>
+<h4>引用外部 templateRef</h4>
+<p>列模板不作为 content 传入，在外部（使用 logi-table 的组件的模板中）定义，这样的话，列模板中的样式可以直接在使用 logi-table 的组件中定义</p>
+<div class="table-container">
+    <logi-table [columns]="columns" [data]="data" [pageSizeOptions]="[2, 4, 8]">
+        <ng-template colDef column="name" let-item>
+            <ng-container *ngTemplateOutlet="nameCol; context: {$implicit:item}"></ng-container>
+        </ng-template>
+        <ng-template colDef column="weight" let-item>
+            <ng-container *ngTemplateOutlet="weightCol; context: {$implicit:item}"></ng-container>
+        </ng-template>
+    </logi-table>
+</div>
+<ng-template #nameCol let-item>
+    <div class="user">
+        <mat-icon svgIcon="ic_user"></mat-icon><span>{{item.name}}</span>
+    </div>
+</ng-template>
+<ng-template #weightCol let-item><span>{{item.weight}}</span></ng-template>

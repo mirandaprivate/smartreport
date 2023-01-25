@@ -1,0 +1,5 @@
+{{ template "interface" . }}
+{{ template "impl" . }}
+{{ template "builder" . }}
+{{ template "typeGuide" . }}
+{{ template "typeAssertion" . }}

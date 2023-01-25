@@ -1,0 +1,79 @@
+<logi-header [title]='"文档设置"' (close$)='close()'></logi-header>
+<div class="body">
+    <div class="key">研报名称:</div>
+    <input [formControl]='reportNameFormControl' logi-input>
+    <div class="key">模板:</div>
+    <div class="value text">{{reportInfo.template?.name}}</div>
+    <div class="key">文档类型:</div>
+    <div class="value text">{{reportInfo.reportDocType}}</div>
+    <div class="key">研究对象类型:</div>
+    <div class="value text">{{reportInfo.researchType?.name}}</div>
+    <div class="key">研究对象:</div>
+    <div class="value text">{{reportInfo.researchTarget?.name}}</div>
+    <div class="key">查看者:</div>
+    <div class="value perm">
+        <logi-radio-group (change$)='readersChanged($event)' [formControl]='readersFormControl'>
+            <logi-radio-button class="normal-perm-button" *ngFor='let p of normalPerms' [value]='p'>
+                {{p | permType}}
+            </logi-radio-button>
+            <logi-radio-button class="custom-perm-button" [value]='permTypeEnum.PERM_TYPE_CUSTOM'>
+                <div class="custom-perm-container">
+                    <div class="custom-perm-tag">{{permTypeEnum.PERM_TYPE_CUSTOM| permType}}</div>
+                    <logi-select class="custom-perm-select" (valueChange$)='readSelectValueChanged($event)'
+                        [disabled]='readersFormControl.value !== permTypeEnum.PERM_TYPE_CUSTOM'
+                        [value]='readerSelectValues' [transfer]="transfer" mode='multiple'>
+                        <logi-option-group>
+                            <logi-option *ngFor='let option of readersOptions' [label]='option.fullName'
+                                [value]='option' [id]='option.id'>{{option.fullName}}
+                            </logi-option>
+                        </logi-option-group>
+                    </logi-select>
+                </div>
+            </logi-radio-button>
+        </logi-radio-group>
+    </div>
+    <div class="key">协作编辑:</div>
+    <div class="value perm">
+        <logi-radio-group (change$)='writersChanged($event)' [formControl]='writersFormControl'>
+            <logi-radio-button class="normal-perm-button" *ngFor='let p of normalPerms' [value]='p'>
+                {{p | permType}}
+            </logi-radio-button>
+            <logi-radio-button class="custom-perm-button" [value]='permTypeEnum.PERM_TYPE_CUSTOM'>
+                <div class="custom-perm-container">
+                    <div class="custom-perm-tag">{{permTypeEnum.PERM_TYPE_CUSTOM| permType}}</div>
+                    <logi-select class="custom-perm-select" (valueChange$)='writeSelectValueChanged($event)'
+                        [disabled]='writersFormControl.value !== permTypeEnum.PERM_TYPE_CUSTOM'
+                        [value]='writerSelectValues' [transfer]="transfer" mode='multiple'>
+                        <logi-option-group>
+                            <logi-option *ngFor='let option of writersOptions' [value]='option'
+                                [label]='option.fullName' [id]='option.id'>{{option.fullName}}
+                            </logi-option>
+                        </logi-option-group>
+                    </logi-select>
+                </div>
+            </logi-radio-button>
+        </logi-radio-group>
+    </div>
+    <div class="key">分类:</div>
+    <logi-select [value]='currClassification' [transfer]="transfer" (valueChange$)='classificationChange($event)'>
+        <logi-option #op *ngFor='let option of classifications' [value]='option' [label]="transfer(option).label">
+            {{op.label}}
+        </logi-option>
+    </logi-select>
+    <div class="key">类型:</div>
+    <logi-select [value]='currType' [transfer]="transfer" (valueChange$)='currType = $event'>
+        <logi-option #op *ngFor='let option of types' [value]='option' [label]='transfer(option).label'>{{op.label}}
+        </logi-option>
+    </logi-select>
+    <div class="key">标签:</div>
+    <logi-select [value]='currTags' [transfer]="tagTransfer" [searchable]="true" (searchKeyChanged$)="searchTag($event)"
+        (valueChange$)='currTags = $event' mode='multiple'>
+        <logi-option #op *ngFor='let option of tags' [value]='option' [label]="tagTransfer(option).label"
+            [id]='tagTransfer(option).id'>{{op.label}}
+        </logi-option>
+    </logi-select>
+</div>
+<div class="footer">
+    <button (click)='save()' logi-flat-button>保存</button>
+    <button (click)='close()' logi-button>取消</button>
+</div>

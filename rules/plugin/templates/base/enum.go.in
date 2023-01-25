@@ -1,0 +1,17 @@
+{{ $enumName := (getTsName .)  }}{{ getAllLeadingComments . 0 }}export enum {{ $enumName }}Enum {
+{{ range .Values }}{{ getAllLeadingComments . 1 }}    {{ toUpper .Name.String }} = {{ .Value }},
+{{ end }}}
+
+export function get{{ $enumName }}EnumFromString(enumString: string): {{ $enumName }}Enum {
+    const enumStringMap = new Map([
+{{ range .Values}}        ['{{ toUpper .Name.String }}', {{ $enumName }}Enum.{{ toUpper .Name.String }}],
+{{ end }}    ])
+    return enumStringMap.get(enumString) ?? 0
+}
+
+export function get{{ $enumName }}EnumString(enumValue: {{ $enumName }}Enum): string {
+    const enumStringMap = new Map([
+{{ range .Values}}        [{{ $enumName }}Enum.{{ toUpper .Name.String }}, '{{ toUpper .Name.String }}'],
+{{ end }}    ])
+    return enumStringMap.get(enumValue) ?? ''
+}

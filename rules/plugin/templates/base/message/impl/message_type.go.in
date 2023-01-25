@@ -1,0 +1,1 @@
+    public {{ .Name.LowerCamelCase }}{{ if isRequiredField . }}!{{ else }}?{{ end }}: {{ getTsType . }}

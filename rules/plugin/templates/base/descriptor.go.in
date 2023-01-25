@@ -1,0 +1,5 @@
+const FILE_DESCRIPTOR = buildFileDescriptor()
+{{ template "fileDesc" . }}
+{{ template "fieldDesc" . }}
+{{ template "enumDesc" . }}
+{{ template "serviceDesc" . }}

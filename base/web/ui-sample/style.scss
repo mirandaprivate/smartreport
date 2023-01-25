@@ -1,0 +1,79 @@
+@use 'base/web/ui/core/styles/shared';
+
+@use 'base/web/ui/core/styles/scrollbar';
+
+$nav-item-hover-bg: rgba(0, 0, 0, 0.04);
+$nav-item-selected-bg: rgba(65, 120, 184, 0.12);
+
+@include scrollbar.simple-scrollbar;
+
+:host {
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    font-family: shared.$base-font;
+}
+
+.ui-sample-header {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    border-bottom: shared.$border-base;
+    height: 64px;
+    padding: 0 24px;
+
+    .theme-radio-button {
+        margin-right: 8px;
+    }
+
+    .title {
+        margin: 0;
+        line-height: 64px;
+        color: shared.$black-87;
+    }
+}
+
+.ui-sample-body {
+    display: flex;
+    height: calc(100% - 64px);
+}
+
+.ui-sample-side-nav {
+    flex-direction: column;
+    display: flex;
+    overflow-y: auto;
+    border-right: shared.$border-base;
+    width: 240px;
+    height: 100%;
+
+    a {
+        height: 36px;
+        padding-left: 24px;
+        font-size: 14px;
+        line-height: 36px;
+        color: shared.$font-color-base;
+        text-decoration: none;
+    }
+    a:hover {
+        background-color: $nav-item-hover-bg;
+    }
+    a.active {
+        background-color: $nav-item-selected-bg;
+        font-weight: bold;
+        color: shared.$base-blue;
+    }
+}
+
+.ui-sample-content {
+    overflow: auto;
+    width: calc(100% - 240px);
+    padding: 24px;
+}
+
+.sample-title-header {
+    align-items: center;
+    display: flex;
+}

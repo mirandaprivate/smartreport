@@ -1,0 +1,37 @@
+<div class="logi-table" #tableMainElement [class.logi-table-bordered]="logiBordered"
+    [class.logi-table-fixed-column]="scrollX" [class.logi-table-fixed-header]="logiData.length &amp;&amp; scrollY"
+    [class.logi-table-has-fix-left]="hasFixLeft" [class.logi-table-has-fix-right]="hasFixRight"
+    [class.logi-table-middle]="logiSize === &quot;middle&quot;"
+    [class.logi-table-out-bordered]="logiOuterBordered &amp;&amp; !logiBordered"
+    [class.logi-table-rtl]="dir === &quot;rtl&quot;" [class.logi-table-small]="logiSize === &quot;small&quot;"
+    [class.scroll-y]="scrollY"
+    [class.withoutPage]="!_paginatorOptions.show || !(data.length &amp;&amp; _paginatorOptions.show)">
+    <ng-container *ngIf="!logiLoading;else loading">
+        <logi-table-inner-scroll *ngIf="scrollY || scrollX; else defaultTemplate" [class.scroll-y]="scrollY"
+            [noResult]="logiNoResult" [contentTemplate]="contentTemplate" [data]="data"
+            [listOfColWidth]="listOfAutoColWidth" [scrollX]="scrollX" [scrollY]="scrollY"
+            [tableMainElement]="tableMainElement" [theadTemplate]="theadTemplate"
+            [verticalScrollBarWidth]="verticalScrollBarWidth" [virtualForTrackBy]="logiVirtualForTrackBy"
+            [virtualItemSize]="logiVirtualItemSize" [virtualMaxBufferPx]="logiVirtualMaxBufferPx"
+            [virtualMinBufferPx]="logiVirtualMinBufferPx"
+            [virtualTemplate]="logiVirtualScrollDirective ? logiVirtualScrollDirective.templateRef : null">
+        </logi-table-inner-scroll>
+    </ng-container>
+    <ng-template #defaultTemplate>
+        <logi-table-inner-default [contentTemplate]="contentTemplate" [listOfColWidth]="listOfManualColWidth"
+            [tableLayout]="logiTableLayout" [theadTemplate]="theadTemplate"></logi-table-inner-default>
+    </ng-template>
+</div>
+<ng-template #loading>
+    <div class="loading-shape" [class.bg]="showLoadingBg">
+        <logi-spinner></logi-spinner>
+    </div>
+</ng-template>
+<ng-template #contentTemplate>
+    <ng-content></ng-content>
+</ng-template>
+<mat-paginator class="logi-table-pagination logi-table-pagination-right" *ngIf="_paginatorOptions.show"
+    (page)="onPage($event)" [hidePageSize]="_paginatorOptions.hidePageSize" [length]="_paginatorOptions.total"
+    [pageIndex]="_paginatorOptions.pageIndex" [pageSizeOptions]="_paginatorOptions.pageSizeOptions"
+    [pageSize]="_paginatorOptions.pageSize" [showFirstLastButtons]="_paginatorOptions.showFirstLastButtons">
+</mat-paginator>

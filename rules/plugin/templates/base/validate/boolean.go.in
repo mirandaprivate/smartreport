@@ -1,0 +1,2 @@
+{{ $r := .Rules }}{{ if $r.Const }}    @validator.Equals({{ $r.GetConst }})
+{{ end }}

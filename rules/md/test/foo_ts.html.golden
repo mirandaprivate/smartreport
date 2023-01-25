@@ -1,0 +1,2 @@
+// tslin<span class="hljs-variable">t:disable</span>-<span class="hljs-keyword">next</span>-<span class="hljs-built_in">line</span>: <span class="hljs-keyword">no</span>-console
+console.<span class="hljs-built_in">log</span>(<span class="hljs-string">'hello world!'</span>)

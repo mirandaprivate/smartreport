@@ -1,0 +1,18 @@
+{
+    "dependencies": {},
+    "description": "Wps offic sdk.",
+    "keywords": [
+        "logi",
+        "office",
+        "wps"
+    ],
+    "main": "index.js",
+    "name": "@logi/wps",
+    "repository": {
+        "directory": "deps/npm/packages/wps",
+        "type": "git",
+        "url": "http://git.corp.logiocean.com/LogiOcean/LogiOcean"
+    },
+    "typings": "index.d.ts",
+    "version": "1.1.10"
+}

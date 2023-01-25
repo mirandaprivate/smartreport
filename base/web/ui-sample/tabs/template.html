@@ -1,0 +1,66 @@
+<div class="sample-item-container">
+  <div class="sample-header">
+    <div class="sample-title">基础示例</div>
+    <logi-select class="tabs-control" (valueChange$)="onSelectPosition($event)" [value]="position">
+      <logi-option *ngFor="let option of positionList" [label]="getPositionLabel(option)" [value]="option">{{getPositionLabel(option)}}</logi-option>
+    </logi-select>
+  </div>
+  <logi-tabset class="tabs" [tabPosition]="position">
+    <logi-tab label="标签一"><span>标签一的内容</span></logi-tab>
+    <logi-tab label="标签二"><span>标签二的内容</span></logi-tab>
+    <logi-tab label="标签三"><span>标签三的内容</span></logi-tab>
+  </logi-tabset>
+</div>
+<div class="sample-item-container">
+  <div class="sample-header">
+    <div class="sample-title">滚动按钮(两侧)</div>
+    <logi-radio-group class="tabs-control" (change$)="onSelectDirection($event)" value="horizontal">
+      <logi-radio-button class="btn" value="horizontal">水平</logi-radio-button>
+      <logi-radio-button class="btn" value="vertical">垂直</logi-radio-button>
+    </logi-radio-group>
+  </div>
+  <logi-tabset class="tabs" [tabPosition]="direction">
+    <logi-tab *ngFor="let tab of tabList1" [label]="tab.title"><span>{{tab.content}}</span></logi-tab>
+  </logi-tabset>
+</div>
+<div class="sample-item-container">
+  <div class="sample-header">
+    <div class="sample-title">logi sheet 风格</div>
+  </div>
+  <logi-tabset class="tabs" [hiddenInkBar]="true" logiTabStyle="sheet" tabPosition="bottom">
+    <logi-tab *ngFor="let sheet of tabList1" [label]="labelContent"><span>{{sheet.content}}</span>
+      <ng-template #labelContent>
+        <mat-icon svgIcon="ic_panel_formula"></mat-icon><span>{{sheet.title}}</span>
+      </ng-template>
+    </logi-tab>
+  </logi-tabset>
+</div>
+<div class="sample-item-container">
+  <div class="sample-header">
+    <div class="sample-title">logi panel 风格</div>
+  </div>
+  <logi-tabset class="tabs" [hiddenInkBar]="true" logiTabStyle="panel" tabPosition="left">
+    <logi-tab *ngFor="let sheet of tabList2" [label]="labelContent"><span>{{sheet.content}}</span>
+      <ng-template #labelContent>
+        <mat-icon *ngIf="sheet.icon !== undefined" [svgIcon]="sheet.icon"></mat-icon><span>{{sheet.title}}</span>
+      </ng-template>
+    </logi-tab>
+  </logi-tabset>
+</div>
+<div class="sample-item-container">
+  <div class="sample-header">
+    <div class="sample-title">logi box 风格</div>
+  </div>
+  <logi-tabset class="tabs" [hiddenInkBar]="true" logiTabStyle="box">
+    <logi-tab *ngFor="let sheet of tabList3" [label]="sheet.title"><span>{{sheet.content}}</span></logi-tab>
+  </logi-tabset>
+</div>
+<div class="sample-item-container">
+  <div class="sample-header">
+    <div class="sample-title">带有前置内容</div>
+  </div>
+  <logi-tabset class="tabs" [hiddenInkBar]="true" [tabBarExtraStartContent]="navTitle">
+    <ng-template #navTitle><span class="nav-title">个股研究</span></ng-template>
+    <logi-tab *ngFor="let tab of tabList4" [label]="tab.title"><span>{{tab.content}}</span></logi-tab>
+  </logi-tabset>
+</div>

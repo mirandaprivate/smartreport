@@ -1,0 +1,11 @@
+<span class="label">引用方式:</span>
+<logi-radio-group>
+    <logi-radio-button class="relative-reference" [checked]='isRelative' [value]='1' (change$)='isRelative$.next(true)'
+        [disabled]='!isTimeSeries' size='middle'>
+        相对引用
+    </logi-radio-button>
+    <logi-radio-button class="absolute-reference" [checked]='!isRelative' [value]='2'
+        (change$)='isRelative$.next(false)' [disabled]='!isTimeSeries' size='middle'>
+        绝对引用
+    </logi-radio-button>
+</logi-radio-group>

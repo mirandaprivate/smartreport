@@ -1,0 +1,6 @@
+export * from './select.component'
+export * from './option.component'
+export {LogiSelectPanelActionsDirective} from './panel_actions.directive'
+export {LogiOptionGroupComponent} from './option_group.component'
+export {LogiSelectModule} from './module'
+export {Label} from './selected_label.component'

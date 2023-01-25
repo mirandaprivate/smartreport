@@ -1,0 +1,54 @@
+{{ range $_, $s := .Services }}
+{{ getAllLeadingComments . 0 }}export interface {{ $s.Name }}ServiceHandlerFactory { {{- range .Methods }}
+{{ getAllLeadingComments . 1 }}    readonly {{ .Name.LowerCamelCase }}: {{ getHandleType . }}<{{ getFullTsName .Input }}, {{ getFullTsName .Output }}>{{ end }}
+    getServerDesc(): Map<string, grpc.ServerRpcDescriptor<unknown, unknown>>
+}
+
+class {{ $s.Name }}ServiceHandlerFactoryImpl implements __Impl__<{{ $s.Name }}ServiceHandlerFactory> { {{- range .Methods }}
+    public {{ .Name.LowerCamelCase }}!: {{ getHandleType . }}<{{ getFullTsName .Input }}, {{ getFullTsName .Output }}>{{ end }}
+
+    public getServerDesc(): Map<string, grpc.ServerRpcDescriptor<unknown, unknown>> {
+        const map = new Map<string, grpc.ServerRpcDescriptor<any, any>>()
+{{ range .Methods}}
+        const {{ .Name.LowerCamelCase }}Desc = new grpc.ServerRpcDescriptorBuilder<{{ getFullTsName .Input }}, {{ getFullTsName .Output }}>()
+            .path('{{ getGrpcPath . $s.Name }}')
+            .decodeRequest((data: Buffer): {{ getFullTsName .Input }} =>
+                new {{ getFullTsName .Input }}Builder().decode(data).build(),
+            )
+            .encodeResponse((res: {{ getFullTsName .Output }}): Buffer => {
+                const bin = res.encode()
+                if (bin instanceof Uint8Array)
+                    return Buffer.from(bin)
+                return Buffer.from('')
+            })
+            .serverStream({{ .ServerStreaming }})
+            .clientStream({{ .ClientStreaming }})
+            .handle(this.{{ .Name.LowerCamelCase }})
+            .build()
+        map.set('{{ getGrpcPath . $s.Name }}', {{ .Name.LowerCamelCase }}Desc)
+{{ end }}
+        return map
+    }
+}
+
+export class {{ $s.Name }}ServiceHandlerFactoryBuilder extends __Builder__<{{ $s.Name }}ServiceHandlerFactory, {{ $s.Name }}ServiceHandlerFactoryImpl> {
+    public constructor(obj?: Readonly<{{ $s.Name }}ServiceHandlerFactory>) {
+        const impl = new {{ $s.Name }}ServiceHandlerFactoryImpl()
+        if (obj)
+            {{ $s.Name }}ServiceHandlerFactoryBuilder.shallowCopy(impl, obj)
+        super(impl)
+    }
+{{ range .Methods }}
+    public {{ .Name.LowerCamelCase }}({{ .Name.LowerCamelCase }}: {{ getHandleType . }}<{{ getFullTsName .Input }}, {{ getFullTsName .Output }}>): this {
+        this.getImpl().{{ .Name.LowerCamelCase }} = {{ .Name.LowerCamelCase }}
+        return this
+    }{{ end }}
+
+    protected get daa(): readonly string[] {
+        return {{ $s.Name }}ServiceHandlerFactoryBuilder.__DAA_PROPS__
+    }
+    protected static readonly __DAA_PROPS__: readonly string[] = [{{ range .Methods }}
+        '{{ .Name.LowerCamelCase }}',{{ end }}
+    ]
+}
+{{ end }}

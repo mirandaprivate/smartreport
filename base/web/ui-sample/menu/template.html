@@ -1,0 +1,60 @@
+<h2>使用 mat-menu</h2>
+<div class='sample'>
+    <div class="sample-title-header">
+        <h4>基础用法</h4>
+        <logi-code-tab-button codeId="menu_a"></logi-code-tab-button>
+    </div>
+    <p>直接使用 mat-menu，为Panel附加我们的样式类(logi-style-menu-panel)</p>
+    <button [matMenuTriggerFor]="mat_menu" fontIcon="more_vert" logi-icon-button></button>
+    <mat-menu #mat_menu="matMenu" [class]="&quot;logi-style-menu-panel&quot;">
+        <button mat-menu-item>选项１</button>
+        <button mat-menu-item [matMenuTriggerFor]='mat_sub_mebu'>选项２</button>
+    </mat-menu>
+    <mat-menu #mat_sub_mebu>
+        <button mat-menu-item>选项3</button>
+        <button mat-menu-item>选项4</button>
+    </mat-menu>
+</div>
+
+<h2>使用 logi-menu</h2>
+<div class='sample'>
+    <h4>基础用法</h4>
+    <button fontIcon='more_vert' logi-icon-button [logiMenuTrigger]='menu1'></button>
+    <logi-menu #menu1='logiMenu'>
+        <button logi-menu-item>选项1</button>
+        <button logi-menu-item>选项2</button>
+        <mat-divider></mat-divider>
+        <button logi-menu-item [logiMenuTrigger]='subMenu1'>选项3</button>
+    </logi-menu>
+    <logi-menu #subMenu1='logiMenu'>
+        <button logi-menu-item>选项4</button>
+        <button logi-menu-item>选项5</button>
+    </logi-menu>
+    <h4>右键触发</h4>
+    <button fontIcon='more_vert' logi-icon-button [logiContextMenuTrigger]='menu3'></button>
+    <logi-menu #menu3='logiMenu'>
+        <button logi-menu-item>foo</button>
+        <button logi-menu-item>bar</button>
+    </logi-menu>
+</div>
+
+<div class='sample'>
+    <h4>绑定数据和右键触发功能</h4>
+    <div class='row' [logiContextMenuTrigger]='menu2' [menuData]='data'>
+        <span class='text'>一行数据</span>
+        <button #menu_trigger='logiMenuTrigger' fontIcon='more_vert' logi-icon-button [logiMenuTrigger]='menu2'
+            [menuData]='data' (menuOpened$)='onMenuChange()' (menuClosed$)='onMenuChange()'></button>
+    </div>
+    <logi-menu #menu2='logiMenu'>
+        <ng-template logi-menu-content let-data>
+            <button logi-menu-item>选项１: {{data.id}}</button>
+            <button logi-menu-item [logiMenuTrigger]='subMenu2' [menuData]='data'>选项２: {{data.name}}</button>
+        </ng-template>
+    </logi-menu>
+    <logi-menu #subMenu2='logiMenu'>
+        <ng-template logi-menu-content let-data>
+            <button logi-menu-item>选项4: {{data.name}}</button>
+            <button logi-menu-item>选项5</button>
+        </ng-template>
+    </logi-menu>
+</div>

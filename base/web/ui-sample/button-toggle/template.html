@@ -1,0 +1,13 @@
+<h4>基础用法</h4>
+<logi-button-toggle-group (valueChange$)='onValueChange($event)'>
+    <logi-button-toggle value='沪深'>沪深</logi-button-toggle>
+    <logi-button-toggle value='港股'>港股</logi-button-toggle>
+    <logi-button-toggle value='美股'>美股</logi-button-toggle>
+</logi-button-toggle-group>
+
+<h4>提供默认值</h4>
+<logi-button-toggle-group [value]='defaultValue' (valueChange$)='onValueChange($event)'>
+    <logi-button-toggle value='沪深'>沪深</logi-button-toggle>
+    <logi-button-toggle value='港股'>港股</logi-button-toggle>
+    <logi-button-toggle value='美股'>美股</logi-button-toggle>
+</logi-button-toggle-group>

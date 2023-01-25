@@ -1,0 +1,20 @@
+<h4>基本用法</h4>
+<div>当前选中: {{selectedValue}}</div>
+<logi-cascaded-select [options]='options' (change$)='onChange($event)'></logi-cascaded-select>
+
+<h4>提供初始选中值</h4>
+<logi-cascaded-select [options]='options1' [value]='initValue' (valueChange$)='onChange1($event)'>
+</logi-cascaded-select>
+
+<h4>选项的value为对象的情况</h4>
+<logi-cascaded-select [options]='options2' [value]='initValue1' (valueChange$)='onChange2($event)'>
+</logi-cascaded-select>
+
+<h4>过滤按钮效果</h4>
+<logi-cascaded-select class='filter' innerLabel='选择城市:' [noborder]='true' [ripple]='true' [columnWidth]='120'
+    [options]='options1' [value]='initValue'>
+</logi-cascaded-select>
+
+<h4>disabled</h4>
+<logi-cascaded-select disabled [options]='options1' [value]='initValue' (valueChange$)='onChange1($event)'>
+</logi-cascaded-select>

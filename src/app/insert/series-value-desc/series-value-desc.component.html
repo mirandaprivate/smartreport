@@ -1,0 +1,38 @@
+<ng-container *ngFor="let item of seriesValueDescs;let i = index">
+    <div class="key">{{item.key}}:&nbsp;</div>
+    <div class="desc">
+        <ng-container [ngSwitch]="item.type">
+            <ng-container *ngSwitchCase='dataViewItemId.ABS_TIME'>
+                <div class="value">{{item.value}}</div>
+            </ng-container>
+            <ng-container *ngSwitchCase='dataViewItemId.DISTANCE'>
+                <span>最近{{freq | logiFreq}}&nbsp;&nbsp;</span>
+                <logi-input-number class="distance-input" [showLeftRightButton]='false' [value]="item.getNum()"
+                    (valueChange$)="distanceChanged$.next([$event.toString(), i])"></logi-input-number>
+                <span>&nbsp;&nbsp;{{freq | logiFreq}}</span>
+            </ng-container>
+            <ng-container *ngSwitchCase='dataViewItemId.FREQ'>
+                <div>{{freq | logiFreq}}</div>
+            </ng-container>
+            <ng-container *ngSwitchCase='dataViewItemId.MAGNITUDE'>
+                <div class="magnitude-container">
+                    <span>乘以</span>
+                    <logi-input-number class="magnitude-input" [inputNumberType]='inputNumberType' [step]='10'
+                        [value]="item.getNum()" (valueChange$)='magnitudeChanged$.next([$event.toString(), i])'>
+                    </logi-input-number>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase='dataViewItemId.PLACEHOLDER'>
+                <div>{{item.value}}</div>
+            </ng-container>
+            <ng-container *ngSwitchCase='dataViewItemId.UNIT'>
+                <span>{{item.value}}</span>
+            </ng-container>
+            <ng-container *ngSwitchCase='dataViewItemId.ABS_DATA'>
+                <span>{{item.value}}</span>
+                <button logi-icon-button icon='ic_edit_copy' smaller [cdkCopyToClipboard]='item.value'
+                    (cdkCopyToClipboardCopied)='onItemValueCopied()' matTooltip='复制'></button>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>

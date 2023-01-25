@@ -1,0 +1,14 @@
+{{ $r := .Rules }}{{ if $r.Const }}    @logiValidator.longEquals(Long.fromString('{{ $r.GetConst }}'))
+{{ end }}{{ if or $r.Lt $r.Gt $r.Lte $r.Gte }}    @logiValidator.longCompare({ {{- if $r.Gt }}
+        gt: Long.fromString('{{ $r.GetGt }}'),{{ end }}{{ if $r.Gte }}
+        gte: Long.fromString('{{ $r.GetGte }}'),{{ end }}{{ if $r.Lt }}
+        lt: Long.fromString('{{ $r.GetLt }}'),{{ end }}{{ if $r.Lte }}
+        lte: Long.fromString('{{ $r.GetLte }}'),{{ end }}
+    })
+{{ end }}{{ if $r.NotIn }}    @logiValidator.longIsNotIn([{{ range $r.GetNotIn }}
+        Long.fromString('{{ . }}'),{{ end }}
+    ])
+{{ end }}{{ if $r.In }}    @logiValidator.longIsIn([{{ range $r.GetIn }}
+        Long.fromString('{{ . }}'),{{ end }}
+    ])
+{{ end }}

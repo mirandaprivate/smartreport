@@ -1,0 +1,93 @@
+@use 'src/app/assets/styles/shared';
+$selected-bg: rgba(65, 120, 184, 0.12);
+$selected-border: 2px solid #4178B8;
+$selected-relative-border: 2px dotted #4178B8;
+:host {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.scrollbar-container {
+    width: 100%;
+    height: 100%;
+}
+.scroll-btn {
+    position: absolute;
+    z-index: 1;
+    top: 38%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+    border-radius: 50%;
+    background-color: #FFFFFF;
+}
+.left-scroll-btn {
+    left: 8px;
+}
+.right-scroll-btn {
+    right: 8px;
+}
+.scroll.template {
+    margin-top: 18px;
+}
+.scroll {
+    border-radius: 4px;
+    width: 100%;
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    thead {
+        height: 34px;
+        th {
+            position: relative;
+            border: 0.5px solid rgba(0, 0, 0, 0.12);
+            background-color: rgba(0, 0, 0, 0.04);
+            @include shared.set-font(12px, $color: rgba(0,0,0,0.6));
+        }
+        th.selected {
+            border-left: $selected-border;
+            border-right: $selected-border;
+            border-top: $selected-border;
+            background-color: $selected-bg;
+        }
+        th.selected.relative {
+            border-left: $selected-relative-border;
+            border-right: $selected-relative-border;
+            border-top: $selected-relative-border;
+        }
+    }
+    tbody {
+        height: 34px;
+        td {
+            border: 0.5px solid rgba(0, 0, 0, 0.12);
+            @include shared.set-font();
+        }
+        td.selected {
+            border-bottom: $selected-border;
+            border-left: $selected-border;
+            border-right: $selected-border;
+            background-color: $selected-bg;
+        }
+        td.selected.relative {
+            border-bottom: $selected-relative-border;
+            border-left: $selected-relative-border;
+            border-right: $selected-relative-border;
+        }
+    }
+    .curr-date-box {
+        position: absolute;
+        top: -19px;
+        right: 0;
+        border-radius: 4px 4px 0;
+        width: 56px;
+        height: 19px;
+        background-color: rgba(0, 0, 0, 0.08);
+    }
+}
+.empty-table {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0 4px 0 0;
+    height: 66px;
+}

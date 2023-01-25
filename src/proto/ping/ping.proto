@@ -1,0 +1,16 @@
+// (api-linter: core::0158::request-page-size-field=disabled)
+// (api-linter: core::0158::request-page-token-field=disabled)
+// (api-linter: core::0158::response-next-page-token-field=disabled)
+// (api-linter: core::0142::time-field-type=disabled)
+syntax = "proto3";
+
+package saas;
+option go_package = 'logi/src/proto/ping';
+
+message Ping {
+    string req = 1;
+}
+
+message Pong {
+    string res = 1;
+}

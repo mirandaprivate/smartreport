@@ -1,0 +1,10 @@
+@use 'src/app/assets/styles/shared';
+
+.logi-growth {
+    &-positive {
+        color: shared.$base-red;
+    }
+    &-negative {
+        color: shared.$base-green;
+    }
+}

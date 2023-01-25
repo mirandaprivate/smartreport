@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message Other {
+    OtherItem item = 1;
+}
+
+enum OtherItem {
+    OTHER_ZERO = 0;
+    OTHER_FOO = 1;
+    OTHER_BAR = 2;
+}

@@ -1,0 +1,17 @@
+{{ $r := .Rules }}{{ if $r.Const }}    @logiValidator.timestampEquals({
+        nanos: {{ $r.GetConst.GetNanos }},
+        seconds: Long.fromString('{{ $r.GetConst.GetSeconds }}'),
+    })
+{{ end }}{{ if or $r.Lt $r.Gt $r.Lte $r.Gte }}    @logiValidator.timestampCompare({ {{- if $r.Gt }}
+        gt: {nanos: {{ $r.GetGt.GetNanos }}, seconds: Long.fromString('{{ $r.GetGt.GetSeconds }}')},{{ end }}{{ if $r.Gte }}
+        gte: {nanos: {{ $r.GetGte.GetNanos }}, seconds: Long.fromString('{{ $r.GetGte.GetSeconds }}')},{{ end }}{{ if $r.Lt }}
+        lt: {nanos: {{ $r.GetLt.GetNanos }}, seconds: Long.fromString('{{ $r.GetLt.GetSeconds }}')},{{ end }}{{ if $r.Lte }}
+        lte: {nanos: {{ $r.GetLte.GetNanos }}, seconds: Long.fromString('{{ $r.GetLte.GetSeconds }}')},{{ end }}
+    })
+{{ end }}{{ if $r.LtNow }}    @logiValidator.timestampLtNow()
+{{ end }}{{ if $r.GtNow }}    @logiValidator.timestampGtNow()
+{{ end }}{{ if $r.Within }}    @logiValidator.timestampWithin({
+        nanos: {{ $r.GetWithin.GetNanos }},
+        seconds: Long.fromString('{{ $r.GetWithin.GetSeconds }}'),
+    })
+{{ end }}

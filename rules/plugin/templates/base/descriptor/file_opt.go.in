@@ -1,0 +1,22 @@
+    const opt = new proto.FileOptionsBuilder(){{ if .GetJavaPackage}}
+        .javaPackage('{{ .GetJavaPackage }}'){{ end }}{{ if .GetJavaOuterClassname }}
+        .javaOuterClassname('{{ .GetJavaOuterClassname }}'){{ end }}{{ if .GetJavaMultipleFiles }}
+        .javaMultipleFiles(true){{ end }}{{ if .GetJavaGenerateEqualsAndHash }}
+        .javaGenerateEqualsAndHash(true){{ end }}{{ if .GetJavaStringCheckUtf8 }}
+        .javaStringCheckUtf8(true){{ end }}
+        .optimizeFor(proto.OptimizeMode.{{ .GetOptimizeFor }}){{ if .GetGoPackage }}
+        .goPackage('{{ .GetGoPackage }}'){{ end }}{{ if .GetCcGenericServices }}
+        .ccGenericServices(true){{ end }}{{ if .GetJavaGenericServices }}
+        .javaGenericServices(true){{ end }}{{ if .GetPyGenericServices }}
+        .pyGenericServices(true){{ end }}{{ if .GetPhpGenericServices }}
+        .phpGenericServices(true){{ end }}{{ if .GetDeprecated }}
+        .deprecated(true){{ end }}{{ if .GetCcEnableArenas }}
+        .ccEnableArenas(true){{ end }}{{ if .GetObjcClassPrefix }}
+        .objcClassPrefix('{{ .GetObjcClassPrefix }}'){{ end }}{{ if .GetCsharpNamespace }}
+        .csharpNamespace('{{ .GetCsharpNamespace }}'){{ end }}{{ if .GetSwiftPrefix }}
+        .swiftPrefix('{{ .GetSwiftPrefix }}'){{ end }}{{ if .GetPhpClassPrefix }}
+        .phpClassPrefix('{{ .GetPhpClassPrefix }}'){{ end }}{{ if .GetPhpNamespace }}
+        .phpNamespace('{{ .GetPhpNamespace }}'){{ end }}{{ if .GetPhpMetadataNamespace }}
+        .phpMetadataNamespace('{{ .GetPhpMetadataNamespace }}'){{ end }}{{ if .GetRubyPackage }}
+        .rubyPackage('{{ .GetRubyPackage }}'){{ end }}
+        .build()

@@ -1,0 +1,21 @@
+:host {
+    flex-wrap: wrap;
+    display: flex;
+    color: rgba(0, 0, 0, 0.87);
+
+    .square {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        display: flex;
+
+        border: 1px solid lightgray;
+        width: 162px;
+        height: 82px;
+    }
+    .text {
+        margin-top: 8px;
+        font-size: 12px;
+    }
+}

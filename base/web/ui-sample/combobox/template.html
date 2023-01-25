@@ -1,0 +1,112 @@
+<logi-switch (change$)='toggleDisabled()'>禁用</logi-switch>
+<logi-button-toggle-group value='default' (valueChange$)='size=$event'>
+    <logi-button-toggle value='large'>large</logi-button-toggle>
+    <logi-button-toggle value='default'>default</logi-button-toggle>
+    <logi-button-toggle value='small'>small</logi-button-toggle>
+</logi-button-toggle-group>
+<div class='samples'>
+    <div class='select-container'>
+        <h4>基础用法</h4>
+        <logi-combobox [disabled]='disabled' [size]='size'>
+            <logi-combobox-option value='张三'></logi-combobox-option>
+            <logi-combobox-option value='李四' disabled></logi-combobox-option>
+            <logi-combobox-option value='王五'></logi-combobox-option>
+            <logi-combobox-option value='赵六'></logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>数据加载</h4>
+        <logi-combobox [disabled]='disabled' [size]='size' [loading]='dataPreparing'>
+            <logi-combobox-option *ngFor='let option of lazyOptions' [label]='option' [value]='option'>
+            </logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>无边框过滤器风格</h4>
+        <logi-combobox noborder [ripple]='true' innerLabel='过滤用户: ' dropdownIcon='ic_arrow_drop_down'
+            [disabled]='disabled' [size]='size'>
+            <logi-combobox-option *ngFor='let option of options1' [value]='option' [label]='option'>{{option}}
+            </logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>提供初始值, 监听值变化</h4>
+        <logi-combobox [disabled]='disabled' [size]='size' [value]='options1[options1.length - 1]'
+            (valueChange$)='onValueChange($event)'>
+            <logi-combobox-option *ngFor='let option of options1' [value]='option' [label]='option'>{{option}}
+            </logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>空选项</h4>
+        <logi-combobox [disabled]='disabled' [size]='size'></logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>多选</h4>
+        <logi-combobox [size]='size' (valueChange$)='onValueChange($event)'
+            [value]='[options1[options1.length - 1], options1[options1.length - 3]]' [disabled]='disabled'
+            mode='multiple'>
+            <logi-combobox-option *ngFor='let option of options1' [value]='option'></logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>分组</h4>
+        <logi-combobox [size]='size'>
+            <logi-combobox-option-group *ngFor='let group of groupList1' [label]='group.name'>
+                <logi-combobox-option *ngFor='let option of group.users' [value]='option' [label]='option.name'>
+                </logi-combobox-option>
+            </logi-combobox-option-group>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>搜索</h4>
+        <logi-combobox showSearch [size]='size' (valueChange$)='onValueChange($event)'>
+            <logi-combobox-option *ngFor='let option of options1' [value]='option' [label]='option'>
+            </logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>搜索-多选</h4>
+        <logi-combobox showSearch mode='multiple' placeholder='选择用户' [size]='size'
+            (valueChange$)='onValueChange($event)'>
+            <logi-combobox-option *ngFor='let option of options1' [value]='option' [label]='option'>
+            </logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>搜索-多选-设置最多显示3个</h4>
+        <logi-combobox showSearch mode='multiple' placeholder='选择用户' [size]='size' [maxShowTagCount]='3'
+            (valueChange$)='onValueChange($event)'>
+            <logi-combobox-option *ngFor='let option of options1' [value]='option' [label]='option'>
+            </logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>分组-多选-搜索</h4>
+        <logi-combobox showSearch [size]='size' mode='multiple'>
+            <logi-combobox-option-group *ngFor='let group of groupList1' [label]='group.name'>
+                <logi-combobox-option *ngFor='let option of group.users' [value]='option' [label]='option.name'>
+                </logi-combobox-option>
+            </logi-combobox-option-group>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>搜索-多选-表单验证(不能为空)</h4>
+        <logi-combobox showSearch [size]='size' mode='multiple' placeholder='选择用户' [formControl]='formControl1'>
+            <logi-combobox-option *ngFor='let option of options1' [value]='option' [label]='option'>
+            </logi-combobox-option>
+        </logi-combobox>
+    </div>
+    <div class='select-container'>
+        <h4>带actions</h4>
+        <logi-combobox [size]='size'>
+            <logi-combobox-option value='张三'></logi-combobox-option>
+            <logi-combobox-option value='李四' disabled></logi-combobox-option>
+            <logi-combobox-option value='王五'></logi-combobox-option>
+            <logi-combobox-option value='赵六'></logi-combobox-option>
+            <logi-combobox-panel-actions>
+                <div (click)="clickAction()">combobox panel action</div>
+            </logi-combobox-panel-actions>
+        </logi-combobox>
+    </div>
+</div>

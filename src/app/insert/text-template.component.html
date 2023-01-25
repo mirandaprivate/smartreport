@@ -1,0 +1,14 @@
+<logi-ref-type class="ref-type" [isRelative]='isRelative' [isTimeSeries]='isTimeSeries'
+    (isRelative$)='onButtonRadioSel($event)'>
+</logi-ref-type>
+<div class="table-container">
+    <logi-text-table [tableValues]='tableValues' [currValue]='currValue' [lastestValue]='lastestValue'
+        [isTimeSeries]='isTimeSeries' [isRelative]='isRelative' (clickItem$)='clickItem($event)'
+        (dbclickItem$)='dblClickItem($event)' [isTemplate]='true'></logi-text-table>
+</div>
+<div class="series-value-desc">
+    <logi-series-value-desc [seriesValueDescs]='seriesValueDescs' [freq]='itemData.freqs'
+        (magnitudeChanged$)='onDescChanged($event)' (distanceChanged$)="onDistanceChanged($event)">
+    </logi-series-value-desc>
+</div>
+<button class="insert-btn" logi-flat-button (click)='onInsert()'>插入</button>

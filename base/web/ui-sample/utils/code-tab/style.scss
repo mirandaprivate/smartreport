@@ -1,0 +1,47 @@
+@use 'base/web/ui/core/styles/shared';
+
+$bg: white;
+$shadow: 0 24px 48px rgba(0, 0, 0, 0.16);
+
+$mat-ink-bar-bg: rgb(224, 224, 224);
+
+:host {
+    position: relative;
+
+    display: block;
+
+    box-shadow: $shadow;
+    padding: 24px;
+
+    background-color: $bg;
+
+    .close-icon {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+
+        width: 18px;
+        height: 18px;
+
+        cursor: pointer;
+
+        color: shared.$font-color-base;
+    }
+}
+
+.code-region {
+    height: 300px;
+}
+
+.tab-group {
+    border: shared.$border-base;
+    border-radius: 4px;
+
+    ::ng-deep .mat-tab-label {
+        height: 32px;
+    }
+
+    ::ng-deep .mat-ink-bar {
+        background-color: $mat-ink-bar-bg !important
+    }
+}

@@ -1,0 +1,11 @@
+<div class="header">
+  <mat-icon class="close-icon" (click)="onClose()" svgIcon="ic_close"></mat-icon>
+</div>
+<div class="content">
+  <mat-tab-group class="tab-group">
+    <mat-tab *ngFor="let tab of tabs">
+      <ng-template mat-tab-label><span>{{tab.title}}</span></ng-template>
+      <logi-code-region class="code-region" [code]="tab.code"></logi-code-region>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,6 @@
+<div class="text" *ngIf="textType; else tag">{{userName}}</div>
+<ng-template #tag>
+    <logi-tag *ngIf='userName' class="logi-tag" icon="ic_user" [ellipsis]='true' [matTooltip]='userName||""'>
+        {{userName}}
+    </logi-tag>
+</ng-template>

@@ -1,0 +1,129 @@
+<logi-switch (change$)='toggleDisabled()'>禁用</logi-switch>
+<logi-button-toggle-group value='default' (valueChange$)='size=$event'>
+    <logi-button-toggle value='large'>large</logi-button-toggle>
+    <logi-button-toggle value='default'>default</logi-button-toggle>
+    <logi-button-toggle value='small'>small</logi-button-toggle>
+</logi-button-toggle-group>
+<div class='samples'>
+    <div class='select-container'>
+        <h4>基础用法</h4>
+        <logi-select [disabled]='disabled' [size]="size">
+            <logi-option *ngFor='let option of options1' [value]='option'>{{option}}</logi-option>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>空选项</h4>
+        <logi-select [disabled]='disabled' [size]="size"></logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>禁用某一项</h4>
+        <logi-select [size]="size" [disabled]="disabled">
+            <logi-option value='张三'>张三</logi-option>
+            <logi-option value='李四' disabled>李四</logi-option>
+            <logi-option value='王五'>王五</logi-option>
+            <logi-option value='赵六'>赵六</logi-option>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>使用label（当数据为对象而不是字符串时）</h4>
+        <logi-select [size]="size" [disabled]="disabled">
+            <logi-option *ngFor='let option of options2' [value]='option' [label]='option.name'>{{option.name}}
+            </logi-option>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>提供初始选中值</h4>
+        <logi-select [value]='selected' [size]="size" [disabled]="disabled">
+            <logi-option *ngFor='let option of options1' [value]='option'>{{option}}</logi-option>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>使用FormControl</h4>
+        <logi-select [formControl]='formControl' [size]="size" [disabled]="disabled">
+            <logi-option *ngFor='let option of options1' [value]='option'>{{option}}</logi-option>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>分组</h4>
+        <logi-select [formControl]='formControl' [size]="size" [disabled]="disabled">
+            <logi-option-group *ngFor='let group of groupList1' [label]='group.name'>
+                <logi-option *ngFor='let option of group.users' [value]='option' [label]='option.name'>{{option.name}}
+                </logi-option>
+            </logi-option-group>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>分组并带有额外操作</h4>
+        <logi-select [formControl]='formControl' [size]="size" [disabled]="disabled">
+            <logi-option-group *ngFor='let group of groupList1' [label]='group.name'>
+                <logi-option *ngFor='let option of group.users' [value]='option' [label]='option.name'>{{option.name}}
+                </logi-option>
+            </logi-option-group>
+            <logi-select-panel-actions>
+                <div (click)='onClickPanelAction()'>查看所有</div>
+            </logi-select-panel-actions>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>搜索</h4>
+        <logi-select [formControl]='formControl' [size]="size" [disabled]="disabled" searchable>
+            <logi-option-group *ngFor='let group of groupList1' [label]='group.name'>
+                <logi-option *ngFor='let option of group.users' [value]='option' [label]='option.name'>{{option.name}}
+                </logi-option>
+            </logi-option-group>
+            <logi-select-panel-actions>
+                <div (click)='onClickPanelAction()'>查看所有</div>
+            </logi-select-panel-actions>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>多选</h4>
+        <logi-select [size]="size" [disabled]="disabled" (selectChange$)='onSelectChange($event)'
+            (valueChange$)='onValueChange($event)' mode='multiple'>
+            <logi-option *ngFor='let option of options1' [value]='option'>{{option}}</logi-option>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>多选限制选中数目3个</h4>
+        <logi-select [size]="size" [disabled]="disabled" [maxSelectNum]='3' (selectChange$)='onSelectChange($event)'
+            (valueChange$)='onValueChange($event)' [disabled]='disabled' mode='multiple'>
+            <logi-option *ngFor='let option of options1' [value]='option'>{{option}}</logi-option>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>分组多选</h4>
+        <logi-select (selectChange$)='onSelectChange($event)' [size]="size" [disabled]="disabled"
+            (valueChange$)='onValueChange($event)' [disabled]='disabled' mode='multiple'>
+            <logi-option-group *ngFor='let group of groupList1' [label]='group.name'>
+                <logi-option *ngFor='let option of group.users' [value]='option' [label]='option.name'>{{option.name}}
+                </logi-option>
+            </logi-option-group>
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>自定义选中项label</h4>
+        <logi-select [labelContentTpl]='label' [size]="size" [disabled]="disabled">
+            <logi-option *ngFor='let option of options2' [value]='option' [label]='option.name'>{{option.name}}
+            </logi-option>
+        </logi-select>
+        <ng-template #label let-option>
+            <div class='label-content-container'>
+                <div class='name'>{{option.name}}</div>
+                <div class='age'>{{option.age}}</div>
+            </div>
+        </ng-template>
+    </div>
+    <div class='select-container'>
+        <h4>虚拟滚动</h4>
+        <logi-select [virtualScrollItems]='virtualScrollItems' [size]="size" [disabled]="disabled"></logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>虚拟滚动(多选)</h4>
+        <logi-select mode='multiple' [virtualScrollItems]='virtualScrollItems' [size]="size" [disabled]="disabled">
+        </logi-select>
+    </div>
+    <div class='select-container'>
+        <h4>no border, change iton</h4>
+        <logi-select [size]="size" [disabled]="disabled" dropdownIcon="ic_border_color" noborder></logi-select>
+    </div>
+</div>

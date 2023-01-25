@@ -1,0 +1,8 @@
+NAME : {{data.name}}
+AGE: {{data.age}}
+SAY: {{data.say}}
+
+{# Test filters #}
+{{ 'http://example.com/foo/bar?k1=v1' | urlsplit('path') }}
+{{ 'http://example.com/foo/bar?k1=v1' | urlsplit('scheme') }}
+{{ 'http://example.com/foo/bar?k1=v1' | urlsplit('query') }}

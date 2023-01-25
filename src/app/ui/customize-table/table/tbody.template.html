@@ -1,0 +1,5 @@
+<ng-container *ngIf="listOfMeasureColumn$ | async as listOfMeasureColumn">
+    <tr *ngIf="isInsideTable &amp;&amp; listOfMeasureColumn.length" (listOfAutoWidth)="onListOfAutoWidthChange($event)"
+        [listOfMeasureColumn]="listOfMeasureColumn" logi-table-measure-row></tr>
+</ng-container>
+<ng-content></ng-content>

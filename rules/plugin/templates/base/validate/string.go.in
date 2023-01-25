@@ -1,0 +1,25 @@
+{{ $r := .Rules }}{{ if $r.Const }}    @validator.Equals('{{ $r.GetConst }}')
+{{ end }}{{ if $r.Len }}    @validator.Length({{ $r.GetLen }}, {{ $r.GetLen }})
+{{ end }}{{ if $r.MinLen }}    @validator.MinLength({{ $r.GetMinLen }})
+{{ end }}{{ if $r.MaxLen }}    @validator.MaxLength({{ $r.GetMaxLen }})
+{{ end }}{{ if $r.MinBytes }}    @validator.IsByteLength({{ $r.GetMinBytes }})
+{{ end }}{{ if $r.MaxBytes }}    @validator.IsByteLength(0, {{ $r.GetMaxBytes }})
+{{ end }}{{ if $r.Pattern }}    @validator.Matches(/{{ formatPattern $r.GetPattern }}/)
+{{ end }}{{ if $r.In }}    @validator.IsIn([{{ range $r.GetIn }}
+        '{{ . }}',{{ end }}
+    ])
+{{ end }}{{ if $r.NotIn }}    @validator.IsNotIn([{{ range $r.GetNotIn }}
+        '{{ . }}',{{ end }}
+    ])
+{{ end }}{{ if $r.Prefix }}    @logiValidator.prefix('{{ $r.GetPrefix }}')
+{{ end }}{{ if $r.Suffix }}    @logiValidator.suffix('{{ $r.GetSuffix }}')
+{{ end }}{{ if $r.Contains }}    @validator.Contains('{{ $r.GetContains }}')
+{{ end }}{{ if $r.NotContains }}    @validator.NotContains('{{ $r.GetNotContains }}')
+{{ end }}{{ if $r.GetUuid }}    @validator.IsUUID(undefined)
+{{ end }}{{ if $r.GetEmail }}    @validator.IsEmail()
+{{ end }}{{ if $r.GetIp }}    @validator.IsIP(undefined)
+{{ end }}{{ if $r.GetIpv4 }}    @validator.IsIP(4)
+{{ end }}{{ if $r.GetIpv6 }}    @validator.IsIP(6)
+{{ end }}{{ if $r.GetUri }}    @logiValidator.isUri(true)
+{{ end }}{{ if $r.GetUriRef }}    @logiValidator.isUri(undefined)
+{{ end }}

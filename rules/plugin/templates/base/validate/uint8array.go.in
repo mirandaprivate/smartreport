@@ -1,0 +1,25 @@
+{{ $r := .Rules }}{{ if $r.Const }}    @logiValidator.uint8ArrayEquals(new Uint8Array([{{ range $r.GetConst }}
+        {{ . }},{{ end }}
+    ]))
+{{ end }}{{ if $r.Len }}    @logiValidator.uint8ArrayLength({{ $r.GetLen }}, {{ $r.GetLen }})
+{{ end }}{{ if or $r.MinLen $r.MaxLen }}    @logiValidator.uint8ArrayLength({{ $r.GetMinLen }}{{ if $r.MaxLen }}, {{ $r.GetMaxLen }}{{ end }})
+{{ end }}{{ if $r.Prefix }}    @logiValidator.uint8ArrayPrefix(new Uint8Array([{{ range $r.GetPrefix }}
+        {{ . }},{{ end }}
+    ]))
+{{ end }}{{ if $r.Suffix }}    @logiValidator.uint8ArraySuffix(new Uint8Array([{{ range $r.GetSuffix }}
+        {{ . }},{{ end }}
+    ]))
+{{ end }}{{ if $r.Contains }}    @logiValidator.uint8ArrayContains(new Uint8Array([{{ range $r.GetContains }}
+        {{ . }},{{ end }}
+    ]))
+{{ end }}{{ if $r.In }}    @logiValidator.uint8ArrayIsIn([{{ range $r.GetIn }}
+        new Uint8Array([{{ range . }}{{ . }}, {{ end }}]),{{ end }}
+    ])
+{{ end }}{{ if $r.NotIn }}    @logiValidator.uint8ArrayIsNotIn([{{ range $r.GetNotIn }}
+        new Uint8Array([{{ range . }}{{ . }}, {{ end }}]),{{ end }}
+    ])
+{{ end }}{{ if $r.Pattern }}    @logiValidator.uint8ArrayMatches(/{{ formatPattern $r.GetPattern }}/)
+{{ end }}{{ if $r.GetIp }}    @logiValidator.uint8ArrayIsIp(undefined)
+{{ end }}{{ if $r.GetIpv4 }}    @logiValidator.uint8ArrayIsIp(4)
+{{ end }}{{ if $r.GetIpv6 }}    @logiValidator.uint8ArrayIsIp(6)
+{{ end }}

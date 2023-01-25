@@ -1,0 +1,40 @@
+<ng-container *ngIf="scrollY">
+    <div #tableheaderelement [class]="&quot;logi-table-header logi-table-hide-scrollbar&quot;"
+        [ngStyle]="headerStyleMap">
+        <table [listOfColWidth]="listOfColWidth" [scrollX]="scrollX" [tableLayout]="&quot;fixed&quot;"
+            [theadTemplate]="theadTemplate" logi-table-content></table>
+    </div>
+    <ng-container *ngIf="showEmpty$ | async;else tableContent">
+        <logi-empty class="logi-customize-table-empty-page" #tablebodyelement [message]="noResult"></logi-empty>
+    </ng-container>
+</ng-container>
+<div class="logi-table-content" *ngIf="!scrollY">
+    <div class="logi-table-body" #tablebodyelement [ngStyle]="bodyStyleMap">
+        <table [contentTemplate]="contentTemplate" [listOfColWidth]="listOfColWidth" [scrollX]="scrollX"
+            [tableLayout]="&quot;fixed&quot;" [theadTemplate]="theadTemplate" logi-table-content></table>
+    </div>
+</div>
+<ng-template #tableContent>
+    <logi-scrollbar class="logi-table-custom-scrollbar">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </logi-scrollbar>
+    <ng-template #content>
+        <div *ngIf="!virtualTemplate" #tablebodyelement [class]="&quot;logi-table-body&quot;" [ngStyle]="bodyStyleMap">
+            <table [contentTemplate]="contentTemplate" [listOfColWidth]="listOfColWidth" [scrollX]="scrollX"
+                [tableLayout]="&quot;fixed&quot;" logi-table-content></table>
+        </div>
+    </ng-template>
+    <cdk-virtual-scroll-viewport *ngIf="virtualTemplate" #tablebodyelement [itemSize]="virtualItemSize"
+        [maxBufferPx]="virtualMaxBufferPx" [minBufferPx]="virtualMinBufferPx"
+        [style.height]="data.length ? scrollY : noDateVirtualHeight">
+        <table [listOfColWidth]="listOfColWidth" [scrollX]="scrollX" [tableLayout]="&quot;fixed&quot;"
+            logi-table-content>
+            <tbody>
+                <ng-container *cdkVirtualFor="let item of data; let i = index; trackBy: virtualForTrackBy">
+                    <ng-template [ngTemplateOutletContext]="{ $implicit: item, index: i }"
+                        [ngTemplateOutlet]="virtualTemplate"></ng-template>
+                </ng-container>
+            </tbody>
+        </table>
+    </cdk-virtual-scroll-viewport>
+</ng-template>

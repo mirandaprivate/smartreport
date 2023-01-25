@@ -1,0 +1,23 @@
+<logi-header (close$)='closePanel()' [title]='"插入数据"'></logi-header>
+<div class='body'>
+    <ng-container *ngIf='!loadDatabase;else loading'>
+        <ng-container *ngIf="sources.length > 0; else empty">
+            <logi-source-names class="source-names" [sources]='sources' [currSource]='currSource'
+                [researchName]='researchName' (sourceChanged$)="onSourceChange($event)"></logi-source-names>
+            <div class='tree-container'>
+                <logi-indicators [source]='currSource' (selectItem$)='itemChange($event)'></logi-indicators>
+            </div>
+            <div class='data-desc'>
+                <logi-insert-number-template *ngIf="currItem !== undefined;else empty" [projectId]='researchId'
+                    [itemData]='currItem' (insert$)='onInsert($event)'>
+                </logi-insert-number-template>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-template #loading>
+        <logi-spinner class='spinner'></logi-spinner>
+    </ng-template>
+    <ng-template #empty>
+        <logi-empty class='empty' message='暂无数据'></logi-empty>
+    </ng-template>
+</div>
